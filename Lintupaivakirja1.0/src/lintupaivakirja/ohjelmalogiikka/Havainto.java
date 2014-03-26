@@ -41,6 +41,15 @@ public class Havainto {
     public Pvm getPvm() {
         return pvm;
     }
+
+    public int getLkm() {
+        return lkm;
+    }
+
+    @Override
+    public String toString() {
+        return laji + "\t" + pvm + "\t" + paikka + " (" + lkm + ")";
+    }
    
    
 }

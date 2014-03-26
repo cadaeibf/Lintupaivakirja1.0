@@ -16,14 +16,14 @@ public class Havainto {
     private Pvm pvm;
     private int lkm;
 
-    public Havainto(Lintulaji laji, Havaintopaikka paikka, Pvm pvm, int lkm) {
+    public Havainto(Lintulaji laji, Pvm pvm, Havaintopaikka paikka, int lkm) {
         this.laji = laji;
         this.paikka = paikka;
         this.pvm = pvm;
         this.lkm = lkm;
     }
     
-   public Havainto(Lintulaji laji, Havaintopaikka paikka, Pvm pvm) {
+   public Havainto(Lintulaji laji, Pvm pvm, Havaintopaikka paikka) {
        this.laji = laji;
        this.paikka = paikka;
        this.pvm = pvm;

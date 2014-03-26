@@ -22,6 +22,14 @@ public class Havaintolista {
     public void setJarjestamisperuste(int jarjestamisperuste) {
         this.jarjestamisperuste = jarjestamisperuste;
     }
+
+    public int getHavaintoja() {
+        return havaintoja;
+    }
+    
+    public Havainto get(int indeksi) {
+        return lista[indeksi];
+    }
     
     public void lisaa(Havainto havainto) {
         while(havaintoja >= lista.length) lisaaPaikkoja();

@@ -6,6 +6,7 @@ package lintupaivakirja.gui.paneelit;
 
 import java.awt.GridLayout;
 import javax.swing.JPanel;
+import lintupaivakirja.ohjelmalogiikka.Havaintolista;
 
 /**
  *
@@ -22,8 +23,9 @@ public class Keskuspaneeli extends JPanel {
     }
 
     private void luoKomponentit() {
-        vasenLohko = new VasenLohko();
-        havaintolistakaavake = new Havaintolistakaavake();
+        Havaintolista lista = new Havaintolista();
+        havaintolistakaavake = new Havaintolistakaavake(lista);
+        vasenLohko = new VasenLohko(havaintolistakaavake);
         
         add(vasenLohko);
         add(havaintolistakaavake);

@@ -5,10 +5,14 @@
 package lintupaivakirja.gui.paneelit;
 
 import java.awt.GridLayout;
+import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import lintupaivakirja.gui.tapahtumankuuntelijat.LisaaHavainto;
+import lintupaivakirja.ohjelmalogiikka.Havaintolista;
+import lintupaivakirja.util.Pvm;
 
 /**
  *
@@ -21,23 +25,31 @@ public class UusiHavaintoKaavake extends JPanel {
     private JTextField pvmkentta;
     private JTextField lkmkentta;
     private JButton lisaaPainike;
+    private Havaintolista lista;
 
-    public UusiHavaintoKaavake() {
+    public UusiHavaintoKaavake(Havaintolistakaavake havaintolistakaavake) {
         super(new GridLayout(6,3));
+        lista = havaintolistakaavake.getLista();
         
-        luoKomponentit();
+        luoKomponentit(havaintolistakaavake);
     }
 
-    private void luoKomponentit() {
+    private void luoKomponentit(Havaintolistakaavake havaintolistakaavake) {
         nimikentta = new JTextField();
         latinalainennimikentta = new JLabel("");
         paikkakentta = new JTextField();
-        pvmkentta = new JTextField();
+        
+        
+        Calendar cal = Calendar.getInstance();
+        Pvm pvm = new Pvm(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH)+1, cal.get(Calendar.YEAR));
+        pvmkentta = new JTextField(pvm.toString());
         lkmkentta = new JTextField("1");
         lisaaPainike = new JButton("Lisää");
         
+        lisaaPainike.addActionListener(new LisaaHavainto(nimikentta, paikkakentta, pvmkentta, lkmkentta, havaintolistakaavake));
+        
         add(new JLabel(""));
-        add(new JLabel("UUSI HAVAINTO"));
+        add(new JLabel("UUSI HAVAINTO:"));
         add(new JLabel(""));
         
         add(new JLabel("Laji:"));

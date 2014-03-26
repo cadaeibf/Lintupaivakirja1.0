@@ -24,7 +24,7 @@ public class Kayttoliittyma implements Runnable {
 
     @Override
     public void run() {
-        frame = new JFrame("Lintupäiväkirja 1.0");
+        frame = new JFrame("Lintupäiväkirja v1.0");
         frame.setPreferredSize(new Dimension(700,600));
         
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -37,7 +37,7 @@ public class Kayttoliittyma implements Runnable {
 
     private void luoKomponentit(Container container) {
         container.add(new Ylapalkki(), BorderLayout.NORTH);
-        container.add(new Keskuspaneeli());
+        container.add(new Keskuspaneeli(frame));
     }
     
     

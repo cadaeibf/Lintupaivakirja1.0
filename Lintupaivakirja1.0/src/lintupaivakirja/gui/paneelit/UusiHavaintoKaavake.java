@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import lintupaivakirja.gui.tapahtumankuuntelijat.LisaaHavainto;
+import lintupaivakirja.gui.tapahtumankuuntelijat.LisaaHavaintoNappaimistolla;
 import lintupaivakirja.ohjelmalogiikka.Havaintolista;
 import lintupaivakirja.util.Pvm;
 
@@ -35,9 +36,9 @@ public class UusiHavaintoKaavake extends JPanel {
     }
 
     private void luoKomponentit(Havaintolistakaavake havaintolistakaavake) {
-        nimikentta = new JTextField();
+        nimikentta = new JTextField("ankka");
         latinalainennimikentta = new JLabel("");
-        paikkakentta = new JTextField();
+        paikkakentta = new JTextField("helsinki");
         
         
         Calendar cal = Calendar.getInstance();
@@ -47,6 +48,12 @@ public class UusiHavaintoKaavake extends JPanel {
         lisaaPainike = new JButton("Lisää");
         
         lisaaPainike.addActionListener(new LisaaHavainto(nimikentta, paikkakentta, pvmkentta, lkmkentta, havaintolistakaavake));
+        
+        LisaaHavaintoNappaimistolla avaimenKuuntelija = new LisaaHavaintoNappaimistolla(lisaaPainike);
+        nimikentta.addKeyListener(avaimenKuuntelija);
+        pvmkentta.addKeyListener(avaimenKuuntelija);
+        paikkakentta.addKeyListener(avaimenKuuntelija);
+        lkmkentta.addKeyListener(avaimenKuuntelija);
         
         add(new JLabel(""));
         add(new JLabel("UUSI HAVAINTO:"));

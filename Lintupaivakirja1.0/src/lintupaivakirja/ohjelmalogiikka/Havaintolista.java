@@ -22,6 +22,17 @@ public class Havaintolista {
     public void setJarjestamisperuste(int jarjestamisperuste) {
         this.jarjestamisperuste = jarjestamisperuste;
     }
+    
+    public void poistaValitut() {
+        int i = 0;
+        while ( i < havaintoja) {
+            if(lista[i].valittu()) {
+                poista(lista[i]);
+            } else {
+                i++;
+            }
+        }
+    }
 
     public int getHavaintoja() {
         return havaintoja;

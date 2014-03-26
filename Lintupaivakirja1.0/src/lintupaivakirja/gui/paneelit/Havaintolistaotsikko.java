@@ -14,16 +14,16 @@ import javax.swing.JPanel;
  */
 public class Havaintolistaotsikko extends JPanel {
 
-    public Havaintolistaotsikko() {
+    public Havaintolistaotsikko(int lkm) {
         super(new GridLayout(1,3));
         
-        luoKomponentit();
+        luoKomponentit(lkm);
     }
 
-    private void luoKomponentit() {
+    private void luoKomponentit(int lkm) {
         add(new JLabel(""));
-        add(new JLabel("HAVAINNOT"));
-        add(new JLabel(""));
+        add(new JLabel("HAVAINNOT:"));
+        add(new JLabel(lkm + ""));
     }
     
     

@@ -6,8 +6,8 @@ package lintupaivakirja.gui.paneelit;
 
 import java.awt.GridLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import lintupaivakirja.gui.tapahtumankuuntelijat.PoistaValitut;
 
 /**
  *
@@ -15,14 +15,17 @@ import javax.swing.JPanel;
  */
 public class HavaintolistaYlarivi extends JPanel {
 
-    public HavaintolistaYlarivi() {
+    public HavaintolistaYlarivi(Havaintolistakaavake lista) {
         super(new GridLayout(1,5));
         
-        luoKomponentit();
+        luoKomponentit(lista);
     }
 
-    private void luoKomponentit() {
-        add(new JLabel("Valitse"));
+    private void luoKomponentit(Havaintolistakaavake lista) {
+        JButton poistaValitut = new JButton("Poista Valitut");
+        poistaValitut.addActionListener(new PoistaValitut(lista));
+        
+        add(poistaValitut);
         add(new JButton("Laji"));
         add(new JButton("Pvm"));
         add(new JButton("Paikka"));

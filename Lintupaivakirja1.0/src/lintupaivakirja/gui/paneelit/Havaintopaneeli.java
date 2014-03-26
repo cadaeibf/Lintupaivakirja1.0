@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import lintupaivakirja.gui.tapahtumankuuntelijat.HavainnonValinta;
 import lintupaivakirja.ohjelmalogiikka.Havainto;
 
 /**
@@ -27,6 +28,8 @@ public class Havaintopaneeli extends JPanel {
 
     private void luoKomponentit() {
         valintaruutu = new JCheckBox();
+        valintaruutu.addActionListener(new HavainnonValinta(valintaruutu, havainto));
+        
         add(valintaruutu);
         add(new JLabel(havainto.getLaji().toString()));
         add(new JLabel(havainto.getPvm().toString()));

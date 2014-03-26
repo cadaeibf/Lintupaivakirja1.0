@@ -11,7 +11,7 @@ import lintupaivakirja.gui.Kayttoliittyma;
  *
  * @author anterova
  */
-public class Main {
+public class Lintupaivakirja {
 
     /**
      * @param args the command line arguments

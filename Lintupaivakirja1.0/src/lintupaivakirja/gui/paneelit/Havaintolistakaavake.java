@@ -5,6 +5,7 @@
 package lintupaivakirja.gui.paneelit;
 
 import java.awt.GridLayout;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import lintupaivakirja.ohjelmalogiikka.Havainto;
 import lintupaivakirja.ohjelmalogiikka.Havaintolista;
@@ -16,29 +17,44 @@ import lintupaivakirja.ohjelmalogiikka.Havaintolista;
 public class Havaintolistakaavake extends JPanel {
     private HavaintolistaYlarivi ylarivi;
     private Havaintolista lista;
+    private Havaintolistaotsikko otsikko;
+    private JFrame frame;
 
-    public Havaintolistakaavake(Havaintolista havaintolista) {
-        super(new GridLayout(0,1));
-        lista = havaintolista;
+    public Havaintolistakaavake(JFrame frame, Havaintolista havaintolista) {
+        super(new GridLayout(20,1));
         
-        luoKomponentit();
+        
+        luoKomponentit(frame, havaintolista);
+        
+        
+        
     }
 
-    private void luoKomponentit() {
-        ylarivi = new HavaintolistaYlarivi();
+    private void luoKomponentit(JFrame frame, Havaintolista havaintolista) {
+        this.frame = frame;
+        lista = havaintolista;
+        ylarivi = new HavaintolistaYlarivi(this);
         
-        add(new Havaintolistaotsikko());
+        add(new Havaintolistaotsikko(lista.getHavaintoja()));
         add(ylarivi);
         
+        
         lisaaHavainnot();
+        
+        
     }
     
     private void paivita() {
         removeAll();
-        add(new Havaintolistaotsikko());
+        add(new Havaintolistaotsikko(lista.getHavaintoja()));
         add(ylarivi);
         
         lisaaHavainnot();
+        repaint();
+        
+        frame.repaint();
+        frame.pack();
+        frame.setVisible(true);
     }
     
     public void lisaa(Havainto havainto) {
@@ -54,6 +70,11 @@ public class Havaintolistakaavake extends JPanel {
         for (int i = 0; i < lista.getHavaintoja(); i++) {
             add(new Havaintopaneeli(lista.get(i)));
         }
+    }
+    
+    public void poistaValitut() {
+        lista.poistaValitut();
+        paivita();
     }
     
 }

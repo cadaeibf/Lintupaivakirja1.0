@@ -46,7 +46,8 @@ public class LisaaHavainto implements ActionListener {
     }
     
     private Pvm luePvm(String teksti) {
-        String[] tekstit = teksti.split(".");
+        String[] tekstit = teksti.split("\\.");
+        
         int pv = Integer.parseInt(tekstit[0]);
         int kk = Integer.parseInt(tekstit[1]);
         int vvvv = Integer.parseInt(tekstit[2]);

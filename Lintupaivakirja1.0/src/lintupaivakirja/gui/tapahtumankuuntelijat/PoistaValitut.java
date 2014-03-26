@@ -17,7 +17,6 @@ public class PoistaValitut implements ActionListener {
 
     public PoistaValitut(Havaintolistakaavake lista) {
         this.lista = lista;
-        System.out.println("");
     }
     
     

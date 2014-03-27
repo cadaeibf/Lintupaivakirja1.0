@@ -23,11 +23,7 @@ public class Havaintolistakaavake extends JPanel {
     public Havaintolistakaavake(JFrame frame, Havaintolista havaintolista) {
         super(new GridLayout(20,1));
         
-        
         luoKomponentit(frame, havaintolista);
-        
-        
-        
     }
 
     private void luoKomponentit(JFrame frame, Havaintolista havaintolista) {
@@ -74,6 +70,11 @@ public class Havaintolistakaavake extends JPanel {
     
     public void poistaValitut() {
         lista.poistaValitut();
+        paivita();
+    }
+    
+    public void vaihdaJarjestamisperuste(int peruste) {
+        lista.vaihdaJarjestamisperuste(peruste);
         paivita();
     }
     

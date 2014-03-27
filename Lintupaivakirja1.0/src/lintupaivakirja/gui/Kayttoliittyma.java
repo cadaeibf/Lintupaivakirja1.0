@@ -6,7 +6,6 @@ package lintupaivakirja.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import lintupaivakirja.gui.paneelit.Keskuspaneeli;

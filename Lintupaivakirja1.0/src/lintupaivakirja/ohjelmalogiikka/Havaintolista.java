@@ -14,13 +14,14 @@ public class Havaintolista {
     private int havaintoja;
 
     public Havaintolista() {
-        jarjestamisperuste = 1;
+        jarjestamisperuste = 0;
         havaintoja = 0;
         lista = new Havainto[1000];
     }
     
-    public void setJarjestamisperuste(int jarjestamisperuste) {
+    public void vaihdaJarjestamisperuste(int jarjestamisperuste) {
         this.jarjestamisperuste = jarjestamisperuste;
+        jarjesta();
     }
     
     public void poistaValitut() {
@@ -46,7 +47,21 @@ public class Havaintolista {
         while(havaintoja >= lista.length) lisaaPaikkoja();
         lista[havaintoja] = havainto;
         havaintoja++;
-        jarjesta();
+        
+        int i = havaintoja -1;
+        
+        while(i > 0) {
+            if( vertaa(lista[i], lista[i-1]) < 0 ) {
+                swap(i, i-1);
+                i--;
+            } else break;
+        }
+    }
+    
+    private void swap(int i, int j) {
+        Havainto havainto = lista[i];
+        lista[i] = lista[j];
+        lista[j] = havainto;
     }
     
     public void poista(Havainto havainto)  {
@@ -112,6 +127,7 @@ public class Havaintolista {
         if(havainto2 == null) return -1;
         if(jarjestamisperuste == 1) return havainto1.getPvm().compareTo(havainto2.getPvm());
         if(jarjestamisperuste == 2) return havainto1.getPaikka().compareTo(havainto2.getPaikka());
+        if(jarjestamisperuste == 3) return havainto1.getLkm() - havainto2.getLkm();
         return havainto1.getLaji().compareTo(havainto2.getLaji()); 
     }
 
@@ -121,7 +137,7 @@ public class Havaintolista {
         for (int i = 0; i < havaintoja; i++) {
             tuloste += lista[i] + "\n";
         }
-        tuloste += "\nHavaintoja: " + havaintoja;
+        tuloste += "Havaintoja: " + havaintoja;
         
         return tuloste;
     }

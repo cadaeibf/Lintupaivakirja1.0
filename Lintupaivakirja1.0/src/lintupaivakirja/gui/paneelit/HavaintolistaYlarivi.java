@@ -7,6 +7,7 @@ package lintupaivakirja.gui.paneelit;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import lintupaivakirja.gui.tapahtumankuuntelijat.Jarjestaja;
 import lintupaivakirja.gui.tapahtumankuuntelijat.PoistaValitut;
 
 /**
@@ -23,13 +24,23 @@ public class HavaintolistaYlarivi extends JPanel {
 
     private void luoKomponentit(Havaintolistakaavake lista) {
         JButton poistaValitut = new JButton("Poista");
-        poistaValitut.addActionListener(new PoistaValitut(lista));
+        JButton jarjestaLaji = new JButton("Laji");
+        JButton jarjestaPvm = new JButton("Pvm");
+        JButton jarjestaPaikka = new JButton("Paikka");
+        JButton jarjestaLkm = new JButton("Lkm");
         
-        add(poistaValitut);
-        add(new JButton("Laji"));
-        add(new JButton("Pvm"));
-        add(new JButton("Paikka"));
-        add(new JButton("Lkm"));
+        
+        poistaValitut.addActionListener( new PoistaValitut(lista) );
+        jarjestaLaji.addActionListener( new Jarjestaja(lista, 0) );
+        jarjestaPvm.addActionListener( new Jarjestaja(lista, 1) );
+        jarjestaPaikka.addActionListener( new Jarjestaja( lista, 2 ) );
+        jarjestaLkm.addActionListener( new Jarjestaja( lista, 3 ) );
+        
+        add( poistaValitut );
+        add( jarjestaLaji );
+        add( jarjestaPvm );
+        add( jarjestaPaikka );
+        add( jarjestaLkm );
     }
     
     

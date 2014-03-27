@@ -150,6 +150,12 @@ public class Havaintolista {
         
         lista = uusi;
     }
+
+    public void tyhjenna() {
+        jarjestamisperuste = 0;
+        havaintoja = 0;
+        lista = new Havainto[1000];
+    }
     
     
 }

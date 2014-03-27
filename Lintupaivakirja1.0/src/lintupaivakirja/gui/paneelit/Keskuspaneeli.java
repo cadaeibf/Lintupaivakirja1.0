@@ -7,11 +7,7 @@ package lintupaivakirja.gui.paneelit;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import lintupaivakirja.ohjelmalogiikka.Havainto;
 import lintupaivakirja.ohjelmalogiikka.Havaintolista;
-import lintupaivakirja.ohjelmalogiikka.Havaintopaikka;
-import lintupaivakirja.ohjelmalogiikka.Lintulaji;
-import lintupaivakirja.util.Pvm;
 
 /**
  *

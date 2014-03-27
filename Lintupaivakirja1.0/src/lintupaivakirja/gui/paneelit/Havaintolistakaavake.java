@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import lintupaivakirja.ohjelmalogiikka.Havainto;
 import lintupaivakirja.ohjelmalogiikka.Havaintolista;
+import lintupaivakirja.ohjelmalogiikka.tallennus.Lataaja;
+import lintupaivakirja.ohjelmalogiikka.tallennus.Tallentaja;
 
 /**
  *
@@ -75,6 +77,16 @@ public class Havaintolistakaavake extends JPanel {
     
     public void vaihdaJarjestamisperuste(int peruste) {
         lista.vaihdaJarjestamisperuste(peruste);
+        paivita();
+    }
+
+    public void tallenna() {
+        new Tallentaja("/Users/anterova/Desktop/save1.txt", lista).tallenna();
+        paivita();
+    }
+    
+    public void lataa() {
+        new Lataaja("/Users/anterova/Desktop/save1.txt", lista).lataa();
         paivita();
     }
     

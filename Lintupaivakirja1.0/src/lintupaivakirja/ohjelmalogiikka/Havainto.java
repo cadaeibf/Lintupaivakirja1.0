@@ -62,7 +62,7 @@ public class Havainto {
 
     @Override
     public String toString() {
-        return laji + "\t" + pvm + "\t" + paikka + " (" + lkm + ")";
+        return laji + "\t" + pvm + "\t" + paikka + "(" + lkm + ")";
     }
    
    

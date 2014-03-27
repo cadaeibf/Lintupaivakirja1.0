@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import lintupaivakirja.gui.tapahtumankuuntelijat.LisaaHavainto;
 import lintupaivakirja.gui.tapahtumankuuntelijat.LisaaHavaintoNappaimistolla;
-import lintupaivakirja.ohjelmalogiikka.Havaintolista;
 import lintupaivakirja.util.Pvm;
 
 /**
@@ -26,11 +25,9 @@ public class UusiHavaintoKaavake extends JPanel {
     private JTextField pvmkentta;
     private JTextField lkmkentta;
     private JButton lisaaPainike;
-    private Havaintolista lista;
 
     public UusiHavaintoKaavake(Havaintolistakaavake havaintolistakaavake) {
         super(new GridLayout(6,3));
-        lista = havaintolistakaavake.getLista();
         
         luoKomponentit(havaintolistakaavake);
     }

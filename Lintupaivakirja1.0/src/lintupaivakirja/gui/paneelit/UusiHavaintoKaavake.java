@@ -36,9 +36,9 @@ public class UusiHavaintoKaavake extends JPanel {
     }
 
     private void luoKomponentit(Havaintolistakaavake havaintolistakaavake) {
-        nimikentta = new JTextField("ankka");
+        nimikentta = new JTextField("");
         latinalainennimikentta = new JLabel("");
-        paikkakentta = new JTextField("helsinki");
+        paikkakentta = new JTextField("");
         
         
         Calendar cal = Calendar.getInstance();
@@ -63,7 +63,7 @@ public class UusiHavaintoKaavake extends JPanel {
         add(nimikentta);
         add(latinalainennimikentta);
         
-        add(new JLabel("Paikka"));
+        add(new JLabel("Havaintopaikka:"));
         add(paikkakentta);
         add(new JLabel(""));
         

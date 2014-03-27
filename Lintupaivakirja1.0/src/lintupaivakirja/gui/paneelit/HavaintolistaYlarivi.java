@@ -22,7 +22,7 @@ public class HavaintolistaYlarivi extends JPanel {
     }
 
     private void luoKomponentit(Havaintolistakaavake lista) {
-        JButton poistaValitut = new JButton("Poista Valitut");
+        JButton poistaValitut = new JButton("Poista");
         poistaValitut.addActionListener(new PoistaValitut(lista));
         
         add(poistaValitut);

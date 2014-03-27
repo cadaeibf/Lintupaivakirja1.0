@@ -38,7 +38,7 @@ public class LisaaHavainto implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Havainto uusi = new Havainto(new Lintulaji(nimikentta.getText()), luePvm(pvmkentta.getText()), 
-                new Havaintopaikka(paikkakentta.getText()));
+                new Havaintopaikka(paikkakentta.getText()), Integer.parseInt(lkmkentta.getText()));
         havaintolistakaavake.lisaa(uusi);
         
         nimikentta.setText("");

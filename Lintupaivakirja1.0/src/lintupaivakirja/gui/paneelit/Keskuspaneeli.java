@@ -5,8 +5,6 @@
 package lintupaivakirja.gui.paneelit;
 
 import java.awt.GridLayout;
-import java.awt.Scrollbar;
-import java.awt.event.AdjustmentListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import lintupaivakirja.ohjelmalogiikka.Havainto;
@@ -31,15 +29,11 @@ public class Keskuspaneeli extends JPanel {
 
     private void luoKomponentit(JFrame frame) {
         Havaintolista lista = new Havaintolista();
-        lista.lisaa(new Havainto(new Lintulaji("ankka"), new Pvm(26,3,2014), new Havaintopaikka("mökki")));
         havaintolistakaavake = new Havaintolistakaavake(frame, lista);
         vasenLohko = new VasenLohko(havaintolistakaavake);
         
         add(vasenLohko);
-        
-        
         add(havaintolistakaavake);
-        
         
     }
     

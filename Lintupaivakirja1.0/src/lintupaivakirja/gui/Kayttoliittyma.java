@@ -25,7 +25,8 @@ public class Kayttoliittyma implements Runnable {
     @Override
     public void run() {
         frame = new JFrame("Lintupäiväkirja v1.0");
-        frame.setPreferredSize(new Dimension(700,600));
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
         
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         

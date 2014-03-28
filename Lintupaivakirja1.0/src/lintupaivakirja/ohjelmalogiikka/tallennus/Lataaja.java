@@ -51,6 +51,8 @@ public class Lataaja  {
             
         }
         
+        teksti = muunnaFormaatti(teksti);
+        
         String[] linnut = teksti.split("&");
         
         for (int i = 0; i < linnut.length - 1; i++) {
@@ -66,6 +68,7 @@ public class Lataaja  {
         
         String[] attribuutit = teksti.split("/");
         
+        attribuutit[0] = attribuutit[0].substring(0,1).toUpperCase() + attribuutit[0].substring(1, attribuutit[0].length() );
         
         Lintulaji laji = new Lintulaji(attribuutit[0]);
         
@@ -76,6 +79,8 @@ public class Lataaja  {
                 Integer.parseInt( pvmtiedot[2] ));
         
         String[] paikkaJaLkm = attribuutit[2].split("\\(");
+        
+        paikkaJaLkm[0] = paikkaJaLkm[0].substring(0,1).toUpperCase() + paikkaJaLkm[0].substring(1, paikkaJaLkm[0].length() );
         Havaintopaikka paikka = new Havaintopaikka( paikkaJaLkm[0] );
         
         String lkm = paikkaJaLkm[1];
@@ -84,6 +89,13 @@ public class Lataaja  {
         System.out.println(lkm);
         return new Havainto( laji, pvm, paikka, Integer.parseInt(lkm) );
         
+    }
+    
+    private String muunnaFormaatti(String raaka) {
+        String korjattu = raaka.replace('@', 'ä');
+        korjattu = korjattu.replace('#', 'ö');
+        
+        return korjattu;
     }
     
 }

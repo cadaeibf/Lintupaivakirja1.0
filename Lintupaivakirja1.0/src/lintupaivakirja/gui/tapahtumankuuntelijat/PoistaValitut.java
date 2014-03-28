@@ -7,6 +7,7 @@ package lintupaivakirja.gui.tapahtumankuuntelijat;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import lintupaivakirja.gui.paneelit.Havaintolistakaavake;
+import lintupaivakirja.gui.paneelit.Tallennussijaintipalkki;
 
 /**
  *
@@ -14,9 +15,11 @@ import lintupaivakirja.gui.paneelit.Havaintolistakaavake;
  */
 public class PoistaValitut implements ActionListener {
     private Havaintolistakaavake lista;
+    private Tallennussijaintipalkki tspalkki;
 
-    public PoistaValitut(Havaintolistakaavake lista) {
+    public PoistaValitut(Havaintolistakaavake lista, Tallennussijaintipalkki tspalkki) {
         this.lista = lista;
+        this.tspalkki = tspalkki;
     }
     
     
@@ -24,6 +27,7 @@ public class PoistaValitut implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         lista.poistaValitut();
+        tspalkki.muutoksiaTehty();
     }
     
 }

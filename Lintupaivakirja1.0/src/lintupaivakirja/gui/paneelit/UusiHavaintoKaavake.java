@@ -26,13 +26,13 @@ public class UusiHavaintoKaavake extends JPanel {
     private JTextField lkmkentta;
     private JButton lisaaPainike;
 
-    public UusiHavaintoKaavake(Havaintolistakaavake havaintolistakaavake) {
+    public UusiHavaintoKaavake() {
         super(new GridLayout(6,3));
         
-        luoKomponentit(havaintolistakaavake);
+        luoKomponentit();
     }
 
-    private void luoKomponentit(Havaintolistakaavake havaintolistakaavake) {
+    private void luoKomponentit() {
         nimikentta = new JTextField("");
         latinalainennimikentta = new JLabel("");
         paikkakentta = new JTextField("");
@@ -44,7 +44,6 @@ public class UusiHavaintoKaavake extends JPanel {
         lkmkentta = new JTextField("1");
         lisaaPainike = new JButton("Lisää");
         
-        lisaaPainike.addActionListener(new LisaaHavainto(nimikentta, paikkakentta, pvmkentta, lkmkentta, havaintolistakaavake));
         
         LisaaHavaintoNappaimistolla avaimenKuuntelija = new LisaaHavaintoNappaimistolla(lisaaPainike);
         nimikentta.addKeyListener(avaimenKuuntelija);
@@ -77,7 +76,9 @@ public class UusiHavaintoKaavake extends JPanel {
         add(lisaaPainike);
     }
     
-    
+    public void lisaaPainikkeet(Havaintolistakaavake havaintolistakaavake, Tallennussijaintipalkki tspalkki) {
+        lisaaPainike.addActionListener(new LisaaHavainto(nimikentta, paikkakentta, pvmkentta, lkmkentta, havaintolistakaavake, tspalkki));
+    }
     
     
 }

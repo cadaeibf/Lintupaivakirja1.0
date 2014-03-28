@@ -7,6 +7,7 @@ package lintupaivakirja.gui.tapahtumankuuntelijat;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import lintupaivakirja.gui.paneelit.Havaintolistakaavake;
+import lintupaivakirja.gui.paneelit.Tallennussijaintipalkki;
 
 /**
  *
@@ -14,14 +15,17 @@ import lintupaivakirja.gui.paneelit.Havaintolistakaavake;
  */
 public class Lataa implements ActionListener {
     private Havaintolistakaavake lista;
+    private Tallennussijaintipalkki tspalkki;
 
-    public Lataa(Havaintolistakaavake lista) {
+    public Lataa(Havaintolistakaavake lista, Tallennussijaintipalkki tspalkki) {
         this.lista = lista;
+        this.tspalkki = tspalkki;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         lista.lataa();
+        tspalkki.tiedostoLadattu();
     }
     
 }

@@ -6,7 +6,6 @@ package lintupaivakirja.gui.paneelit;
 
 import java.awt.GridLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import lintupaivakirja.gui.tapahtumankuuntelijat.Lataa;
 import lintupaivakirja.gui.tapahtumankuuntelijat.Tallenna;
@@ -17,38 +16,46 @@ import lintupaivakirja.gui.tapahtumankuuntelijat.Tallenna;
  */
 public class Painikekentta extends JPanel {
     private String tiedostonimi;
-    private JLabel tallennuspolkukentta;
+    private Tallennussijaintipalkki tallennussijaintipalkki;
     private JButton vaihdaSijainti;
     private JButton tallenna;
     private JButton lataa;
     private JButton tuo;
     private JButton vie;
 
-    public Painikekentta(Havaintolistakaavake lista) {
+    public Painikekentta() {
         super(new GridLayout(10,1));
         
-        luoKomponentit(lista);
+        luoKomponentit();
+    }
+    
+    public Tallennussijaintipalkki tallennussijaintipalkki() {
+        return tallennussijaintipalkki;
     }
 
-    private void luoKomponentit(Havaintolistakaavake lista) {
+    private void luoKomponentit() {
         tiedostonimi = "save1.txt";
         
-        tallennuspolkukentta = new JLabel("Tallennuskohde: "+ tiedostonimi );
+        tallennussijaintipalkki = new Tallennussijaintipalkki(tiedostonimi);
         vaihdaSijainti = new JButton("Vaihda sijainti");
         tallenna = new JButton("Tallenna");
         lataa = new JButton("Lataa");
         tuo = new JButton("Tuo...");
         vie = new JButton("Vie...");
         
-        tallenna.addActionListener( new Tallenna(lista) );
-        lataa.addActionListener( new Lataa(lista) );
         
-        add(tallennuspolkukentta);
+        
+        add(tallennussijaintipalkki);
         add(vaihdaSijainti);
         add(tallenna);
         add(lataa);
         add(tuo);
         add(vie);
+    }
+    
+    public void lisaaPainikkeet(Havaintolistakaavake lista) {
+        tallenna.addActionListener( new Tallenna(lista, tallennussijaintipalkki) );
+        lataa.addActionListener( new Lataa(lista, tallennussijaintipalkki) );
     }
     
     

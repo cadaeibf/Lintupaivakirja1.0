@@ -25,8 +25,11 @@ public class Keskuspaneeli extends JPanel {
 
     private void luoKomponentit(JFrame frame) {
         Havaintolista lista = new Havaintolista();
-        havaintolistakaavake = new Havaintolistakaavake(frame, lista);
-        vasenLohko = new VasenLohko(havaintolistakaavake);
+        
+        vasenLohko = new VasenLohko();
+        havaintolistakaavake = new Havaintolistakaavake(frame, lista, vasenLohko.tallennussijaintipalkki());
+        
+        vasenLohko.lisaaPainikkeet(havaintolistakaavake);
         
         add(vasenLohko);
         add(havaintolistakaavake);

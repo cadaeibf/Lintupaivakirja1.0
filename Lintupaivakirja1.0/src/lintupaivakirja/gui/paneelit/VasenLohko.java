@@ -15,17 +15,27 @@ public class VasenLohko extends JPanel {
     private UusiHavaintoKaavake uusiHavainto;
     private Painikekentta painikekentta;
 
-    public VasenLohko(Havaintolistakaavake havaintolistakaavake) {
+    public VasenLohko() {
         super(new GridLayout(2,1));
         
-        luoKomponentit(havaintolistakaavake);
+        luoKomponentit();
     }
 
-    private void luoKomponentit(Havaintolistakaavake havaintolistakaavake) {
-        uusiHavainto = new UusiHavaintoKaavake(havaintolistakaavake);
-        painikekentta = new Painikekentta(havaintolistakaavake);
+    private void luoKomponentit() {
+        painikekentta = new Painikekentta();
+        uusiHavainto = new UusiHavaintoKaavake();
+        
         add(uusiHavainto);
         add(painikekentta);
+    }
+    
+    public void lisaaPainikkeet(Havaintolistakaavake lista) {
+        uusiHavainto.lisaaPainikkeet(lista, painikekentta.tallennussijaintipalkki());
+        painikekentta.lisaaPainikkeet(lista);
+    }
+    
+    public Tallennussijaintipalkki tallennussijaintipalkki() {
+        return painikekentta.tallennussijaintipalkki();
     }
     
     

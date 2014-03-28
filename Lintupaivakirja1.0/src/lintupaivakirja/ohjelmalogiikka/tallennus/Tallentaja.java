@@ -34,7 +34,7 @@ public class Tallentaja {
             BufferedWriter bw = new BufferedWriter( new FileWriter( tiedosto.getAbsoluteFile() ) );
             
             for (int i = 0; i < lista.getHavaintoja(); i++) {
-                bw.write( lista.get(i).toString().replace('\t', '/') );
+                bw.write( muunnaFormaatti( lista.get(i).toString() ) );
                 bw.write("&");
             }
             bw.write(".");
@@ -43,6 +43,15 @@ public class Tallentaja {
         } catch (Exception ex) {
             System.out.println("virhe kirjoittamisessa");
         }
+    }
+    
+    private String muunnaFormaatti(String raaka) {
+        String korjattu = raaka.toLowerCase();
+        korjattu = korjattu.replace('ä', '@');
+        korjattu = korjattu.replace('ö', '#');
+        korjattu = korjattu.replace('\t', '/');
+        
+        return korjattu;
     }
     
 }

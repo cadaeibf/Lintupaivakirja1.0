@@ -16,13 +16,13 @@ import lintupaivakirja.gui.tapahtumankuuntelijat.PoistaValitut;
  */
 public class HavaintolistaYlarivi extends JPanel {
 
-    public HavaintolistaYlarivi(Havaintolistakaavake lista) {
+    public HavaintolistaYlarivi(Havaintolistakaavake lista, Tallennussijaintipalkki tspalkki) {
         super(new GridLayout(1,5));
         
-        luoKomponentit(lista);
+        luoKomponentit(lista, tspalkki);
     }
 
-    private void luoKomponentit(Havaintolistakaavake lista) {
+    private void luoKomponentit(Havaintolistakaavake lista, Tallennussijaintipalkki tspalkki) {
         JButton poistaValitut = new JButton("Poista");
         JButton jarjestaLaji = new JButton("Laji");
         JButton jarjestaPvm = new JButton("Pvm");
@@ -30,7 +30,7 @@ public class HavaintolistaYlarivi extends JPanel {
         JButton jarjestaLkm = new JButton("Lkm");
         
         
-        poistaValitut.addActionListener( new PoistaValitut(lista) );
+        poistaValitut.addActionListener( new PoistaValitut(lista, tspalkki) );
         jarjestaLaji.addActionListener( new Jarjestaja(lista, 0) );
         jarjestaPvm.addActionListener( new Jarjestaja(lista, 1) );
         jarjestaPaikka.addActionListener( new Jarjestaja( lista, 2 ) );

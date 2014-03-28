@@ -22,16 +22,16 @@ public class Havaintolistakaavake extends JPanel {
     private Havaintolistaotsikko otsikko;
     private JFrame frame;
 
-    public Havaintolistakaavake(JFrame frame, Havaintolista havaintolista) {
+    public Havaintolistakaavake(JFrame frame, Havaintolista havaintolista, Tallennussijaintipalkki tspalkki) {
         super(new GridLayout(20,1));
         
-        luoKomponentit(frame, havaintolista);
+        luoKomponentit(frame, havaintolista, tspalkki);
     }
 
-    private void luoKomponentit(JFrame frame, Havaintolista havaintolista) {
+    private void luoKomponentit(JFrame frame, Havaintolista havaintolista, Tallennussijaintipalkki tspalkki) {
         this.frame = frame;
         lista = havaintolista;
-        ylarivi = new HavaintolistaYlarivi(this);
+        ylarivi = new HavaintolistaYlarivi(this, tspalkki);
         
         add(new Havaintolistaotsikko(lista.getHavaintoja()));
         add(ylarivi);

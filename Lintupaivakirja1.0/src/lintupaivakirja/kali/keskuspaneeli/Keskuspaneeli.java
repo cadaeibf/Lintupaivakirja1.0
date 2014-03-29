@@ -10,30 +10,38 @@ import javax.swing.JPanel;
 import lintupaivakirja.kali.keskuspaneeli.havaintolistakaavake.Havaintolistakaavake;
 import lintupaivakirja.kali.keskuspaneeli.vasenlohko.VasenLohko;
 import lintupaivakirja.ohjelmalogiikka.Havaintolista;
+import lintupaivakirja.rajapinnat.Paivitettava;
 
 /**
  *
  * @author anterova
  */
-public class Keskuspaneeli extends JPanel {
+public class Keskuspaneeli extends JPanel implements Paivitettava {
     private VasenLohko vasenLohko;
     private Havaintolistakaavake havaintolistakaavake;
 
-    public Keskuspaneeli(JFrame frame) {
+    public Keskuspaneeli() {
         super(new GridLayout(1,2));
         
-        luoKomponentit(frame);
+        luoKomponentit();
     }
 
-    private void luoKomponentit(JFrame frame) {
+    private void luoKomponentit() {
         vasenLohko = new VasenLohko();
-        havaintolistakaavake = new Havaintolistakaavake(frame, new Havaintolista(), vasenLohko.tallennussijaintipalkki());
+        havaintolistakaavake = new Havaintolistakaavake(new Havaintolista(), vasenLohko.tallennussijaintipalkki());
         
         vasenLohko.lisaaPainikkeet(havaintolistakaavake);
         
         add(vasenLohko);
         add(havaintolistakaavake);
         
+    }
+
+    @Override
+    public void paivita() {
+        havaintolistakaavake.paivita();
+        
+        repaint();
     }
     
     

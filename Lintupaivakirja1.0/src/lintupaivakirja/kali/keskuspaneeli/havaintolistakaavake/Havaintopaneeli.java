@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lintupaivakirja.kali.keskuspaneeli;
+package lintupaivakirja.kali.keskuspaneeli.havaintolistakaavake;
 
 import java.awt.GridLayout;
 import javax.swing.JCheckBox;

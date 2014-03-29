@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lintupaivakirja.tapahtumankuuntelijat;
+package lintupaivakirja.tapahtumankuuntelijat.painikkeet;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

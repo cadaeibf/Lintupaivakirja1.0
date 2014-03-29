@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import lintupaivakirja.kali.keskuspaneeli.havaintolistakaavake.Havaintolistakaavake;
-import lintupaivakirja.tapahtumankuuntelijat.LisaaHavainto;
+import lintupaivakirja.tapahtumankuuntelijat.painikkeet.LisaaHavainto;
 import lintupaivakirja.tapahtumankuuntelijat.LisaaHavaintoNappaimistolla;
 import lintupaivakirja.util.Pvm;
 

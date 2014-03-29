@@ -8,8 +8,8 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import lintupaivakirja.kali.keskuspaneeli.havaintolistakaavake.Havaintolistakaavake;
-import lintupaivakirja.tapahtumankuuntelijat.Lataa;
-import lintupaivakirja.tapahtumankuuntelijat.Tallenna;
+import lintupaivakirja.tapahtumankuuntelijat.painikkeet.Lataa;
+import lintupaivakirja.tapahtumankuuntelijat.painikkeet.Tallenna;
 
 /**
  *

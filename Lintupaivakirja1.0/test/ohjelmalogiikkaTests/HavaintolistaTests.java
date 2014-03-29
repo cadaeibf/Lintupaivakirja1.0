@@ -4,11 +4,11 @@
  */
 package ohjelmalogiikkaTests;
 
-import lintupaivakirja.ohjelmalogiikka.Havainto;
-import lintupaivakirja.ohjelmalogiikka.Havaintolista;
-import lintupaivakirja.ohjelmalogiikka.Havaintopaikka;
-import lintupaivakirja.ohjelmalogiikka.Lintulaji;
-import lintupaivakirja.util.Pvm;
+import lipvk.ohlo.Havainto;
+import lipvk.ohlo.Havaintolista;
+import lipvk.ohlo.Havaintopaikka;
+import lipvk.ohlo.Lintulaji;
+import lipvk.dom.Pvm;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

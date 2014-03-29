@@ -5,7 +5,7 @@ package utilTests;
  * and open the template in the editor.
  */
 
-import lintupaivakirja.util.Pvm;
+import lipvk.dom.Pvm;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

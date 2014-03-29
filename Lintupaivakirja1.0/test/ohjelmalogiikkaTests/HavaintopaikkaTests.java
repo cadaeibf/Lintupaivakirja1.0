@@ -4,7 +4,7 @@
  */
 package ohjelmalogiikkaTests;
 
-import lintupaivakirja.ohjelmalogiikka.Havaintopaikka;
+import lipvk.ohlo.Havaintopaikka;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lintupaivakirja.gui.paneelit;
+package lintupaivakirja.kali.keskuspaneeli.vasenlohko;
 
 import java.awt.GridLayout;
 import java.util.Calendar;
@@ -10,8 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import lintupaivakirja.gui.tapahtumankuuntelijat.LisaaHavainto;
-import lintupaivakirja.gui.tapahtumankuuntelijat.LisaaHavaintoNappaimistolla;
+import lintupaivakirja.kali.keskuspaneeli.havaintolistakaavake.Havaintolistakaavake;
+import lintupaivakirja.tapahtumankuuntelijat.LisaaHavainto;
+import lintupaivakirja.tapahtumankuuntelijat.LisaaHavaintoNappaimistolla;
 import lintupaivakirja.util.Pvm;
 
 /**

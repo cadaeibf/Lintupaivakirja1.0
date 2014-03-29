@@ -12,12 +12,15 @@ public class Lintulaji implements Comparable {
     private String nimi;
     private String latinalainenNimi;
 
-    public Lintulaji (String nimi, String latinalainenNimi) {
+    public Lintulaji (String nimi, String latinalainenNimi) throws IllegalArgumentException {
+        if(nimi == null) throw new IllegalArgumentException();
         this.nimi = nimi;
         this.latinalainenNimi = latinalainenNimi;
     }
 
-    public Lintulaji(String nimi) {
+    public Lintulaji(String nimi) throws IllegalArgumentException {
+        if(nimi == null) throw new IllegalArgumentException();
+        if(nimi.equals("")) throw new IllegalArgumentException();
         this.nimi = nimi;
     }
     

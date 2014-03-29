@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lintupaivakirja.gui.tapahtumankuuntelijat;
+package lintupaivakirja.tapahtumankuuntelijat;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import lintupaivakirja.gui.paneelit.Havaintolistakaavake;
+import lintupaivakirja.kali.keskuspaneeli.havaintolistakaavake.Havaintolistakaavake;
 
 /**
  *

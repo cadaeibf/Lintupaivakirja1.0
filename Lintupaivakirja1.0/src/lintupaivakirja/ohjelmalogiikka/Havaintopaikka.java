@@ -11,7 +11,9 @@ package lintupaivakirja.ohjelmalogiikka;
 public class Havaintopaikka implements Comparable{
     private String nimi;
 
-    public Havaintopaikka(String nimi) {
+    public Havaintopaikka(String nimi) throws IllegalArgumentException {
+        if(nimi.equals("")) throw new IllegalArgumentException();
+        
         this.nimi = nimi;
     }
 

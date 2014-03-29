@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lintupaivakirja.gui.paneelit;
+package lintupaivakirja.kali.keskuspaneeli;
 
 import java.awt.GridLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import lintupaivakirja.gui.tapahtumankuuntelijat.HavainnonValinta;
+import lintupaivakirja.tapahtumankuuntelijat.HavainnonValinta;
 import lintupaivakirja.ohjelmalogiikka.Havainto;
 
 /**

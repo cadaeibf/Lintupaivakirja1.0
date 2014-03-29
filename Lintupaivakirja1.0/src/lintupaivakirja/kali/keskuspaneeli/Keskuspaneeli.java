@@ -2,11 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lintupaivakirja.gui.paneelit;
+package lintupaivakirja.kali.keskuspaneeli;
 
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import lintupaivakirja.kali.keskuspaneeli.havaintolistakaavake.Havaintolistakaavake;
+import lintupaivakirja.kali.keskuspaneeli.vasenlohko.VasenLohko;
 import lintupaivakirja.ohjelmalogiikka.Havaintolista;
 
 /**
@@ -18,16 +20,14 @@ public class Keskuspaneeli extends JPanel {
     private Havaintolistakaavake havaintolistakaavake;
 
     public Keskuspaneeli(JFrame frame) {
-        super(new GridLayout(1,2,10,10));
+        super(new GridLayout(1,2));
         
         luoKomponentit(frame);
     }
 
     private void luoKomponentit(JFrame frame) {
-        Havaintolista lista = new Havaintolista();
-        
         vasenLohko = new VasenLohko();
-        havaintolistakaavake = new Havaintolistakaavake(frame, lista, vasenLohko.tallennussijaintipalkki());
+        havaintolistakaavake = new Havaintolistakaavake(frame, new Havaintolista(), vasenLohko.tallennussijaintipalkki());
         
         vasenLohko.lisaaPainikkeet(havaintolistakaavake);
         

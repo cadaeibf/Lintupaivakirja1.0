@@ -2,13 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lintupaivakirja.gui.paneelit;
+package lintupaivakirja.kali.keskuspaneeli.vasenlohko;
 
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import lintupaivakirja.gui.tapahtumankuuntelijat.Lataa;
-import lintupaivakirja.gui.tapahtumankuuntelijat.Tallenna;
+import lintupaivakirja.kali.keskuspaneeli.havaintolistakaavake.Havaintolistakaavake;
+import lintupaivakirja.tapahtumankuuntelijat.Lataa;
+import lintupaivakirja.tapahtumankuuntelijat.Tallenna;
 
 /**
  *
@@ -34,7 +35,7 @@ public class Painikekentta extends JPanel {
     }
 
     private void luoKomponentit() {
-        tiedostonimi = "save1.txt";
+        tiedostonimi = "save1";
         
         tallennussijaintipalkki = new Tallennussijaintipalkki(tiedostonimi);
         vaihdaSijainti = new JButton("Vaihda sijainti");

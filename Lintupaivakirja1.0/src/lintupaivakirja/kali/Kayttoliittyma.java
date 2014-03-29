@@ -2,21 +2,23 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lintupaivakirja.gui;
+package lintupaivakirja.kali;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
-import lintupaivakirja.gui.paneelit.Keskuspaneeli;
-import lintupaivakirja.gui.paneelit.Ylapalkki;
+import lintupaivakirja.kali.keskuspaneeli.Keskuspaneeli;
+import lintupaivakirja.rajapinnat.Paivitettava;
 
 /**
  *
  * @author anterova
  */
-public class Kayttoliittyma implements Runnable {
+public class Kayttoliittyma implements Runnable, Paivitettava {
     private JFrame frame;
+    private Ylapalkki ylapalkki;
 
     public Kayttoliittyma() {
     }
@@ -24,7 +26,8 @@ public class Kayttoliittyma implements Runnable {
     @Override
     public void run() {
         frame = new JFrame("Lintupäiväkirja v1.0");
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setPreferredSize(new Dimension(1000,600));
+        frame.setResizable(false);
         
         
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -34,9 +37,17 @@ public class Kayttoliittyma implements Runnable {
         frame.pack();
         frame.setVisible(true);
     }
+    
+    @Override
+    public void paivita() {
+        ylapalkki.paivita();
+        
+    }
 
     private void luoKomponentit(Container container) {
-        container.add(new Ylapalkki(), BorderLayout.NORTH);
+        ylapalkki = new Ylapalkki();
+        
+        container.add(ylapalkki, BorderLayout.NORTH);
         container.add(new Keskuspaneeli(frame));
     }
     

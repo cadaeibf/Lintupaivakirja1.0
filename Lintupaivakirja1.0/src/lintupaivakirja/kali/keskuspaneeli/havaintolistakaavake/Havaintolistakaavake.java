@@ -2,11 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lintupaivakirja.gui.paneelit;
+package lintupaivakirja.kali.keskuspaneeli.havaintolistakaavake;
 
+import lintupaivakirja.kali.keskuspaneeli.vasenlohko.Tallennussijaintipalkki;
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import lintupaivakirja.kali.keskuspaneeli.HavaintolistaYlarivi;
+import lintupaivakirja.kali.keskuspaneeli.Havaintolistaotsikko;
+import lintupaivakirja.kali.keskuspaneeli.ScrollattavaLista;
 import lintupaivakirja.ohjelmalogiikka.Havainto;
 import lintupaivakirja.ohjelmalogiikka.Havaintolista;
 import lintupaivakirja.ohjelmalogiikka.tallennus.Lataaja;
@@ -18,36 +23,46 @@ import lintupaivakirja.ohjelmalogiikka.tallennus.Tallentaja;
  */
 public class Havaintolistakaavake extends JPanel {
     private HavaintolistaYlarivi ylarivi;
+    private ScrollattavaLista listapaneeli;
     private Havaintolista lista;
-    private Havaintolistaotsikko otsikko;
     private JFrame frame;
 
     public Havaintolistakaavake(JFrame frame, Havaintolista havaintolista, Tallennussijaintipalkki tspalkki) {
-        super(new GridLayout(20,1));
+        super(new BorderLayout());
         
         luoKomponentit(frame, havaintolista, tspalkki);
     }
 
     private void luoKomponentit(JFrame frame, Havaintolista havaintolista, Tallennussijaintipalkki tspalkki) {
-        this.frame = frame;
-        lista = havaintolista;
         ylarivi = new HavaintolistaYlarivi(this, tspalkki);
+        lista = havaintolista;
+        this.frame = frame;
         
-        add(new Havaintolistaotsikko(lista.getHavaintoja()));
-        add(ylarivi);
+        luoYlapaneeli();
+        luoListapaneeli();
         
+    }
+    
+    private void luoYlapaneeli() {
+        JPanel ylapaneeli = new JPanel( new GridLayout(2,1) );
         
-        lisaaHavainnot();
+        ylapaneeli.add(new Havaintolistaotsikko(lista.getHavaintoja()));
+        ylapaneeli.add(ylarivi);
         
-        
+        add(ylapaneeli, BorderLayout.NORTH);
+    }
+    
+    private void luoListapaneeli() {
+        listapaneeli = new ScrollattavaLista(lista);
+        add(listapaneeli, BorderLayout.CENTER);
     }
     
     private void paivita() {
         removeAll();
-        add(new Havaintolistaotsikko(lista.getHavaintoja()));
-        add(ylarivi);
         
-        lisaaHavainnot();
+        luoYlapaneeli();
+        luoListapaneeli();
+        
         repaint();
         
         frame.repaint();
@@ -63,12 +78,6 @@ public class Havaintolistakaavake extends JPanel {
    public Havaintolista getLista() {
        return lista;
    }
-    
-    private void lisaaHavainnot() {
-        for (int i = 0; i < lista.getHavaintoja(); i++) {
-            add(new Havaintopaneeli(lista.get(i)));
-        }
-    }
     
     public void poistaValitut() {
         lista.poistaValitut();

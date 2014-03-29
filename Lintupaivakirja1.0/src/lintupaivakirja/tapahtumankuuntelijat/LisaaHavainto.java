@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lintupaivakirja.gui.tapahtumankuuntelijat;
+package lintupaivakirja.tapahtumankuuntelijat;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextField;
-import lintupaivakirja.gui.paneelit.Havaintolistakaavake;
-import lintupaivakirja.gui.paneelit.Tallennussijaintipalkki;
+import lintupaivakirja.kali.keskuspaneeli.havaintolistakaavake.Havaintolistakaavake;
+import lintupaivakirja.kali.keskuspaneeli.vasenlohko.Tallennussijaintipalkki;
 import lintupaivakirja.ohjelmalogiikka.Havainto;
 import lintupaivakirja.ohjelmalogiikka.Havaintopaikka;
 import lintupaivakirja.ohjelmalogiikka.Lintulaji;
@@ -40,7 +40,17 @@ public class LisaaHavainto implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Havainto uusi = new Havainto(new Lintulaji(nimikentta.getText()), luePvm(pvmkentta.getText()), 
+        Lintulaji laji;
+        Havaintopaikka paikka;
+        try {
+            laji = new Lintulaji(nimikentta.getText());
+            paikka = new Havaintopaikka(paikkakentta.getText());
+        } catch (Exception ex) {
+            return;
+        }
+        
+        
+        Havainto uusi = new Havainto(laji, luePvm(pvmkentta.getText()), 
                 new Havaintopaikka(paikkakentta.getText()), Integer.parseInt(lkmkentta.getText()));
         havaintolistakaavake.lisaa(uusi);
         tspalkki.muutoksiaTehty();

@@ -2,25 +2,26 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lintupaivakirja.gui.tapahtumankuuntelijat;
+package lintupaivakirja.tapahtumankuuntelijat;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import lintupaivakirja.gui.paneelit.Havaintolistakaavake;
+import lintupaivakirja.kali.keskuspaneeli.havaintolistakaavake.Havaintolistakaavake;
 
 /**
  *
  * @author anterova
  */
-public class JarjestaLaji implements ActionListener {
+public class JarjestaPaikka implements ActionListener {
     private Havaintolistakaavake lista;
 
-    public JarjestaLaji(Havaintolistakaavake lista) {
+    public JarjestaPaikka(Havaintolistakaavake lista) {
         this.lista = lista;
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-        lista.vaihdaJarjestamisperuste(0);
+        lista.vaihdaJarjestamisperuste(2);
     }
+    
 }

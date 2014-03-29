@@ -65,9 +65,9 @@ public class Lataaja  {
     
     private Havainto lueHavainto(String teksti) {
         
-        
         String[] attribuutit = teksti.split("/");
         
+        // Muunnetaan ensimmäinen alkukirjain suureksi.
         attribuutit[0] = attribuutit[0].substring(0,1).toUpperCase() + attribuutit[0].substring(1, attribuutit[0].length() );
         
         Lintulaji laji = new Lintulaji(attribuutit[0]);
@@ -86,7 +86,6 @@ public class Lataaja  {
         String lkm = paikkaJaLkm[1];
         lkm = lkm.substring(0, lkm.length()-1);
         
-        System.out.println(lkm);
         return new Havainto( laji, pvm, paikka, Integer.parseInt(lkm) );
         
     }

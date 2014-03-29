@@ -15,11 +15,11 @@ import lipvk.ohlo.Havainto;
  *
  * @author anterova
  */
-public class Havaintopaneeli extends JPanel {
+public class Havaintopalkki extends JPanel {
     private JCheckBox valintaruutu;
     private Havainto havainto;
 
-    public Havaintopaneeli(Havainto havainto) {
+    public Havaintopalkki(Havainto havainto) {
         super(new GridLayout(1,5));
         this.havainto = havainto;
         

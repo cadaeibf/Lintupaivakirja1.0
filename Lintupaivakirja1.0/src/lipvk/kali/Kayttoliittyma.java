@@ -46,22 +46,19 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
         
         frame.setVisible(true);
     }
+
+    private void luoKomponentit(Container container) {
+        ylapalkki = new Ylapalkki();
+        keskuspaneeli = new Keskuspaneeli(this);
+        
+        container.add(ylapalkki, BorderLayout.NORTH);
+        container.add(keskuspaneeli);
+    }
     
     @Override
     public void paivita() {
         ylapalkki.paivita();
         keskuspaneeli.paivita();
-        
-        frame.repaint();
-        
-    }
-
-    private void luoKomponentit(Container container) {
-        ylapalkki = new Ylapalkki();
-        keskuspaneeli = new Keskuspaneeli();
-        
-        container.add(ylapalkki, BorderLayout.NORTH);
-        container.add(keskuspaneeli);
     }
     
     

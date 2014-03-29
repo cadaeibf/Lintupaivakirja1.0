@@ -51,7 +51,7 @@ public class Ylapalkki extends JPanel implements Paivitettava {
                 + ( cal.get( Calendar.MONTH ) + 1 ) + "." 
                 + cal.get( Calendar.YEAR ) );
         
-        pvmKentta.repaint();
+        repaint();
     }
     
 }

@@ -51,6 +51,7 @@ public class LisaaHavainto implements ActionListener {
         
         nimikentta.setText("");
         
+        System.out.println("");
     }
     
     private Pvm luePvm(String teksti) {

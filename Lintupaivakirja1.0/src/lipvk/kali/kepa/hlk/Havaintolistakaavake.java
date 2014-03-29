@@ -6,10 +6,15 @@ package lipvk.kali.kepa.hlk;
 
 import lipvk.kali.kepa.vasen.Tallennussijaintipalkki;
 import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import lipvk.kali.Kayttoliittyma;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Havaintolista;
 import lipvk.ohlo.save.Lataaja;
@@ -23,22 +28,28 @@ import lipvk.takut.napit.PoistaValitut;
  * @author anterova
  */
 public class Havaintolistakaavake extends JPanel implements Paivitettava {
+    private JScrollPane scrolleri;
     private Havaintolista lista;
     private Tallennussijaintipalkki tspalkki;
     private JLabel havaintojasarake;
+    private Kayttoliittyma kali;
+    
 
-    public Havaintolistakaavake(Havaintolista havaintolista, Tallennussijaintipalkki tspalkki) {
-        super(new BorderLayout());
+    public Havaintolistakaavake(Kayttoliittyma kali, Havaintolista havaintolista, Tallennussijaintipalkki tspalkki) {
+        super();
+        
+        lista = havaintolista;
+        this.kali = kali;
         this.tspalkki = tspalkki;
         
-        luoKomponentit(havaintolista);
+        luoKomponentit();
     }
 
-    private void luoKomponentit(Havaintolista havaintolista) {
-        lista = havaintolista;
+    private void luoKomponentit() {
+        setLayout( new BorderLayout() );
         
         luoYlapaneeli();
-        luoListapaneeli();
+        luoScrolleri();
     }
     
     private void luoYlapaneeli() {
@@ -61,6 +72,10 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
         otsikko.add( havaintojasarake );
         
         return otsikko;
+    }
+    
+    private void paivitaHavaintoja() {
+        havaintojasarake.setText( lista.getHavaintoja() + "" );
     }
     
     private JPanel luoYlarivi() {
@@ -88,12 +103,30 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
         return ylarivi;
     }
     
-    private void luoListapaneeli() {
-        add(new ScrollattavaLista(lista), BorderLayout.CENTER);
+    private void luoScrolleri() {
+        JPanel listapaneeli = skannaaLista();
+        
+        scrolleri = new JScrollPane(listapaneeli);
+        scrolleri.setHorizontalScrollBarPolicy( ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
+        scrolleri.setVerticalScrollBarPolicy( ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED );
+        
+        add(scrolleri, BorderLayout.CENTER);
     }
     
-    private void paivitaHavaintoja() {
-        havaintojasarake.setText( lista.getHavaintoja() + "" );
+    private JPanel skannaaLista() {
+        JPanel listapaneeli = new JPanel ( new GridLayout( lista.getHavaintoja(), 1 ) );
+        
+        for (int i = 0; i < lista.getHavaintoja(); i++) {
+            listapaneeli.add( new Havaintopalkki( lista.get(i)) );
+        }
+        
+        return listapaneeli;
+    }
+    
+    private void paivitaLista() {
+        remove(scrolleri);
+        
+        luoScrolleri();
     }
     
     public void lisaa(Havainto havainto) {
@@ -105,36 +138,32 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
     public void poistaValitut() {
         lista.poistaValitut();
         tspalkki.muutoksiaTehty();
-        paivita();
+        kali.paivita();
     }
     
     public void jarjesta(int peruste) {
         lista.vaihdaJarjestamisperuste(peruste);
         lista.jarjesta();
         
-        paivita();
+        kali.paivita();
     }
 
     public void tallenna() {
         new Tallentaja("/Users/anterova/Desktop/save1.txt", lista).tallenna();
         tspalkki.tiedostoTallennettu();
-        paivita();
+        kali.paivita();
     }
     
     public void lataa() {
         new Lataaja("/Users/anterova/Desktop/save1.txt", lista).lataa();
         tspalkki.tiedostoLadattu();
-        paivita();
+        kali.paivita();
     }
     
     @Override
     public void paivita() {
-        removeAll();
-        
-        luoYlapaneeli();
-        luoListapaneeli();
-        
-        repaint();
+        paivitaHavaintoja();
+        paivitaLista();
     }
     
 }

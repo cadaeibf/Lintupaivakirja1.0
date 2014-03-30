@@ -6,9 +6,7 @@ package lipvk.kali.kepa.hlk;
 
 import lipvk.kali.kepa.vasen.Tallennussijaintipalkki;
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -114,7 +112,9 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
     }
     
     private JPanel skannaaLista() {
-        JPanel listapaneeli = new JPanel ( new GridLayout( lista.getHavaintoja(), 1 ) );
+        int riveja = lista.getHavaintoja();
+        if( riveja < 24) riveja = 24;
+        JPanel listapaneeli = new JPanel ( new GridLayout( riveja, 1 ) );
         
         for (int i = 0; i < lista.getHavaintoja(); i++) {
             listapaneeli.add( new Havaintopalkki( lista.get(i)) );
@@ -136,28 +136,27 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
     }
     
     public void poistaValitut() {
-        lista.poistaValitut();
-        tspalkki.muutoksiaTehty();
-        kali.paivita();
+        if( lista.poistaValitut() ) tspalkki.muutoksiaTehty();
+        
+        paivita();
     }
     
     public void jarjesta(int peruste) {
-        lista.vaihdaJarjestamisperuste(peruste);
-        lista.jarjesta();
+        lista.jarjesta(peruste);
         
-        kali.paivita();
+        paivita();
     }
 
     public void tallenna() {
         new Tallentaja("/Users/anterova/Desktop/save1.txt", lista).tallenna();
         tspalkki.tiedostoTallennettu();
-        kali.paivita();
+        paivita();
     }
     
     public void lataa() {
         new Lataaja("/Users/anterova/Desktop/save1.txt", lista).lataa();
         tspalkki.tiedostoLadattu();
-        kali.paivita();
+        paivita();
     }
     
     @Override

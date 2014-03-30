@@ -19,70 +19,6 @@ public class Havaintolista {
         lista = new Havainto[1000];
     }
     
-    public void vaihdaJarjestamisperuste(int jarjestamisperuste) {
-        this.jarjestamisperuste = jarjestamisperuste;
-        jarjesta();
-    }
-    
-    public void poistaValitut() {
-        int i = 0;
-        while ( i < havaintoja) {
-            if(lista[i].valittu()) {
-                poista(lista[i]);
-            } else {
-                i++;
-            }
-        }
-    }
-
-    public int getHavaintoja() {
-        return havaintoja;
-    }
-    
-    public Havainto get(int indeksi) {
-        return lista[indeksi];
-    }
-    
-    public void lisaa(Havainto havainto) {
-        while(havaintoja >= lista.length) lisaaPaikkoja();
-        lista[havaintoja] = havainto;
-        havaintoja++;
-        
-        int i = havaintoja -1;
-        
-        while(i > 0) {
-            if( vertaa(lista[i], lista[i-1]) < 0 ) {
-                swap(i, i-1);
-                i--;
-            } else break;
-        }
-    }
-    
-    private void swap(int i, int j) {
-        Havainto havainto = lista[i];
-        lista[i] = lista[j];
-        lista[j] = havainto;
-    }
-    
-    public void poista(Havainto havainto)  {
-        boolean loytynyt = false;
-        
-        for (int i = 0; i < havaintoja; i++) {
-            if(!loytynyt) {
-                if(lista[i] == havainto) loytynyt = true;
-            }
-            if(loytynyt) lista[i] = lista[i+1];
-        }
-        if(!loytynyt) return;
-        lista[havaintoja-1] = null;
-        havaintoja--;
-    }
-    
-    // Lomitusjärjestäminen
-    public void jarjesta() {
-        if(havaintoja > 1) mergesort(0,havaintoja-1);
-    }
-    
     private void mergesort(int vasen, int oikea) {
         if(vasen < oikea) {
             int keski = (vasen + oikea) / 2;
@@ -122,6 +58,12 @@ public class Havaintolista {
         }
     }
     
+    private void swap(int i, int j) {
+        Havainto havainto = lista[i];
+        lista[i] = lista[j];
+        lista[j] = havainto;
+    }
+    
     private int vertaa(Havainto havainto1, Havainto havainto2) {
         if(havainto1 == null) return 1;
         if(havainto2 == null) return -1;
@@ -129,6 +71,68 @@ public class Havaintolista {
         if(jarjestamisperuste == 2) return havainto1.getPaikka().compareTo(havainto2.getPaikka());
         if(jarjestamisperuste == 3) return havainto1.getLkm() - havainto2.getLkm();
         return havainto1.getLaji().compareTo(havainto2.getLaji()); 
+    }
+    
+    public void jarjesta(int jarjestamisperuste) {
+        this.jarjestamisperuste = jarjestamisperuste;
+        jarjesta();
+    }
+    
+    public boolean poistaValitut() {
+        int poistettuja = 0;
+        int i = 0;
+        while ( i < havaintoja) {
+            if(lista[i].valittu()) {
+                poista(lista[i]);
+                poistettuja++;
+            } else {
+                i++;
+            }
+        }
+        if(poistettuja == 0) return false;
+        return true;
+    }
+
+    public int getHavaintoja() {
+        return havaintoja;
+    }
+    
+    public Havainto get(int indeksi) {
+        return lista[indeksi];
+    }
+    
+    public void lisaa(Havainto havainto) {
+        while(havaintoja >= lista.length) lisaaPaikkoja();
+        lista[havaintoja] = havainto;
+        havaintoja++;
+        
+        int i = havaintoja -1;
+        
+        while(i > 0) {
+            if( vertaa(lista[i], lista[i-1]) < 0 ) {
+                swap(i, i-1);
+                i--;
+            } else break;
+        }
+    }
+    
+    public void poista(Havainto havainto)  {
+        boolean loytynyt = false;
+        
+        for (int i = 0; i < havaintoja; i++) {
+            if(!loytynyt) {
+                if(lista[i] == havainto) loytynyt = true;
+            }
+            if(loytynyt) lista[i] = lista[i+1];
+        }
+        if(!loytynyt) return;
+        lista[havaintoja-1] = null;
+        havaintoja--;
+    }
+    
+    // Lomitusjärjestäminen
+    public void jarjesta() {
+        if(havaintoja > 1) mergesort(0,havaintoja-1);
     }
 
     @Override

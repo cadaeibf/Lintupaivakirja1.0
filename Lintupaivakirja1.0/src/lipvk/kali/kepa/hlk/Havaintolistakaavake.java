@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import lipvk.kali.Kayttoliittyma;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Havaintolista;
 import lipvk.ohlo.save.Lataaja;
@@ -27,27 +26,26 @@ import lipvk.takut.napit.PoistaValitut;
  */
 public class Havaintolistakaavake extends JPanel implements Paivitettava {
     private JScrollPane scrolleri;
-    private Havaintolista lista;
     private Tallennussijaintipalkki tspalkki;
     private JLabel havaintojasarake;
-    private Kayttoliittyma kali;
+    private Havaintolista lista;
+    private String tallennussijainti;
     
 
-    public Havaintolistakaavake(Kayttoliittyma kali, Havaintolista havaintolista, Tallennussijaintipalkki tspalkki) {
-        super();
+    public Havaintolistakaavake(Havaintolista havaintolista, Tallennussijaintipalkki tspalkki) {
+        super( new BorderLayout() );
         
+        tallennussijainti = "/Users/anterova/Desktop/";
         lista = havaintolista;
-        this.kali = kali;
         this.tspalkki = tspalkki;
         
         luoKomponentit();
     }
 
     private void luoKomponentit() {
-        setLayout( new BorderLayout() );
         
         luoYlapaneeli();
-        luoScrolleri();
+        lisaaScrolleri();
     }
     
     private void luoYlapaneeli() {
@@ -101,13 +99,13 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
         return ylarivi;
     }
     
-    private void luoScrolleri() {
+    private void lisaaScrolleri() {
         JPanel listapaneeli = skannaaLista();
+        System.out.println("Lista skannattu");
         
         scrolleri = new JScrollPane(listapaneeli);
         scrolleri.setHorizontalScrollBarPolicy( ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
         scrolleri.setVerticalScrollBarPolicy( ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED );
-        
         add(scrolleri, BorderLayout.CENTER);
     }
     
@@ -117,16 +115,11 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
         JPanel listapaneeli = new JPanel ( new GridLayout( riveja, 1 ) );
         
         for (int i = 0; i < lista.getHavaintoja(); i++) {
+            System.out.println("Lisätään lintu " + lista.get(i).getLaji().toString() );
             listapaneeli.add( new Havaintopalkki( lista.get(i)) );
         }
         
         return listapaneeli;
-    }
-    
-    private void paivitaLista() {
-        remove(scrolleri);
-        
-        luoScrolleri();
     }
     
     public void lisaa(Havainto havainto) {
@@ -137,32 +130,42 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
     
     public void poistaValitut() {
         if( lista.poistaValitut() ) tspalkki.muutoksiaTehty();
-        
         paivita();
     }
     
     public void jarjesta(int peruste) {
-        lista.jarjesta(peruste);
-        
+        lista.asetaJarjestamisperuste(peruste);
+        lista.jarjesta();
         paivita();
     }
 
-    public void tallenna() {
-        new Tallentaja("/Users/anterova/Desktop/save1.txt", lista).tallenna();
+    public void tallenna(String tiedostonimi) {
+        new Tallentaja(tallennussijainti + tiedostonimi, lista).tallenna();
         tspalkki.tiedostoTallennettu();
         paivita();
     }
     
-    public void lataa() {
-        new Lataaja("/Users/anterova/Desktop/save1.txt", lista).lataa();
-        tspalkki.tiedostoLadattu();
-        paivita();
+    public void lataa(String tiedostonimi) {
+        if( new Lataaja(tallennussijainti + tiedostonimi, lista).lataa() ) {
+            tspalkki.tiedostoLadattu();
+            paivita();
+        } else {
+            tspalkki.tiedostoaEiLoydy();
+        }
     }
     
     @Override
     public void paivita() {
-        paivitaHavaintoja();
-        paivitaLista();
+        System.out.println("päivitetään havaintolistakaavake...");
+        
+        removeAll();
+        
+        luoKomponentit();
+        
+        repaint();
+        revalidate();
+        
+        System.out.println("Havaintolistakaavake päivitetty");
     }
     
 }

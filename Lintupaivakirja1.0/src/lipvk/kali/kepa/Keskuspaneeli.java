@@ -6,7 +6,6 @@ package lipvk.kali.kepa;
 
 import java.awt.GridLayout;
 import javax.swing.JPanel;
-import lipvk.kali.Kayttoliittyma;
 import lipvk.kali.kepa.hlk.Havaintolistakaavake;
 import lipvk.kali.kepa.vasen.VasenLohko;
 import lipvk.ohlo.Havaintolista;
@@ -20,15 +19,15 @@ public class Keskuspaneeli extends JPanel implements Paivitettava {
     private VasenLohko vasenLohko;
     private Havaintolistakaavake havaintolistakaavake;
 
-    public Keskuspaneeli(Kayttoliittyma kali) {
+    public Keskuspaneeli() {
         super(new GridLayout(1,2));
         
-        luoKomponentit(kali);
+        luoKomponentit();
     }
 
-    private void luoKomponentit(Kayttoliittyma kali) {
+    private void luoKomponentit() {
         vasenLohko = new VasenLohko();
-        havaintolistakaavake = new Havaintolistakaavake(kali, new Havaintolista(), vasenLohko.tallennussijaintipalkki());
+        havaintolistakaavake = new Havaintolistakaavake(new Havaintolista(), vasenLohko.tallennussijaintipalkki());
         
         vasenLohko.lisaaTakut(havaintolistakaavake);
         

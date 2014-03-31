@@ -4,6 +4,8 @@
  */
 package lipvk.dom;
 
+import java.util.Calendar;
+
 /**
  *
  * @author anterova
@@ -12,6 +14,14 @@ public class Pvm implements Comparable {
     private int paivat;
     private int kuukaudet;
     private int vuodet;
+
+    public Pvm() {
+        Calendar cal = Calendar.getInstance();
+        
+        paivat = cal.get( Calendar.DAY_OF_MONTH );
+        kuukaudet = cal.get( Calendar.MONTH ) + 1;
+        vuodet = cal.get( Calendar.YEAR );
+    }
 
     public Pvm(int paivat, int kuukaudet, int vuodet) {
         this.paivat = paivat;

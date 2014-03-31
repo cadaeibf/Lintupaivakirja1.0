@@ -5,9 +5,11 @@
 package lipvk.kali.kepa.vasen;
 
 import java.awt.GridLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import lipvk.takut.LataaTiedostoNappaimistolta;
 
 /**
  *
@@ -17,16 +19,21 @@ public class Tallennussijaintipalkki extends JPanel {
     private JTextField tiedostonimikentta;
     private JLabel ilmoituskentta;
 
-    public Tallennussijaintipalkki(String tiedostonimi) {
+    public Tallennussijaintipalkki(String tiedostonimi, JButton lataaPainike) {
         super( new GridLayout(1,3) );
         
-        this.tiedostonimikentta = new JTextField(tiedostonimi);
+        luoKomponentit(tiedostonimi, lataaPainike);
+    }
+    
+    private void luoKomponentit(String tiedostonimi, JButton lataaPainike) {
+        this.tiedostonimikentta = new JTextField(tiedostonimi.replace(".txt", ""));
         ilmoituskentta = new JLabel();
+        
+        tiedostonimikentta.addKeyListener( new LataaTiedostoNappaimistolta( lataaPainike ) );
         
         add(new JLabel("Tallennustiedosto:"));
         add(tiedostonimikentta);
         add(ilmoituskentta);
-        
     }
     
     public void muutoksiaTehty() {
@@ -39,5 +46,13 @@ public class Tallennussijaintipalkki extends JPanel {
     
     public void tiedostoLadattu() {
         ilmoituskentta.setText("Tiedosto ladattu");
+    }
+    
+    public void tiedostoaEiLoydy() {
+        ilmoituskentta.setText("Annettua tiedostoa ei löytynyt");
+    }
+    
+    public String getTiedostonimi() {
+        return tiedostonimikentta.getText() + ".txt";
     }
 }

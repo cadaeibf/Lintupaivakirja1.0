@@ -23,6 +23,10 @@ public class Tallentaja {
     }
     
     public void tallenna() {
+        for (int i = 3; i >= 0; i--) {
+            lista.asetaJarjestamisperuste(i);
+        }
+        
         try {
             File tiedosto = new File(tiedostonimi);
             

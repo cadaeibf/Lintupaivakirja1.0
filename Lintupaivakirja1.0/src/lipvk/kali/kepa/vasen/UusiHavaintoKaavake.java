@@ -4,16 +4,17 @@
  */
 package lipvk.kali.kepa.vasen;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
-import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import lipvk.dom.Pvm;
 import lipvk.kali.kepa.hlk.Havaintolistakaavake;
 import lipvk.takut.napit.LisaaHavainto;
-import lipvk.takut.LisaaHavaintoNappaimistolla;
-import lipvk.dom.Pvm;
+import lipvk.takut.LisaaHavaintoNappaimistolta;
 
 /**
  *
@@ -22,56 +23,39 @@ import lipvk.dom.Pvm;
 public class UusiHavaintoKaavake extends JPanel {
 
     public UusiHavaintoKaavake() {
-        super(new GridLayout(6,3));
+        super(new GridLayout( 10,1 ));
     }
     
     public void luoKomponentit(Havaintolistakaavake havaintolistakaavake, Tallennussijaintipalkki tspalkki) {
-        JButton lisaa = new JButton("Lisää");
-        JTextField nimikentta = new JTextField("");
-        JLabel latinalainennimikentta = new JLabel("");
-        JTextField paikkakentta = new JTextField("");
+        JTextField lajikentta = new JTextField();
+        JTextField paikkakentta = new JTextField();
+        JTextField pvmkentta = new JTextField( new Pvm().toString() );
+        JTextField lkmkentta = new JTextField( "1" );
+        JButton lisaaPainike = new JButton( "Lisää") ;
         
-        Calendar cal = Calendar.getInstance();
-        Pvm pvm = new Pvm( cal.get(Calendar.DAY_OF_MONTH),
-                    cal.get(Calendar.MONTH)+1,
-                    cal.get(Calendar.YEAR)
-                );
+        lisaaPainike.addActionListener( new LisaaHavainto(lajikentta, paikkakentta, pvmkentta, lkmkentta, havaintolistakaavake) );
+        lajikentta.addKeyListener( new LisaaHavaintoNappaimistolta( lisaaPainike ) );
+        paikkakentta.addKeyListener( new LisaaHavaintoNappaimistolta( lisaaPainike ) );
+        pvmkentta.addKeyListener( new LisaaHavaintoNappaimistolta( lisaaPainike ) );
+        lkmkentta.addKeyListener( new LisaaHavaintoNappaimistolta( lisaaPainike ) );
         
-        JTextField pvmkentta = new JTextField(pvm.toString());
-        JTextField lkmkentta = new JTextField("1");
+        lisaaKentta( "", new JLabel("UUSI HAVAINTO:") );
+        lisaaKentta( "Laji:", lajikentta );
+        lisaaKentta( "Havaintopaikka:", paikkakentta );
+        lisaaKentta( "Päivämäärä:", pvmkentta );
+        lisaaKentta( "Lkm:", lkmkentta);
+        lisaaKentta("", lisaaPainike);
+    }
+    
+    private void lisaaKentta(String teksti, Component komponentti) {
+        JPanel kentta = new JPanel( new GridLayout( 1, 3 ) );
         
-        LisaaHavaintoNappaimistolla avaimenKuuntelija = new LisaaHavaintoNappaimistolla(lisaa);
+        kentta.add( new JLabel( teksti ) );
+        kentta.add( komponentti );
+        kentta.add( new JLabel( "" ) );
         
-        nimikentta.addKeyListener(avaimenKuuntelija);
-        pvmkentta.addKeyListener(avaimenKuuntelija);
-        paikkakentta.addKeyListener(avaimenKuuntelija);
-        lkmkentta.addKeyListener(avaimenKuuntelija);
         
-        lisaa.addActionListener(new LisaaHavainto(nimikentta, paikkakentta, pvmkentta, lkmkentta, havaintolistakaavake));
-        
-        add(new JLabel(""));
-        add(new JLabel("UUSI HAVAINTO:"));
-        add(new JLabel(""));
-        
-        add(new JLabel("Laji:"));
-        add(nimikentta);
-        add(latinalainennimikentta);
-        
-        add(new JLabel("Havaintopaikka:"));
-        add(paikkakentta);
-        add(new JLabel(""));
-        
-        add(new JLabel("Pvm:"));
-        add(pvmkentta);
-        add(new JLabel(""));
-        
-        add(new JLabel("Lkm:"));
-        add(lkmkentta);
-        add(new JLabel(""));
-        
-        add(new JLabel(""));
-        add(new JLabel(""));
-        add(lisaa);
+        add( kentta );
     }
     
 }

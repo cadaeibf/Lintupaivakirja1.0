@@ -25,6 +25,13 @@ public class Havainto {
         valittu = false;
     }
     
+   public Havainto(Lintulaji laji, Pvm pvm, Havaintopaikka paikka) {
+       this.laji = laji;
+       this.paikka = paikka;
+       this.pvm = pvm;
+       this.lkm = 1;
+   }
+    
     public void valitse() {
         valittu = true;
     }
@@ -36,13 +43,6 @@ public class Havainto {
     public boolean valittu() {
         return valittu;
     }
-    
-   public Havainto(Lintulaji laji, Pvm pvm, Havaintopaikka paikka) {
-       this.laji = laji;
-       this.paikka = paikka;
-       this.pvm = pvm;
-       this.lkm = 1;
-   }
 
     public Lintulaji getLaji() {
         return laji;

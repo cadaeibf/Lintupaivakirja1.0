@@ -32,7 +32,7 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
         frame.setBounds(0,0,screenSize.width, screenSize.height);
         frame.setVisible(true);
         
-        frame.setResizable(false);
+        frame.setResizable(true);
     }
 
     @Override
@@ -43,13 +43,11 @@ public class Kayttoliittyma implements Runnable, Paivitettava {
         taysiRuutu();
         
         luoKomponentit(frame.getContentPane());
-        
-        frame.setVisible(true);
     }
 
     private void luoKomponentit(Container container) {
         ylapalkki = new Ylapalkki();
-        keskuspaneeli = new Keskuspaneeli(this);
+        keskuspaneeli = new Keskuspaneeli();
         
         container.add(ylapalkki, BorderLayout.NORTH);
         container.add(keskuspaneeli);

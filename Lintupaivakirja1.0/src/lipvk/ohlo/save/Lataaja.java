@@ -18,21 +18,22 @@ import lipvk.dom.Pvm;
  * @author anterova
  */
 public class Lataaja  {
-    private String tiedostonimi;
+    private String tiedostopolku;
     private Havaintolista lista;
 
-    public Lataaja(String tiedostonimi, Havaintolista lista) {
-        this.tiedostonimi = tiedostonimi;
+    public Lataaja(String tiedostopolku, Havaintolista lista) {
+        this.tiedostopolku = tiedostopolku;
         this.lista = lista;
     }
     
-    public void lataa() {
+    public boolean lataa() {
+        System.out.println("tyhjennetään lista");
         lista.tyhjenna();
         
-        File tiedosto = new File(tiedostonimi);
+        File tiedosto = new File(tiedostopolku);
         
         if( !tiedosto.exists() ) {
-            return;
+            return false;
         }
         
         // Luetaan tiedosto
@@ -40,15 +41,14 @@ public class Lataaja  {
         try {
             BufferedReader br = new BufferedReader( new FileReader( tiedosto ) );
             String s = "";
-            
             while( (s = br.readLine()) != null ) {
                 teksti += s;
             }
             
             br.close();
-        
         } catch(Exception ex) {
-            
+            System.out.println("Tiedoston " + tiedostopolku + " lukeminen epäonnistui, keskeytetään lataus.");
+            return false;
         }
         
         teksti = muunnaFormaatti(teksti);
@@ -57,10 +57,9 @@ public class Lataaja  {
         
         for (int i = 0; i < linnut.length - 1; i++) {
             lista.lisaa( lueHavainto(linnut[i]) );
-            
         }
         
-        
+        return true;
     }
     
     private Havainto lueHavainto(String teksti) {

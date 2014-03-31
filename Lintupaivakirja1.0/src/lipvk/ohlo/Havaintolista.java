@@ -20,6 +20,7 @@ public class Havaintolista {
     }
     
     private void mergesort(int vasen, int oikea) {
+        System.out.println("merge-sort " + vasen + " - " + oikea);
         if(vasen < oikea) {
             int keski = (vasen + oikea) / 2;
             mergesort(vasen, keski);
@@ -29,6 +30,8 @@ public class Havaintolista {
     }
     
     private void merge(int vasen, int keski, int oikea) {
+        System.out.println("merge " + vasen + " - " + keski + " - " + oikea);
+        
         int n1 = keski-vasen+2;
         int n2 = oikea-keski+1;
         Havainto[] L = new Havainto[n1];
@@ -47,7 +50,7 @@ public class Havaintolista {
         i = 0;
         j = 0;
         
-        for (k = vasen; k <= oikea; k++) {
+        for (k = vasen; k < oikea; k++) {
            if(vertaa(L[i],R[j]) <= 0) {
                lista[k] = L[i];
                i++;
@@ -65,17 +68,27 @@ public class Havaintolista {
     }
     
     private int vertaa(Havainto havainto1, Havainto havainto2) {
+        // Tyhjäarvoiset perälle
         if(havainto1 == null) return 1;
         if(havainto2 == null) return -1;
+        
         if(jarjestamisperuste == 1) return havainto1.getPvm().compareTo(havainto2.getPvm());
         if(jarjestamisperuste == 2) return havainto1.getPaikka().compareTo(havainto2.getPaikka());
         if(jarjestamisperuste == 3) return havainto1.getLkm() - havainto2.getLkm();
         return havainto1.getLaji().compareTo(havainto2.getLaji()); 
     }
     
-    public void jarjesta(int jarjestamisperuste) {
+    // Lomitusjärjestäminen
+    public void jarjesta() {
+        System.out.println("Järjestetään");
+        System.out.println("Järjestämisperuste: " + jarjestamisperuste);
+        System.out.println("Havaintoja: " + havaintoja);
+        
+        mergesort(0,havaintoja-1);
+    }
+    
+    public void asetaJarjestamisperuste(int jarjestamisperuste) {
         this.jarjestamisperuste = jarjestamisperuste;
-        jarjesta();
     }
     
     public boolean poistaValitut() {
@@ -128,11 +141,6 @@ public class Havaintolista {
         if(!loytynyt) return;
         lista[havaintoja-1] = null;
         havaintoja--;
-    }
-    
-    // Lomitusjärjestäminen
-    public void jarjesta() {
-        if(havaintoja > 1) mergesort(0,havaintoja-1);
     }
 
     @Override

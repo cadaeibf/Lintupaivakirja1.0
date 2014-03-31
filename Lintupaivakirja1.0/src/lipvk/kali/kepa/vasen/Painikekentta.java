@@ -19,7 +19,7 @@ public class Painikekentta extends JPanel {
     private Tallennussijaintipalkki tallennussijaintipalkki;
     private String tiedostonimi;
     
-    private JButton vaihdaSijainti;
+    private JButton vaihdaTiedosto;
     private JButton tallenna;
     private JButton lataa;
     private JButton tuo;
@@ -32,20 +32,18 @@ public class Painikekentta extends JPanel {
     }
 
     private void luoKomponentit() {
-        tiedostonimi = "save1";
+        tiedostonimi = "save1.txt";
         
-        tallennussijaintipalkki = new Tallennussijaintipalkki(tiedostonimi);
-        vaihdaSijainti = new JButton("Vaihda sijainti");
         tallenna = new JButton("Tallenna");
         lataa = new JButton("Lataa");
         tuo = new JButton("Tuo...");
         vie = new JButton("Vie...");
+        tallennussijaintipalkki = new Tallennussijaintipalkki(tiedostonimi, lataa);
         
         
         add(tallennussijaintipalkki);
-        add(vaihdaSijainti);
-        add(tallenna);
         add(lataa);
+        add(tallenna);
         add(tuo);
         add(vie);
     }
@@ -55,8 +53,8 @@ public class Painikekentta extends JPanel {
     }
     
     public void lisaaTakut(Havaintolistakaavake lista) {
-        tallenna.addActionListener( new Tallenna(lista) );
-        lataa.addActionListener( new Lataa(lista) );
+        tallenna.addActionListener( new Tallenna( tallennussijaintipalkki, lista ) );
+        lataa.addActionListener( new Lataa( tallennussijaintipalkki, lista ) );
     }
     
     

@@ -33,6 +33,10 @@ public class Havainto implements Comparable<Havainto> {
         return lkm;
     }
     
+    public int getVuosi() {
+        return pvm.get(Calendar.YEAR);
+    }
+    
     public String formatoiPvm() {
         return pvm.get(Calendar.DAY_OF_MONTH) + "."
                 + (pvm.get(Calendar.MONTH) + 1) + "."

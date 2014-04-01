@@ -26,7 +26,7 @@ public class Keskuspaneeli extends JPanel implements Paivitettava {
 
     private void luoKomponentit() {
         vasenLohko = new VasenLohko();
-        havaintolistakaavake = new Havaintolistakaavake(vasenLohko.tallennussijaintipalkki());
+        havaintolistakaavake = new Havaintolistakaavake(vasenLohko);
         
         vasenLohko.lisaaTakut(havaintolistakaavake);
         

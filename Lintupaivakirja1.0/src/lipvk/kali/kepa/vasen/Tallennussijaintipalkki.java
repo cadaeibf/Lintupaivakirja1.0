@@ -36,24 +36,8 @@ public class Tallennussijaintipalkki extends JPanel {
         add(ilmoituskentta);
     }
     
-    public void muutoksiaTehty() {
-        ilmoituskentta.setText("Muutoksia tehty");
-    }
-    
-    public void tiedostoTallennettu() {
-        ilmoituskentta.setText("Tiedosto tallennettu");
-    }
-    
-    public void tiedostoLadattu() {
-        ilmoituskentta.setText("Tiedosto ladattu");
-    }
-    
-    public void tiedostoaEiLoydy() {
-        ilmoituskentta.setText("Annettua tiedostoa ei löytynyt");
-    }
-
-    public void virheLatauksessa() {
-        ilmoituskentta.setText("Virhe latauksessa");
+    public void asetaIlmoitus(String ilmoitusteksti) {
+        ilmoituskentta.setText(ilmoitusteksti);
     }
     
     public String getTiedostonimi() {

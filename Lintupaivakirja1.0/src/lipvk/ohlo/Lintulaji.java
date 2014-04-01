@@ -35,6 +35,18 @@ public class Lintulaji implements Comparable {
         return havainnot.size();
     }
     
+    public String havaintojaVuonna(int vuosi) {
+        int havaintoja = 0;
+        
+        for (Havainto havainto : havainnot) {
+            if( havainto.getVuosi() == vuosi ) havaintoja += havainto.getLkm();
+        }
+        
+        if (havaintoja == 0) return "-";
+        
+        return havaintoja + "";
+    }
+    
     public String viimeinenHavaintoPaikka() {
         if( havainnot.isEmpty() ) return "-";
         return havainnot.last().getPaikka().toString();

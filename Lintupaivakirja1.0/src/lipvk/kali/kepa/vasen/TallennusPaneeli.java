@@ -6,6 +6,7 @@ package lipvk.kali.kepa.vasen;
 
 import java.awt.GridLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import lipvk.kali.kepa.hlk.Havaintolistakaavake;
 import lipvk.takut.napit.Lataa;
@@ -15,16 +16,15 @@ import lipvk.takut.napit.Tallenna;
  *
  * @author anterova
  */
-public class Painikekentta extends JPanel {
+public class TallennusPaneeli extends JPanel {
     private Tallennussijaintipalkki tspalkki;
-    
     private Havaintolistakaavake lista;
     
     private JButton tallenna;
     private JButton lataa;
 
-    public Painikekentta() {
-        super(new GridLayout(10,1));
+    public TallennusPaneeli() {
+        super(new GridLayout(10,2));
         
         luoKomponentit(lista);
     }
@@ -46,7 +46,11 @@ public class Painikekentta extends JPanel {
     }
     
     public Tallennussijaintipalkki tallennussijaintipalkki() {
-        return tspalkki;
+        return this.tspalkki;
+    }
+    
+    public void ilmoitus(String teksti) {
+        tspalkki.asetaIlmoitus(teksti);
     }
     
     

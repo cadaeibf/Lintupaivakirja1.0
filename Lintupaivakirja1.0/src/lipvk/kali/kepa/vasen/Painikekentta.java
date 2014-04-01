@@ -16,45 +16,37 @@ import lipvk.takut.napit.Tallenna;
  * @author anterova
  */
 public class Painikekentta extends JPanel {
-    private Tallennussijaintipalkki tallennussijaintipalkki;
-    private String tiedostonimi;
+    private Tallennussijaintipalkki tspalkki;
     
-    private JButton vaihdaTiedosto;
+    private Havaintolistakaavake lista;
+    
     private JButton tallenna;
     private JButton lataa;
-    private JButton tuo;
-    private JButton vie;
 
     public Painikekentta() {
         super(new GridLayout(10,1));
         
-        luoKomponentit();
+        luoKomponentit(lista);
     }
 
-    private void luoKomponentit() {
-        tiedostonimi = "save1.txt";
+    private void luoKomponentit(Havaintolistakaavake lista) {
         
         tallenna = new JButton("Tallenna");
         lataa = new JButton("Lataa");
-        tuo = new JButton("Tuo...");
-        vie = new JButton("Vie...");
-        tallennussijaintipalkki = new Tallennussijaintipalkki(tiedostonimi, lataa);
+        tspalkki = new Tallennussijaintipalkki("lintulista.xml", lataa);
         
-        
-        add(tallennussijaintipalkki);
+        add(tspalkki);
         add(lataa);
         add(tallenna);
-        add(tuo);
-        add(vie);
-    }
-    
-    public Tallennussijaintipalkki tallennussijaintipalkki() {
-        return tallennussijaintipalkki;
     }
     
     public void lisaaTakut(Havaintolistakaavake lista) {
-        tallenna.addActionListener( new Tallenna( tallennussijaintipalkki, lista ) );
-        lataa.addActionListener( new Lataa( tallennussijaintipalkki, lista ) );
+        lataa.addActionListener( new Lataa(tspalkki, lista) );
+        tallenna.addActionListener( new Tallenna(tspalkki, lista) );
+    }
+    
+    public Tallennussijaintipalkki tallennussijaintipalkki() {
+        return tspalkki;
     }
     
     

@@ -7,18 +7,20 @@ package lipvk.kali.kepa.hlk;
 import lipvk.kali.kepa.vasen.Tallennussijaintipalkki;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import lipvk.ohlo.Havainto;
-import lipvk.ohlo.Havaintolista;
+import lipvk.ohlo.Lintulaji;
+import lipvk.ohlo.Lintulista;
 import lipvk.ohlo.save.Lataaja;
 import lipvk.ohlo.save.Tallentaja;
 import lipvk.rajapinnat.Paivitettava;
-import lipvk.takut.Jarjestaja;
-import lipvk.takut.napit.PoistaValitut;
 
 /**
  *
@@ -28,15 +30,13 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
     private JScrollPane scrolleri;
     private Tallennussijaintipalkki tspalkki;
     private JLabel havaintojasarake;
-    private Havaintolista lista;
-    private String tallennussijainti;
+    private Lintulista lista;
     
 
-    public Havaintolistakaavake(Havaintolista havaintolista, Tallennussijaintipalkki tspalkki) {
+    public Havaintolistakaavake(Tallennussijaintipalkki tspalkki) {
         super( new BorderLayout() );
         
-        tallennussijainti = "/Users/anterova/Desktop/";
-        lista = havaintolista;
+        lista = new Lintulista();
         this.tspalkki = tspalkki;
         
         luoKomponentit();
@@ -77,31 +77,23 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
     private JPanel luoYlarivi() {
         JPanel ylarivi = new JPanel( new GridLayout( 1, 5 ) );
         
-        JButton poistaValitut = new JButton("Poista");
-        JButton jarjestaLaji = new JButton("Laji");
-        JButton jarjestaPvm = new JButton("Pvm");
-        JButton jarjestaPaikka = new JButton("Paikka");
-        JButton jarjestaLkm = new JButton("Lkm");
+        JLabel valitse = new JLabel("Valitse");
+        JLabel laji = new JLabel("Laji");
+        JLabel edHavainto = new JLabel("Viim. havainto");
+        JLabel paikka = new JLabel("");
+        JLabel lkm = new JLabel("");
         
-        
-        poistaValitut.addActionListener( new PoistaValitut(this) );
-        jarjestaLaji.addActionListener( new Jarjestaja(this, 0) );
-        jarjestaPvm.addActionListener( new Jarjestaja(this, 1) );
-        jarjestaPaikka.addActionListener( new Jarjestaja( this, 2 ) );
-        jarjestaLkm.addActionListener( new Jarjestaja( this, 3 ) );
-        
-        ylarivi.add( poistaValitut );
-        ylarivi.add( jarjestaLaji );
-        ylarivi.add( jarjestaPvm );
-        ylarivi.add( jarjestaPaikka );
-        ylarivi.add( jarjestaLkm );
+        ylarivi.add( valitse );
+        ylarivi.add( laji );
+        ylarivi.add( edHavainto );
+        ylarivi.add( paikka );
+        ylarivi.add( lkm );
         
         return ylarivi;
     }
     
     private void lisaaScrolleri() {
         JPanel listapaneeli = skannaaLista();
-        System.out.println("Lista skannattu");
         
         scrolleri = new JScrollPane(listapaneeli);
         scrolleri.setHorizontalScrollBarPolicy( ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
@@ -110,62 +102,60 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
     }
     
     private JPanel skannaaLista() {
-        int riveja = lista.getHavaintoja();
-        if( riveja < 24) riveja = 24;
+        int riveja = lista.koko();
+        if( riveja < 26) riveja = 26;
         JPanel listapaneeli = new JPanel ( new GridLayout( riveja, 1 ) );
         
-        for (int i = 0; i < lista.getHavaintoja(); i++) {
-            System.out.println("Lisätään lintu " + lista.get(i).getLaji().toString() );
-            listapaneeli.add( new Havaintopalkki( lista.get(i)) );
+        for (Lintulaji lintulaji : lista.getLista()) {
+            listapaneeli.add( lintulajiSarake(lintulaji) );
         }
         
         return listapaneeli;
     }
     
-    public void lisaa(Havainto havainto) {
-        lista.lisaa(havainto);
+    private JPanel lintulajiSarake(Lintulaji lintulaji) {
+        JPanel sarake = new JPanel( new GridLayout(1, 5) );
+        
+        sarake.add(new JRadioButton());
+        sarake.add(new JLabel( lintulaji.getNimi() ));
+        sarake.add(new JLabel( lintulaji.viimeinenHavaintoPvm() ));
+        sarake.add(new JLabel( lintulaji.viimeinenHavaintoPaikka() ));
+        sarake.add(new JLabel( lintulaji.viimeinenHavaintoLkm() ));
+        
+        
+        return sarake;
+    }
+    
+    public void lisaaHavainto(String laji, Havainto havainto) {
+        lista.lisaaHavainto(laji, havainto);
         tspalkki.muutoksiaTehty();
         paivita();
     }
     
-    public void poistaValitut() {
-        if( lista.poistaValitut() ) tspalkki.muutoksiaTehty();
-        paivita();
-    }
-    
-    public void jarjesta(int peruste) {
-        lista.asetaJarjestamisperuste(peruste);
-        lista.jarjesta();
-        paivita();
-    }
-
     public void tallenna(String tiedostonimi) {
-        new Tallentaja(tallennussijainti + tiedostonimi, lista).tallenna();
+        new Tallentaja().tallenna( tiedostonimi, lista);
         tspalkki.tiedostoTallennettu();
-        paivita();
     }
     
     public void lataa(String tiedostonimi) {
-        if( new Lataaja(tallennussijainti + tiedostonimi, lista).lataa() ) {
+        try {
+            lista = new Lataaja().lataa( tiedostonimi );
             tspalkki.tiedostoLadattu();
             paivita();
-        } else {
-            tspalkki.tiedostoaEiLoydy();
+        } catch(Exception ex) {
+            if( ex.getClass() == FileNotFoundException.class ) tspalkki.tiedostoaEiLoydy();
+            if( ex.getClass() == IOException.class ) tspalkki.virheLatauksessa();
         }
     }
     
     @Override
     public void paivita() {
-        System.out.println("päivitetään havaintolistakaavake...");
-        
         removeAll();
         
         luoKomponentit();
         
         repaint();
         revalidate();
-        
-        System.out.println("Havaintolistakaavake päivitetty");
     }
     
 }

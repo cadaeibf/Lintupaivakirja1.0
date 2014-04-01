@@ -17,7 +17,7 @@ public class Tallenna implements ActionListener {
     private Tallennussijaintipalkki tspalkki;
     private Havaintolistakaavake lista;
 
-    public Tallenna( Tallennussijaintipalkki tspalkki, Havaintolistakaavake lista) {
+    public Tallenna(Tallennussijaintipalkki tspalkki, Havaintolistakaavake lista) {
         this.tspalkki = tspalkki;
         this.lista = lista;
     }
@@ -26,4 +26,5 @@ public class Tallenna implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         lista.tallenna( tspalkki.getTiedostonimi() );
     }
+    
 }

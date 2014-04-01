@@ -1,0 +1,1 @@
+<lista><Lintulaji><String>A</String><String></String><lista><Havainto><Havaintopaikka><String>A</String></Havaintopaikka><Date><Integer>31</Integer><Integer>2</Integer><Integer>2014</Integer></Date><Integer>1</Integer></Havainto></lista></Lintulaji></lista>

@@ -8,7 +8,7 @@ package lipvk.ohlo;
  *
  * @author anterova
  */
-public class Havaintopaikka implements Comparable{
+public class Havaintopaikka implements Comparable {
     private String nimi;
 
     public Havaintopaikka(String nimi) throws IllegalArgumentException {

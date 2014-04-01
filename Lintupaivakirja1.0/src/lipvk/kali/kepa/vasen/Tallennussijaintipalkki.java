@@ -26,7 +26,7 @@ public class Tallennussijaintipalkki extends JPanel {
     }
     
     private void luoKomponentit(String tiedostonimi, JButton lataaPainike) {
-        this.tiedostonimikentta = new JTextField(tiedostonimi.replace(".txt", ""));
+        this.tiedostonimikentta = new JTextField(tiedostonimi.replace(".xml", ""));
         ilmoituskentta = new JLabel();
         
         tiedostonimikentta.addKeyListener( new LataaTiedostoNappaimistolta( lataaPainike ) );
@@ -51,8 +51,12 @@ public class Tallennussijaintipalkki extends JPanel {
     public void tiedostoaEiLoydy() {
         ilmoituskentta.setText("Annettua tiedostoa ei löytynyt");
     }
+
+    public void virheLatauksessa() {
+        ilmoituskentta.setText("Virhe latauksessa");
+    }
     
     public String getTiedostonimi() {
-        return tiedostonimikentta.getText() + ".txt";
+        return tiedostonimikentta.getText() + ".xml";
     }
 }

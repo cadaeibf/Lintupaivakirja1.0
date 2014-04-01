@@ -29,11 +29,9 @@ public class HavainnonValinta implements ActionListener {
         if(!ruutu.isSelected()) {
             ruutu.setSelected(false);
             ruutu.setBorderPaintedFlat(false);
-            havainto.poistaValinta();
         } else {
             ruutu.setSelected(true);
             ruutu.setBorderPaintedFlat(true);
-            havainto.valitse();
         }
     }
     

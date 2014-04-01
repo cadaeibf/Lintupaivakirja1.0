@@ -4,65 +4,49 @@
  */
 package lipvk.ohlo;
 
-import lipvk.dom.Pvm;
+import java.util.Calendar;
 
 /**
  *
  * @author anterova
  */
-public class Havainto {
-    private Lintulaji laji;
+public class Havainto implements Comparable<Havainto> {
     private Havaintopaikka paikka;
-    private Pvm pvm;
+    private Calendar pvm;
     private int lkm;
-    private boolean valittu;
 
-    public Havainto(Lintulaji laji, Pvm pvm, Havaintopaikka paikka, int lkm) {
-        this.laji = laji;
+    public Havainto(Havaintopaikka paikka, Calendar pvm, int lkm) {
         this.paikka = paikka;
         this.pvm = pvm;
         this.lkm = lkm;
-        valittu = false;
-    }
-    
-   public Havainto(Lintulaji laji, Pvm pvm, Havaintopaikka paikka) {
-       this.laji = laji;
-       this.paikka = paikka;
-       this.pvm = pvm;
-       this.lkm = 1;
-   }
-    
-    public void valitse() {
-        valittu = true;
-    }
-    
-    public void poistaValinta() {
-        valittu = false;
-    }
-    
-    public boolean valittu() {
-        return valittu;
-    }
-
-    public Lintulaji getLaji() {
-        return laji;
     }
 
     public Havaintopaikka getPaikka() {
         return paikka;
     }
 
-    public Pvm getPvm() {
+    public Calendar getPvm() {
         return pvm;
     }
 
     public int getLkm() {
         return lkm;
     }
+    
+    public String formatoiPvm() {
+        return pvm.get(Calendar.DAY_OF_MONTH) + "."
+                + (pvm.get(Calendar.MONTH) + 1) + "."
+                + pvm.get(Calendar.YEAR);
+    }
 
     @Override
     public String toString() {
-        return laji + "\t" + pvm + "\t" + paikka + "(" + lkm + ")";
+        return paikka.toString() + "\t" + formatoiPvm();
+    }
+
+    @Override
+    public int compareTo(Havainto o) {
+        return this.pvm.compareTo(o.pvm);
     }
    
    

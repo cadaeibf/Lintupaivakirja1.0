@@ -34,7 +34,6 @@ public class LintulajiTests {
     @Before
     public void setUp() {
         ankka = new Lintulaji("Ankka");
-        korppi = new Lintulaji("Korppi", "Corvus corax");
     }
     
     @After

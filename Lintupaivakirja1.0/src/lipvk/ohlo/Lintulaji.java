@@ -4,46 +4,69 @@
  */
 package lipvk.ohlo;
 
+import java.util.TreeSet;
+
 /**
  *
  * @author anterova
  */
 public class Lintulaji implements Comparable {
     private String nimi;
-    private String latinalainenNimi;
+    private TreeSet<Havainto> havainnot;
 
-    public Lintulaji (String nimi, String latinalainenNimi) throws IllegalArgumentException {
-        if(nimi == null) throw new IllegalArgumentException();
+    public Lintulaji(String nimi) {
         this.nimi = nimi;
-        this.latinalainenNimi = latinalainenNimi;
-    }
-
-    public Lintulaji(String nimi) throws IllegalArgumentException {
-        if(nimi == null) throw new IllegalArgumentException();
-        if(nimi.equals("")) throw new IllegalArgumentException();
-        this.nimi = nimi;
+        havainnot = new TreeSet<>();
     }
     
-    public void setLatinalainenNimi(String latinalainenNimi) {
-        this.latinalainenNimi = latinalainenNimi;
+    public void lisaaHavainto(Havainto havainto) {
+        havainnot.add(havainto);
     }
     
-    public String getLatinalainenNimi() {
-        if(latinalainenNimi == null) return "";
-        return this.latinalainenNimi;
-    }
-
-    @Override
-    public String toString() {
-        return this.nimi; //To change body of generated methods, choose Tools | Templates.
+    public void poistaHavainto(Havainto havainto) {
+        havainnot.remove(havainto);
     }
     
+    public String getNimi() {
+        return this.nimi;
+    }
     
-
+    public int getHavaintoja() {
+        return havainnot.size();
+    }
+    
+    public String viimeinenHavaintoPaikka() {
+        if( havainnot.isEmpty() ) return "-";
+        return havainnot.last().getPaikka().toString();
+    }
+    
+    public String viimeinenHavaintoPvm() {
+        if( havainnot.isEmpty() ) return "-";
+        return havainnot.last().formatoiPvm();
+    }
+    
+    public String viimeinenHavaintoLkm() {
+        if( havainnot.isEmpty() ) return "-";
+        return havainnot.last().getLkm() + "";
+    }
+    
     @Override
     public int compareTo(Object o) {
         if(o.getClass() != this.getClass()) return -1;
         Lintulaji verrattava = (Lintulaji) o;
         return nimi.compareTo(verrattava.nimi);
     }
+
+    @Override
+    public String toString() {
+        String tuloste = "";
+        
+        for (Havainto havainto : havainnot) {
+            tuloste += havainto.toString() + "\n";
+        }
+        
+        return tuloste;
+    }
+    
+    
 }

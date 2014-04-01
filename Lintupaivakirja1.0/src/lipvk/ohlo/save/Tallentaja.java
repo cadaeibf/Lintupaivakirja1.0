@@ -4,31 +4,37 @@
  */
 package lipvk.ohlo.save;
 
+import com.thoughtworks.xstream.XStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import lipvk.ohlo.Havaintolista;
+import lipvk.ohlo.Havainto;
+import lipvk.ohlo.Lintulaji;
+import lipvk.ohlo.Lintulista;
 
 /**
  *
  * @author anterova
  */
 public class Tallentaja {
-    private String tiedostonimi;
-    private Havaintolista lista;
 
-    public Tallentaja(String tiedostonimi, Havaintolista lista) {
-        this.tiedostonimi = tiedostonimi;
-        this.lista = lista;
+    public Tallentaja() {
     }
     
-    public void tallenna() {
-        for (int i = 3; i >= 0; i--) {
-            lista.asetaJarjestamisperuste(i);
-        }
+    private String muunnaXml(Lintulista lista) {
+        XStream stream = new XStream();
+        stream.alias( "Lintulista", Lintulista.class );
+        stream.alias( "Lintulaji", Lintulaji.class );
+        stream.alias( "Havainto", Havainto.class );
+        
+        return stream.toXML( lista );
+    }
+    
+    public void tallenna(String tiedostonimi, Lintulista lista) {
+        String tallennuspolku = System.getProperty("user.home") + "/Documents/" + tiedostonimi;
         
         try {
-            File tiedosto = new File(tiedostonimi);
+            File tiedosto = new File(tallennuspolku);
             
             if(! tiedosto.exists() ) {
                 tiedosto.createNewFile();
@@ -37,25 +43,12 @@ public class Tallentaja {
             
             BufferedWriter bw = new BufferedWriter( new FileWriter( tiedosto.getAbsoluteFile() ) );
             
-            for (int i = 0; i < lista.getHavaintoja(); i++) {
-                bw.write( muunnaFormaatti( lista.get(i).toString() ) );
-                bw.write("&");
-            }
-            bw.write(".");
+            bw.write( muunnaXml(lista) );
             bw.close();
             
         } catch (Exception ex) {
-            System.out.println("virhe kirjoittamisessa");
-        }
-    }
-    
-    private String muunnaFormaatti(String raaka) {
-        String korjattu = raaka.toLowerCase();
-        korjattu = korjattu.replace('ä', '@');
-        korjattu = korjattu.replace('ö', '#');
-        korjattu = korjattu.replace('\t', '/');
-        
-        return korjattu;
+            System.out.println("Virhe kirjoittamisessa: " + ex.getMessage());
+      }
     }
     
 }

@@ -4,17 +4,16 @@
  */
 package lipvk.kali.kepa.vasen;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import lipvk.dom.Pvm;
 import lipvk.kali.kepa.hlk.Havaintolistakaavake;
-import lipvk.takut.napit.LisaaHavainto;
 import lipvk.takut.LisaaHavaintoNappaimistolta;
+import lipvk.takut.napit.LisaaHavainto;
 
 /**
  *
@@ -29,11 +28,12 @@ public class UusiHavaintoKaavake extends JPanel {
     public void luoKomponentit(Havaintolistakaavake havaintolistakaavake, Tallennussijaintipalkki tspalkki) {
         JTextField lajikentta = new JTextField();
         JTextField paikkakentta = new JTextField();
-        JTextField pvmkentta = new JTextField( new Pvm().toString() );
+        JTextField pvmkentta = new JTextField( tulostaPvm() );
         JTextField lkmkentta = new JTextField( "1" );
         JButton lisaaPainike = new JButton( "Lisää") ;
         
         lisaaPainike.addActionListener( new LisaaHavainto(lajikentta, paikkakentta, pvmkentta, lkmkentta, havaintolistakaavake) );
+        
         lajikentta.addKeyListener( new LisaaHavaintoNappaimistolta( lisaaPainike ) );
         paikkakentta.addKeyListener( new LisaaHavaintoNappaimistolta( lisaaPainike ) );
         pvmkentta.addKeyListener( new LisaaHavaintoNappaimistolta( lisaaPainike ) );
@@ -56,6 +56,12 @@ public class UusiHavaintoKaavake extends JPanel {
         
         
         add( kentta );
+    }
+    
+    private String tulostaPvm() {
+        Calendar cal = Calendar.getInstance();
+        
+        return cal.get(Calendar.DAY_OF_MONTH) + "." + ( cal.get(Calendar.MONTH) + 1 ) + "." + cal.get(Calendar.YEAR);
     }
     
 }

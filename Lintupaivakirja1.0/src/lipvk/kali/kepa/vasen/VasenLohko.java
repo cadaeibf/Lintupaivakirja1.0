@@ -4,7 +4,13 @@
  */
 package lipvk.kali.kepa.vasen;
 
+import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import lipvk.kali.kepa.hlk.Havaintolistakaavake;
@@ -45,9 +51,12 @@ public class VasenLohko extends JPanel implements Paivitettava {
         return tp.tallennussijaintipalkki();
     }
     
-    public void asetaLintukortti(String nimi, JPanel lintukortti) {
-        if(vasAl.getTabCount() == 2) vasAl.remove(1);
-        vasAl.add(nimi, lintukortti);
+    public void lisaaLintukortti(String nimi, Lintukortti lintukortti) {
+        while( vasAl.getTabCount() > 1 ) vasAl.remove(1);
+        
+        vasAl.addTab(nimi, lintukortti);
+        
+        vasAl.setSelectedIndex(1);
         
         vasAl.repaint();
         vasAl.revalidate();
@@ -66,6 +75,6 @@ public class VasenLohko extends JPanel implements Paivitettava {
     public void asetaIlmoitus(String ilmoitusteksti) {
         tp.ilmoitus(ilmoitusteksti);
     }
-    
-    
 }
+
+

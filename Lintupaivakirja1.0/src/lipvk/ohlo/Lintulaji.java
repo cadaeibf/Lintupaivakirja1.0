@@ -35,6 +35,10 @@ public class Lintulaji implements Comparable {
         return havainnot.size();
     }
     
+    public TreeSet<Havainto> getHavainnot() {
+        return havainnot;
+    }
+    
     public String havaintojaVuonna(int vuosi) {
         int havaintoja = 0;
         

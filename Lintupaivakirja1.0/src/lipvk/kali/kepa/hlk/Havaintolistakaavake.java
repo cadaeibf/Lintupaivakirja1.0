@@ -178,6 +178,8 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
         JPanel sarake = new JPanel(new GridLayout(1,7));
         JRadioButton valitse = new JRadioButton();
         
+        valitse.addActionListener( new ValitseLintu(lintulaji, vl) );
+        
         bg.add(valitse);
         
         sarake.add( valitse );

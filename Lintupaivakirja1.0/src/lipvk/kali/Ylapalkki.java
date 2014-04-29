@@ -40,14 +40,7 @@ public class Ylapalkki extends JPanel implements Paivitettava {
         Calendar cal;
         cal = Calendar.getInstance();
         
-        String tunnit = cal.get( Calendar.HOUR_OF_DAY ) + "";
-        if(tunnit.length() == 1) tunnit = "0" + tunnit;
-        
-        String minuutit = cal.get( Calendar.MINUTE ) + "";
-        if( minuutit.length() == 1 ) minuutit = "0" + minuutit;
-        
-        pvmKentta.setText( tunnit + ":" + minuutit + " " 
-                + cal.get( Calendar.DAY_OF_MONTH ) + "." 
+        pvmKentta.setText( cal.get( Calendar.DAY_OF_MONTH ) + "." 
                 + ( cal.get( Calendar.MONTH ) + 1 ) + "." 
                 + cal.get( Calendar.YEAR ) );
         

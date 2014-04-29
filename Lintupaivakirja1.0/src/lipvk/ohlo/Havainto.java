@@ -42,6 +42,18 @@ public class Havainto implements Comparable<Havainto> {
                 + (pvm.get(Calendar.MONTH) + 1) + "."
                 + pvm.get(Calendar.YEAR);
     }
+    
+    public String formatoiPvmXML() {
+        String kk = (pvm.get(Calendar.MONTH) + 1) + "";
+        if( kk.length() == 1 ) kk = "0" + kk;
+        
+        String pp = pvm.get(Calendar.DAY_OF_MONTH) + "";
+        if( pp.length() == 1 ) pp = "0" + pp;
+        
+        return pvm.get(Calendar.YEAR) + "-"
+                + kk + "-"
+                + pp;
+    }
 
     @Override
     public String toString() {

@@ -21,7 +21,7 @@ import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Lintulaji;
 import lipvk.ohlo.Lintulista;
 import lipvk.ohlo.save.Lataaja;
-import lipvk.ohlo.save.Tallentaja;
+import lipvk.ohlo.xml.KirjoitaXML;
 import lipvk.rajapinnat.Paivitettava;
 import lipvk.takut.napit.VaihdaNakyma;
 import lipvk.takut.napit.ValitseLintu;
@@ -160,7 +160,7 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
         JPanel sarake = new JPanel( new GridLayout(1, 7) );
         JRadioButton valitse = new JRadioButton();
         
-        valitse.addActionListener( new ValitseLintu(lintulaji, vl) );
+        valitse.addActionListener( new ValitseLintu(lintulaji, vl, valitse) );
         
         bg.add(valitse);
         
@@ -178,7 +178,7 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
         JPanel sarake = new JPanel(new GridLayout(1,7));
         JRadioButton valitse = new JRadioButton();
         
-        valitse.addActionListener( new ValitseLintu(lintulaji, vl) );
+        valitse.addActionListener( new ValitseLintu(lintulaji, vl, valitse) );
         
         bg.add(valitse);
         
@@ -203,7 +203,7 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
     }
     
     public void tallenna(String tiedostonimi) {
-        new Tallentaja().tallenna( tiedostonimi, lista);
+        new KirjoitaXML().kirjoita(lista);
         vl.asetaIlmoitus("Tiedosto tallennettu");
     }
     

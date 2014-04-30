@@ -20,7 +20,6 @@ import lipvk.kali.kepa.vasen.VasenLohko;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Lintulaji;
 import lipvk.ohlo.Lintulista;
-import lipvk.ohlo.save.Lataaja;
 import lipvk.ohlo.xml.KirjoitaXML;
 import lipvk.ohlo.xml.LueXML;
 import lipvk.rajapinnat.Paivitettava;

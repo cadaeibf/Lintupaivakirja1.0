@@ -7,8 +7,6 @@ package lipvk.ohlo.xml;
 import lipvk.ohlo.Lintulaji;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -19,7 +17,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import lipvk.ohlo.Havainto;
-import lipvk.ohlo.Havaintopaikka;
 import lipvk.ohlo.Lintulista;
 
 import org.w3c.dom.Attr;
@@ -89,7 +86,7 @@ public class KirjoitaXML {
         Attr xmlns = doc.createAttribute( "xmlns:xs" );
         xmlns.setValue( "http://www.w3.org/2001/XMLSchema" );
 
-        Attr xsd = doc.createAttribute( "xs:noNamespaceSchemaLocation" );
+        Attr xsd = doc.createAttribute( "xs:schemaLocation" );
         xsd.setValue( "havaintolista.xsd" );
 
         juuri.setAttributeNode(xmlns);
@@ -101,7 +98,11 @@ public class KirjoitaXML {
     private Element luoLajiElementti( Document doc, Lintulaji lintulaji ) {
         Element laji = doc.createElement( "laji" );
         
-        laji.appendChild( doc.createTextNode( lintulaji.getNimi().toLowerCase() ) );
+        Element nimi = doc.createElement( "nimi" );
+        
+        nimi.appendChild( doc.createTextNode( lintulaji.getNimi().toLowerCase() ) );
+        
+        laji.appendChild( nimi );
         
         return laji;
     }

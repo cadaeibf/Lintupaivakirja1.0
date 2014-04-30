@@ -22,6 +22,7 @@ import lipvk.ohlo.Lintulaji;
 import lipvk.ohlo.Lintulista;
 import lipvk.ohlo.save.Lataaja;
 import lipvk.ohlo.xml.KirjoitaXML;
+import lipvk.ohlo.xml.LueXML;
 import lipvk.rajapinnat.Paivitettava;
 import lipvk.takut.napit.VaihdaNakyma;
 import lipvk.takut.napit.ValitseLintu;
@@ -209,7 +210,7 @@ public class Havaintolistakaavake extends JPanel implements Paivitettava {
     
     public void lataa(String tiedostonimi) {
         try {
-            lista = new Lataaja().lataa( tiedostonimi );
+            lista = new LueXML().lue();
             vl.asetaIlmoitus("Tiedosto ladattu");
             paivita();
         } catch(Exception ex) {

@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JTextField;
-import lipvk.kali.kepa.hlk.Havaintolistakaavake;
+import lipvk.main.Kayttoliittyma;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Havaintopaikka;
 
@@ -23,18 +23,14 @@ public class LisaaHavainto implements ActionListener {
     private JTextField pvmkentta;
     private JTextField lkmkentta;
     
-    private Havaintolistakaavake lista;
+    private Kayttoliittyma kali;
 
-    public LisaaHavainto(JTextField lajikentta, JTextField paikkakentta, JTextField pvmkentta, JTextField lkmkentta, Havaintolistakaavake lista) {
+    public LisaaHavainto(JTextField lajikentta, JTextField paikkakentta, JTextField pvmkentta, JTextField lkmkentta, Kayttoliittyma kali) {
         this.lajikentta = lajikentta;
         this.paikkakentta = paikkakentta;
         this.pvmkentta = pvmkentta;
         this.lkmkentta = lkmkentta;
-        this.lista = lista;
-    }
-
-    public LisaaHavainto(Havaintolistakaavake lista) {
-        this.lista = lista;
+        this.kali = kali;
     }
     
     public GregorianCalendar luePvm() {
@@ -51,7 +47,7 @@ public class LisaaHavainto implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        lista.lisaaHavainto(lajikentta.getText(), 
+        kali.lisaaHavainto(lajikentta.getText(), 
                 new Havainto( new Havaintopaikka(paikkakentta.getText()), 
                 luePvm(), 
                 Integer.parseInt(lkmkentta.getText()) ));

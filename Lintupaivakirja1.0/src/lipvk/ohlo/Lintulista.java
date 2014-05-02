@@ -4,7 +4,9 @@
  */
 package lipvk.ohlo;
 
+import java.io.File;
 import java.util.TreeSet;
+import lipvk.ohlo.xml.LueXML;
 
 /**
  *
@@ -15,6 +17,10 @@ public class Lintulista {
 
     public Lintulista() {
         lista = new TreeSet<>();
+    }
+    
+    public static Lintulista lataaLintulista(File tiedosto) {
+        return new LueXML().lue(tiedosto);
     }
     
     public void lisaa(Lintulaji lintulaji) {
@@ -35,25 +41,12 @@ public class Lintulista {
         if(lista.contains(lintulaji)) lista.remove(lintulaji);
     }
     
-    public boolean sisaltaa(Lintulaji lintulaji) {
-        return lista.contains(lintulaji);
-    }
-    
     public boolean sisaltaa(String laji) {
         for (Lintulaji lintulaji : lista) {
             if(lintulaji.getNimi().toLowerCase().equals(laji.toLowerCase())) return true;
         }
         
         return false;
-    }
-    
-    public Lintulaji get(String laji) throws NullPointerException {
-        
-        for (Lintulaji lintulaji : lista) {
-            if(lintulaji.getNimi().toLowerCase().equals(laji.toLowerCase())) return lintulaji;
-        }
-        
-        throw new NullPointerException();
     }
     
     public int koko() {
@@ -72,6 +65,15 @@ public class Lintulista {
     
     public TreeSet<Lintulaji> getLista() {
         return lista;
+    }
+    
+    private Lintulaji get(String laji) throws NullPointerException {
+        
+        for (Lintulaji lintulaji : lista) {
+            if(lintulaji.getNimi().toLowerCase().equals(laji.toLowerCase())) return lintulaji;
+        }
+        
+        throw new NullPointerException();
     }
 
     @Override

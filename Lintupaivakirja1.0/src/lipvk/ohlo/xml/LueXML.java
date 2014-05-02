@@ -4,6 +4,7 @@
  */
 package lipvk.ohlo.xml;
 
+import java.io.File;
 import java.util.Calendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,13 +27,13 @@ public class LueXML {
     public LueXML() {
     }
     
-    public Lintulista lue() {
+    public Lintulista lue(File tiedosto) {
         
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             
-            Document doc = db.parse( "/Users/anterova/Lintupaivakirja1.0/xml/havaintolista.xml" );
+            Document doc = db.parse( tiedosto );
             
             doc.normalize();
             

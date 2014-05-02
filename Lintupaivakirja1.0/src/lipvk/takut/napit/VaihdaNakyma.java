@@ -7,7 +7,7 @@ package lipvk.takut.napit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JRadioButton;
-import lipvk.kali.kepa.hlk.Havaintolistakaavake;
+import lipvk.main.Kayttoliittyma;
 
 /**
  *
@@ -16,17 +16,17 @@ import lipvk.kali.kepa.hlk.Havaintolistakaavake;
 public class VaihdaNakyma implements ActionListener {
     private int nakyma;
     private JRadioButton painike;
-    private Havaintolistakaavake lista;
+    private Kayttoliittyma kali;
 
-    public VaihdaNakyma(int nakyma, JRadioButton painike, Havaintolistakaavake lista) {
+    public VaihdaNakyma(int nakyma, JRadioButton painike, Kayttoliittyma kali) {
         this.nakyma = nakyma;
         this.painike = painike;
-        this.lista = lista;
+        this.kali = kali;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        lista.vaihdaNakyma(nakyma);
+        kali.vaihdaListanakyma(nakyma);
     }
     
     

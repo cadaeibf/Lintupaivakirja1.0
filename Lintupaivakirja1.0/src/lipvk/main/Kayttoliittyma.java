@@ -6,14 +6,18 @@ package lipvk.main;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import lipvk.gui.Keskuspaneeli;
+import lipvk.gui.Havaintolistakaavake;
+import lipvk.gui.Havaintolistakaavake.Listanakyma;
+import lipvk.gui.UusiHavaintoKaavake;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Lintulista;
 import lipvk.takut.menu.LataaHavainnot;
@@ -24,7 +28,8 @@ import lipvk.takut.menu.LataaHavainnot;
  */
 public class Kayttoliittyma implements Runnable {
     private JFrame frame;
-    private Keskuspaneeli keskuspaneeli;
+    private UusiHavaintoKaavake uhk;
+    private Havaintolistakaavake hlk;
     
     private Lintulista lintulista;
     
@@ -49,20 +54,28 @@ public class Kayttoliittyma implements Runnable {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         taysiRuutu();
         
-        luoKomponentit(frame.getContentPane());
-    }
-
-    private void luoKomponentit(Container container) {
-        keskuspaneeli = new Keskuspaneeli(lintulista);
-        
-        container.add(keskuspaneeli);
-        
-        // Luo menu
         JMenuBar menuBar = new JMenuBar();
         luoMenut(menuBar);
         
         frame.setJMenuBar(menuBar);
         
+        luoKomponentit(frame.getContentPane());
+    }
+
+    private void luoKomponentit(Container container) {
+        container.setLayout( new GridLayout( 1, 2 ) );
+        
+        luoVasenLohko(container);
+        
+        container.add(hlk = new Havaintolistakaavake(this));
+    }
+    
+    private void luoVasenLohko( Container container ) {
+        JPanel vasenLohko = new JPanel( new GridLayout( 2, 1 ) );
+        
+        vasenLohko.add ( uhk = new UusiHavaintoKaavake(this) );
+        
+        container.add(vasenLohko);
     }
     
     private void luoMenut(JMenuBar menuBar) {
@@ -82,29 +95,40 @@ public class Kayttoliittyma implements Runnable {
         return tiedostoMenu;
     }
     
+    public void paivitaHavaintolistakaavake() {
+        Container container = frame.getContentPane();
+        container.remove(hlk);
+        container.add( hlk = new Havaintolistakaavake(this) );
+        
+        container.validate();
+        container.repaint();
+    }
+    
+    public void paivitaHavaintolistakaavake(Listanakyma nakyma) {
+        Container container = frame.getContentPane();
+        container.remove(hlk);
+        container.add( hlk = new Havaintolistakaavake(this, nakyma) );
+        
+        container.validate();
+        container.repaint();
+    }
+    
     public void lisaaHavainto(String laji, Havainto havainto) {
         lintulista.lisaaHavainto(laji, havainto);
-        paivita();
+        paivitaHavaintolistakaavake();
     }
     
     public void lataaHavainnot(File tiedosto) {
         lintulista = Lintulista.lataaLintulista(tiedosto);
-        paivita();
+        paivitaHavaintolistakaavake();
     }
     
     public void tallennaHavainnot() {
         
     }
     
-    public void vaihdaListanakyma(int nakyma) {
-        
+    public Lintulista getLintulista() {
+        return lintulista;
     }
-    
-    public void paivita() {
-        keskuspaneeli.paivitaLintulista(lintulista);
-        
-        frame.repaint();
-    }
-    
     
 }

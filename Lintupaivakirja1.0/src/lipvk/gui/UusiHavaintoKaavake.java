@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import lipvk.main.Kayttoliittyma;
 import lipvk.takut.LisaaHavaintoNappaimistolta;
 import lipvk.takut.napit.LisaaHavainto;
 
@@ -20,18 +21,20 @@ import lipvk.takut.napit.LisaaHavainto;
  */
 public class UusiHavaintoKaavake extends JPanel {
 
-    public UusiHavaintoKaavake() {
+    public UusiHavaintoKaavake( Kayttoliittyma kali ) {
         super(new GridLayout( 10,1 ));
+        
+        luoKomponentit(kali);
     }
     
-    public void luoKomponentit() {
+    private void luoKomponentit( Kayttoliittyma kali ) {
         JTextField lajikentta = new JTextField();
         JTextField paikkakentta = new JTextField();
         JTextField pvmkentta = new JTextField( tulostaPvm() );
         JTextField lkmkentta = new JTextField( "1" );
         JButton lisaaPainike = new JButton( "Lisää") ;
         
-        // lisaaPainike.addActionListener( new LisaaHavainto(lajikentta, paikkakentta, pvmkentta, lkmkentta, kali) );
+        lisaaPainike.addActionListener( new LisaaHavainto(lajikentta, paikkakentta, pvmkentta, lkmkentta, kali) );
         
         lajikentta.addKeyListener( new LisaaHavaintoNappaimistolta( lisaaPainike ) );
         paikkakentta.addKeyListener( new LisaaHavaintoNappaimistolta( lisaaPainike ) );

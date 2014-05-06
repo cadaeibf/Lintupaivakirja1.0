@@ -28,11 +28,11 @@ import org.w3c.dom.Element;
  *
  * @author anterova
  */
-public class KirjoitaXML {
+public class TallennaHavainnotXML {
     private DocumentBuilderFactory docFactory;
     private DocumentBuilder docBuilder;
 
-    public KirjoitaXML() {
+    public TallennaHavainnotXML() {
     }
     
     public void kirjoita(Lintulista lintulista) {

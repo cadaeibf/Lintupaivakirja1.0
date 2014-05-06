@@ -13,9 +13,7 @@ public class TekstinFormatointi {
     public static String isoAlkukirjain(String teksti) {
         if( teksti.equals("") ) return "";
         
-        
-        
-        return ( teksti.charAt(0) + "" ) + teksti.substring(1);
+        return ( teksti.charAt(0) + "" ).toUpperCase() + teksti.substring(1);
     }
     
 }

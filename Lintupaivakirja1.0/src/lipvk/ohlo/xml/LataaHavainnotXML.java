@@ -13,6 +13,7 @@ import lipvk.ohlo.Havaintopaikka;
 import lipvk.ohlo.Lintulaji;
 import lipvk.ohlo.Lintulista;
 import lipvk.util.Pvm;
+import lipvk.util.TekstinFormatointi;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -22,9 +23,9 @@ import org.w3c.dom.NodeList;
  *
  * @author anterova
  */
-public class LueXML {
+public class LataaHavainnotXML {
 
-    public LueXML() {
+    public LataaHavainnotXML() {
     }
     
     public Lintulista lue(File tiedosto) {
@@ -65,6 +66,7 @@ public class LueXML {
             // Lisää lintulaji listaan
             Element nimiE =  (Element) e.getElementsByTagName( "nimi" ).item(0);
             String nimi = nimiE.getChildNodes().item(0).getNodeValue();
+            nimi = TekstinFormatointi.isoAlkukirjain(nimi);
             lintulista.lisaa( new Lintulaji( nimi ) );
             System.out.println( nimi + " ladattu" );
             

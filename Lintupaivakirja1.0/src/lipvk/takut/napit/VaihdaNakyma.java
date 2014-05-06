@@ -7,7 +7,7 @@ package lipvk.takut.napit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import lipvk.gui.Havaintolistakaavake.Listanakyma;
-import lipvk.main.Kayttoliittyma;
+import lipvk.gui.Kayttoliittyma;
 
 /**
  *

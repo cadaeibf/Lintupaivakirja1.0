@@ -9,7 +9,6 @@ package lipvk.gui;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import lipvk.main.Kayttoliittyma;
 
 /**
  * GUI-luokka käsiteltävän lintukirjaton ja siihen liittyvien havaintojen 

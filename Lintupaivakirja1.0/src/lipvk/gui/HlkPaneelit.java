@@ -14,7 +14,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import lipvk.gui.Havaintolistakaavake.Listanakyma;
-import lipvk.main.Kayttoliittyma;
 import lipvk.ohlo.Lintulaji;
 import lipvk.ohlo.Lintulista;
 import lipvk.takut.napit.VaihdaNakyma;
@@ -112,6 +111,7 @@ public class HlkPaneelit {
     }
     
     private static JPanel lajiLista(Lintulista lintulista, Listanakyma nakyma) {
+        if(lintulista == null) return new JPanel();
         int riveja = lintulista.koko();
         if( riveja < 25) riveja = 25;
         JPanel listapaneeli = new JPanel ( new GridLayout( riveja, 1 ) );

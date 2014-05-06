@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lipvk.main;
+package lipvk.gui;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -15,12 +15,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import lipvk.gui.Havaintolistakaavake;
 import lipvk.gui.Havaintolistakaavake.Listanakyma;
-import lipvk.gui.UusiHavaintoKaavake;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Lintulista;
 import lipvk.takut.menu.LataaHavainnot;
+import lipvk.takut.menu.TallennaHavainnotNimella;
 
 /**
  *
@@ -90,7 +89,11 @@ public class Kayttoliittyma implements Runnable {
         JMenuItem lataaTiedosto = new JMenuItem( "Lataa" );
         lataaTiedosto.addActionListener( new LataaHavainnot(this) );
         
+        JMenuItem tallennaNimella = new JMenuItem("Tallenna nimellä...");
+        tallennaNimella.addActionListener( new TallennaHavainnotNimella(this) );
+        
         tiedostoMenu.add(lataaTiedosto);
+        tiedostoMenu.add(tallennaNimella);
         
         return tiedostoMenu;
     }
@@ -119,12 +122,12 @@ public class Kayttoliittyma implements Runnable {
     }
     
     public void lataaHavainnot(File tiedosto) {
-        lintulista = Lintulista.lataaLintulista(tiedosto);
+        lintulista = Lintulista.lataaHavainnot(tiedosto);
         paivitaHavaintolistakaavake();
     }
     
-    public void tallennaHavainnot() {
-        
+    public void tallennaHavainnot(File tiedosto) {
+        Lintulista.tallennaHavainnot(lintulista, tiedosto);
     }
     
     public Lintulista getLintulista() {

@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import lipvk.main.Kayttoliittyma;
 import lipvk.takut.LisaaHavaintoNappaimistolta;
 import lipvk.takut.napit.LisaaHavainto;
 

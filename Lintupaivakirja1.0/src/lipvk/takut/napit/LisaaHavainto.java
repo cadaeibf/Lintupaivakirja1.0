@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JTextField;
-import lipvk.main.Kayttoliittyma;
+import lipvk.gui.Kayttoliittyma;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Havaintopaikka;
 import lipvk.util.TekstinFormatointi;

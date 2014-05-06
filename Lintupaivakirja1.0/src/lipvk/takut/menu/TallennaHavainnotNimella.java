@@ -11,14 +11,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import lipvk.gui.Kayttoliittyma;
 
 /**
- * Luokka pyytää käyttäjää valitsemaan halutun havaintolistan xml-tiedoston 
- * ja käskee käyttöliittymää lataamaan havainnot.
+ * Luokka pyytää käyttäjää valitsemaan tallennuskohteen ja tallentaa session 
+ * havainnot sinne.
  * @author anterova
  */
-public class LataaHavainnot implements ActionListener {
+public class TallennaHavainnotNimella implements ActionListener {
     private Kayttoliittyma kali;
-
-    public LataaHavainnot(Kayttoliittyma kali) {
+    
+    public TallennaHavainnotNimella( Kayttoliittyma kali ) {
         this.kali = kali;
     }
 
@@ -27,10 +27,10 @@ public class LataaHavainnot implements ActionListener {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter( new FileNameExtensionFilter("xml tiedostot", "xml") );
         
-        int returVal = fileChooser.showDialog( null, "Valitse" );
+        int returVal = fileChooser.showDialog(null , "Valitse");
         
-        if( returVal == JFileChooser.APPROVE_OPTION ) {
-            kali.lataaHavainnot( fileChooser.getSelectedFile() );
+        if (returVal == JFileChooser.APPROVE_OPTION) {
+            kali.tallennaHavainnot( fileChooser.getSelectedFile() );
         }
     }
     

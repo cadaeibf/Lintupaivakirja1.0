@@ -35,7 +35,7 @@ public class TallennaHavainnotXML {
     public TallennaHavainnotXML() {
     }
     
-    public void kirjoita(Lintulista lintulista) {
+    public void kirjoita(Lintulista lintulista, File tiedosto) {
         
         try {
             
@@ -70,7 +70,7 @@ public class TallennaHavainnotXML {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = (Transformer) transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult( new File( "/Users/anterova/Lintupaivakirja1.0/xml/havaintolista.xml" ) );
+            StreamResult result = new StreamResult( tiedosto );
             
             transformer.transform(source, result);
             

@@ -7,6 +7,7 @@ package lipvk.ohlo;
 import java.io.File;
 import java.util.TreeSet;
 import lipvk.ohlo.xml.LataaHavainnotXML;
+import lipvk.ohlo.xml.TallennaHavainnotXML;
 
 /**
  *
@@ -19,8 +20,12 @@ public class Lintulista {
         lista = new TreeSet<>();
     }
     
-    public static Lintulista lataaLintulista(File tiedosto) {
+    public static Lintulista lataaHavainnot(File tiedosto) {
         return new LataaHavainnotXML().lue(tiedosto);
+    }
+    
+    public static void tallennaHavainnot(Lintulista lintulista, File tiedosto) {
+        new TallennaHavainnotXML().kirjoita(lintulista, tiedosto);
     }
     
     public void lisaa(Lintulaji lintulaji) {

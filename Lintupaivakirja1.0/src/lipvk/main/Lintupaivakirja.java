@@ -4,6 +4,7 @@
  */
 package lipvk.main;
 
+import lipvk.gui.Kayttoliittyma;
 import javax.swing.SwingUtilities;
 
 /**

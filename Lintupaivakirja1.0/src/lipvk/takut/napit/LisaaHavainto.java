@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import lipvk.gui.Kayttoliittyma;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Havaintopaikka;
-import lipvk.util.TekstinFormatointi;
 
 /**
  *
@@ -48,8 +47,8 @@ public class LisaaHavainto implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        kali.lisaaHavainto( TekstinFormatointi.isoAlkukirjain( lajikentta.getText() ), 
-                new Havainto( new Havaintopaikka( TekstinFormatointi.isoAlkukirjain( paikkakentta.getText()) ), 
+        kali.lisaaHavainto( lajikentta.getText().toLowerCase(), 
+                new Havainto( new Havaintopaikka( paikkakentta.getText().toLowerCase() ), 
                 luePvm(), 
                 Integer.parseInt(lkmkentta.getText()) ));
         lajikentta.setText("");

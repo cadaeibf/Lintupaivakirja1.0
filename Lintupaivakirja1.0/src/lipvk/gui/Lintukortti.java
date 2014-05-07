@@ -6,18 +6,23 @@ package lipvk.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Lintulaji;
+import lipvk.takut.napit.SoitaAudio;
 
 /**
  *
  * @author anterova
  */
 public class Lintukortti extends JPanel {
+    
+    public Lintukortti() {
+        super();
+    }
 
     public Lintukortti(Lintulaji lintu) {
         super( new GridLayout(1,2) );
@@ -31,10 +36,18 @@ public class Lintukortti extends JPanel {
     }
     
     private JPanel lintufaktat(Lintulaji lintu) {
-        JPanel lintufaktat = new JPanel( new GridLayout(10,1) );
+        JPanel lintufaktat = new JPanel(new GridLayout(15, 1));
+        
+        JButton aaniNappi = new JButton("Lauluääni");
+        aaniNappi.addActionListener(new SoitaAudio(null));
         
         lintufaktat.add( kentta( "Laji:", lintu.getNimi()) );
+        lintufaktat.add( kentta( "Latinankielinen nimi:", lintu.getLatNimi()) );
+        lintufaktat.add( kentta( "Heimo", lintu.getHeimo()) );
+        lintufaktat.add( kentta( "Lahko", lintu.getLahko() ) );
         lintufaktat.add( kentta( "Havaintoja:", lintu.getHavaintoja() + "" ) );
+        lintufaktat.add(aaniNappi);
+        
         
         return lintufaktat;
     }

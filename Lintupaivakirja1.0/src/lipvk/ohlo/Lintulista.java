@@ -28,11 +28,21 @@ public class Lintulista {
         new TallennaHavainnotXML().kirjoita(lintulista, tiedosto);
     }
     
+    /**
+     * Metodi lintulajien lataamiseen tallennustiedostosta.
+     * @param lintulaji 
+     */
     public void lisaa(Lintulaji lintulaji) {
         lista.add(lintulaji);
     }
     
-    public void lisaaHavainto(String laji, Havainto havainto) {
+    /**
+     * Metodi lisää annetulle lintulajille havainnon.
+     * @param laji
+     * @param havainto
+     * @throws IllegalArgumentException 
+     */
+    public void lisaaHavainto(String laji, Havainto havainto) throws IllegalArgumentException {
         if( sisaltaa(laji) ) {
             get(laji).lisaaHavainto(havainto);
             return;

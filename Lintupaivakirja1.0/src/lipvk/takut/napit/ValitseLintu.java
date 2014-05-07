@@ -7,6 +7,7 @@ package lipvk.takut.napit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JRadioButton;
+import lipvk.gui.Kayttoliittyma;
 import lipvk.ohlo.Lintulaji;
 
 /**
@@ -14,17 +15,23 @@ import lipvk.ohlo.Lintulaji;
  * @author anterova
  */
 public class ValitseLintu implements ActionListener {
-    private Lintulaji lintu;
+    private Kayttoliittyma kali;
     private JRadioButton painike;
+    
+    private Lintulaji lintu;
 
-    public ValitseLintu(Lintulaji lintu, JRadioButton painike) {
-        this.lintu = lintu;
+    public ValitseLintu(Kayttoliittyma kali, JRadioButton painike, Lintulaji lintu) {
+        this.kali = kali;
         this.painike = painike;
+        this.lintu = lintu;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        if(!painike.isSelected()) {
+            kali.setLintukortti(lintu);
+            painike.setSelected(true);
+        }
     }
     
 }

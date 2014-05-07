@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import lipvk.gui.Havaintolistakaavake.Listanakyma;
 import lipvk.ohlo.Havainto;
+import lipvk.ohlo.Lintulaji;
 import lipvk.ohlo.Lintulista;
 import lipvk.takut.menu.LataaHavainnot;
 import lipvk.takut.menu.TallennaHavainnotNimella;
@@ -27,7 +28,6 @@ import lipvk.takut.menu.TallennaHavainnotNimella;
  */
 public class Kayttoliittyma implements Runnable {
     private JFrame frame;
-    private UusiHavaintoKaavake uhk;
     private Havaintolistakaavake hlk;
     
     private Lintulista lintulista;
@@ -64,15 +64,16 @@ public class Kayttoliittyma implements Runnable {
     private void luoKomponentit(Container container) {
         container.setLayout( new GridLayout( 1, 2 ) );
         
-        luoVasenLohko(container);
+        luoVasenLohko(container, null);
         
         container.add(hlk = new Havaintolistakaavake(this));
     }
     
-    private void luoVasenLohko( Container container ) {
+    private void luoVasenLohko( Container container, Lintulaji lintulaji ) {
         JPanel vasenLohko = new JPanel( new GridLayout( 2, 1 ) );
         
-        vasenLohko.add ( uhk = new UusiHavaintoKaavake(this) );
+        // vasenLohko.add( new UusiHavaintoKaavake(this) );
+        vasenLohko.add( new UusiLintulajiKaavake(this) );
         
         container.add(vasenLohko);
     }
@@ -98,6 +99,17 @@ public class Kayttoliittyma implements Runnable {
         return tiedostoMenu;
     }
     
+    public void setLintukortti(Lintulaji lintulaji) {
+        Container container = frame.getContentPane();
+        container.removeAll();
+        
+        luoVasenLohko(container, lintulaji);
+        container.add(hlk);
+        
+        container.validate();
+        container.repaint();
+    }
+    
     public void paivitaHavaintolistakaavake() {
         Container container = frame.getContentPane();
         container.remove(hlk);
@@ -114,6 +126,11 @@ public class Kayttoliittyma implements Runnable {
         
         container.validate();
         container.repaint();
+    }
+    
+    public void lisaaLaji(Lintulaji laji) {
+        lintulista.lisaa(laji);
+        paivitaHavaintolistakaavake();
     }
     
     public void lisaaHavainto(String laji, Havainto havainto) {

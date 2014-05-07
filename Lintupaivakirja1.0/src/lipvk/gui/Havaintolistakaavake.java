@@ -35,7 +35,7 @@ public class Havaintolistakaavake extends JPanel {
 
     private void luoKomponentit( Kayttoliittyma kali, Listanakyma nakyma ) {
         JPanel ylapaneeli = HlkPaneelit.ylapaneeli(kali, nakyma);
-        JScrollPane listaScrolleri = HlkPaneelit.listaScrolleri(kali.getLintulista(), nakyma);
+        JScrollPane listaScrolleri = HlkPaneelit.listaScrolleri(kali, nakyma);
         
         add(ylapaneeli, BorderLayout.NORTH);
         add(listaScrolleri, BorderLayout.CENTER);

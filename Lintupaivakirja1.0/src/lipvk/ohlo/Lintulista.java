@@ -40,16 +40,12 @@ public class Lintulista {
      * Metodi lisää annetulle lintulajille havainnon.
      * @param laji
      * @param havainto
-     * @throws IllegalArgumentException 
+     * @throws NullPointerException jos annettua lajia ei löydy listasta
      */
-    public void lisaaHavainto(String laji, Havainto havainto) throws IllegalArgumentException {
-        if( sisaltaa(laji) ) {
-            get(laji).lisaaHavainto(havainto);
-            return;
-        }
-        Lintulaji uusi = new Lintulaji(laji);
-        uusi.lisaaHavainto(havainto);
-        lista.add(uusi);
+    public void lisaaHavainto(String laji, Havainto havainto) throws NullPointerException {
+        if( !sisaltaa(laji) ) throw new NullPointerException();
+        
+        get(laji).lisaaHavainto(havainto);
     }
     
     public void poista(Lintulaji lintulaji) {
@@ -82,13 +78,11 @@ public class Lintulista {
         return lista;
     }
     
-    private Lintulaji get(String laji) throws NullPointerException {
-        
+    public Lintulaji get(String laji) {
         for (Lintulaji lintulaji : lista) {
-            if(lintulaji.getNimi().toLowerCase().equals(laji.toLowerCase())) return lintulaji;
+            if( lintulaji.getNimi().toLowerCase().equals( laji.toLowerCase() ) ) return lintulaji;
         }
-        
-        throw new NullPointerException();
+        return null;
     }
 
     @Override

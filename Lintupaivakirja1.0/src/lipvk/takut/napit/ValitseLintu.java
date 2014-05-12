@@ -15,21 +15,23 @@ import lipvk.ohlo.Lintulaji;
  * @author anterova
  */
 public class ValitseLintu implements ActionListener {
-    private Kayttoliittyma kali;
     private JRadioButton painike;
-    
-    private Lintulaji lintu;
+    private Kayttoliittyma kali;
+    private Lintulaji laji;
 
-    public ValitseLintu(Kayttoliittyma kali, JRadioButton painike, Lintulaji lintu) {
-        this.kali = kali;
+    public ValitseLintu(JRadioButton painike, Kayttoliittyma kali, Lintulaji laji) {
         this.painike = painike;
-        this.lintu = lintu;
+        this.kali = kali;
+        this.laji = laji;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!painike.isSelected()) {
-            kali.setLintukortti(lintu);
+        if(painike.isSelected()) {
+            kali.poistaLintukortti();
+            painike.setSelected(false);
+        } else {
+            kali.lisaaLintukortti(laji);
             painike.setSelected(true);
         }
     }

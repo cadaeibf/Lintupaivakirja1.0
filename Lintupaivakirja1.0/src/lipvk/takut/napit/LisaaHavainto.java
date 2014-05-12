@@ -8,50 +8,63 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import lipvk.gui.Kayttoliittyma;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Havaintopaikka;
+import lipvk.util.Pvm;
 
 /**
  *
  * @author anterova
  */
 public class LisaaHavainto implements ActionListener {
-    private JTextField lajikentta;
-    private JTextField paikkakentta;
-    private JTextField pvmkentta;
-    private JTextField lkmkentta;
-    
     private Kayttoliittyma kali;
-
-    public LisaaHavainto(JTextField lajikentta, JTextField paikkakentta, JTextField pvmkentta, JTextField lkmkentta, Kayttoliittyma kali) {
-        this.lajikentta = lajikentta;
-        this.paikkakentta = paikkakentta;
-        this.pvmkentta = pvmkentta;
-        this.lkmkentta = lkmkentta;
-        this.kali = kali;
-    }
     
-    public GregorianCalendar luePvm() {
-        GregorianCalendar pvm = new GregorianCalendar();
-        
-        String[] data = pvmkentta.getText().split("\\.");
-        
-        pvm.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data[0]));
-        pvm.set(Calendar.MONTH, (Integer.parseInt(data[1]) - 1));
-        pvm.set(Calendar.YEAR, Integer.parseInt(data[2]));
-        
-        return pvm;
+    private JTextField lajikentta;
+    private JLabel lajivirhe;
+    private JTextField paikkakentta;
+    private JLabel paikkavirhe;
+    private JTextField pvmkentta;
+    private JLabel pvmvirhe;
+    private JTextField lkmkentta;
+    private JLabel lkmvirhe;
+    
+
+    public LisaaHavainto(Kayttoliittyma kali, 
+            JTextField lajikentta, JLabel lajivirhe, 
+            JTextField paikkakentta, JLabel paikkavirhe, 
+            JTextField pvmkentta, JLabel pvmvirhe, 
+            JTextField lkmkentta, JLabel lkmvirhe ) {
+        this.lajikentta = lajikentta;
+        this.lajivirhe = lajivirhe;
+        this.paikkakentta = paikkakentta;
+        this.paikkavirhe = paikkavirhe;
+        this.pvmkentta = pvmkentta;
+        this.pvmvirhe = pvmvirhe;
+        this.lkmkentta = lkmkentta;
+        this.lkmvirhe = lkmvirhe;
+        this.kali = kali;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        kali.lisaaHavainto( lajikentta.getText().toLowerCase(), 
-                new Havainto( new Havaintopaikka( paikkakentta.getText().toLowerCase() ), 
-                luePvm(), 
-                Integer.parseInt(lkmkentta.getText()) ));
-        lajikentta.setText("");
+        try {
+            Calendar pvm = Pvm.luePvm( pvmkentta.getText() );
+            kali.lisaaHavainto( lajikentta.getText().toLowerCase(), 
+                    new Havainto( new Havaintopaikka( paikkakentta.getText().toLowerCase() ), 
+                        pvm, 
+                        Integer.parseInt(lkmkentta.getText()) ));
+            lajikentta.setText("");
+            lajivirhe.setText("");
+            pvmvirhe.setText("");
+        } catch(NullPointerException npe) {
+            lajivirhe.setText("Annettua lajia ei löytynyt listasta");
+        } catch(IllegalArgumentException iae) {
+            pvmvirhe.setText("Virheellinen päivämäärä");
+            System.out.println("virhe");
+        }
     }
     
 }

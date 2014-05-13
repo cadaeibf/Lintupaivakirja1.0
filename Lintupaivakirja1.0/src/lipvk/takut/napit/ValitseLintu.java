@@ -27,13 +27,7 @@ public class ValitseLintu implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(painike.isSelected()) {
-            kali.poistaLintukortti();
-            painike.setSelected(false);
-        } else {
-            kali.lisaaLintukortti(laji);
-            painike.setSelected(true);
-        }
+        kali.lisaaLintukortti(laji);
     }
     
 }

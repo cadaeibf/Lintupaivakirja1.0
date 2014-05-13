@@ -50,21 +50,53 @@ public class LisaaHavainto implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try {
-            Calendar pvm = Pvm.luePvm( pvmkentta.getText() );
-            kali.lisaaHavainto( lajikentta.getText().toLowerCase(), 
-                    new Havainto( new Havaintopaikka( paikkakentta.getText().toLowerCase() ), 
-                        pvm, 
-                        Integer.parseInt(lkmkentta.getText()) ));
-            lajikentta.setText("");
+        boolean virhe = false;
+        
+        String laji = lajikentta.getText().toLowerCase();
+        if( !kali.getLintulista().sisaltaa(laji) ) {
+            lajivirhe.setText("Annettua lajia ei löydy listasta");
+            virhe = true;
+        } else {
             lajivirhe.setText("");
-            pvmvirhe.setText("");
-        } catch(NullPointerException npe) {
-            lajivirhe.setText("Annettua lajia ei löytynyt listasta");
-        } catch(IllegalArgumentException iae) {
-            pvmvirhe.setText("Virheellinen päivämäärä");
-            System.out.println("virhe");
         }
+        
+        String paikka = paikkakentta.getText().toLowerCase();
+        if( paikka.equals("") ) {
+            paikkavirhe.setText("Syötä paikkatiedot");
+            virhe = true;
+        } else  {
+            paikkavirhe.setText("");
+        }
+        
+        Calendar pvm = Calendar.getInstance();
+        try{
+            pvm = Pvm.luePvm( pvmkentta.getText() );
+        } catch (Exception ex) {
+            pvmvirhe.setText("Päivämäärä muodossa pp.kk.vvvv");
+            virhe = true;
+        }
+        
+        int lkm = 0;
+        try {
+            lkm = Integer.parseInt( lkmkentta.getText() );
+            lkmvirhe.setText("");
+        } catch (Exception ex) {
+            lkmvirhe.setText("Virheellinen lukumäärä");
+            virhe = true;
+        }
+        
+        if(lkm < 1) {
+            lkmvirhe.setText("Virheellinen lukumäärä");
+            virhe = true;
+        }
+        
+        if(virhe) return;
+        
+        kali.lisaaHavainto( laji, new Havainto( new Havaintopaikka( paikka ), 
+                pvm, lkm ) );
+        lajikentta.setText("");
+        
+        pvmvirhe.setText("");
     }
     
 }

@@ -12,11 +12,11 @@ import javax.swing.JButton;
  *
  * @author anterova
  */
-public class LataaTiedostoNappaimistolta implements KeyListener {
-    private JButton lataaPainike;
+public class NapinpainoNappaimistolta implements KeyListener {
+    private JButton lisaa;
 
-    public LataaTiedostoNappaimistolta(JButton lataaPainike) {
-        this.lataaPainike = lataaPainike;
+    public NapinpainoNappaimistolta(JButton lisaaPainike) {
+        this.lisaa = lisaaPainike;
     }
 
     @Override
@@ -25,10 +25,11 @@ public class LataaTiedostoNappaimistolta implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if( e.getKeyCode() == KeyEvent.VK_ENTER )lataaPainike.doClick();
+        if(e.getKeyCode() == KeyEvent.VK_ENTER) lisaa.doClick();
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
     }
+    
 }

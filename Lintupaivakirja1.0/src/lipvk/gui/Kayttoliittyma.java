@@ -18,7 +18,9 @@ import javax.swing.WindowConstants;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Lintulaji;
 import lipvk.ohlo.Lintulista;
+import lipvk.ohlo.Sovellusdata;
 import lipvk.takut.menu.LataaHavainnot;
+import lipvk.takut.menu.LisaaLaji;
 import lipvk.takut.menu.TallennaHavainnotNimella;
 
 /**
@@ -27,12 +29,15 @@ import lipvk.takut.menu.TallennaHavainnotNimella;
  */
 public class Kayttoliittyma implements Runnable {
     private JFrame frame;
+    private JPanel vasenLohko;
     private Lajilistapaneeli llp;
     
+    private Sovellusdata data;
     private Lintulista lintulista;
     
     public Kayttoliittyma() {
-        lintulista = new Lintulista();
+        (data = new Sovellusdata()).lataa();
+        lintulista = data.luoLintulista();
     }
     
     public void taysiRuutu() {
@@ -40,7 +45,6 @@ public class Kayttoliittyma implements Runnable {
         
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setBounds(0,0,screenSize.width, screenSize.height);
-        frame.setVisible(true);
         
         frame.setResizable(true);
     }
@@ -58,12 +62,14 @@ public class Kayttoliittyma implements Runnable {
         frame.setJMenuBar(menuBar);
         
         luoKomponentit(frame.getContentPane());
+        
+        frame.setVisible(true);
     }
 
     private void luoKomponentit(Container container) {
         container.setLayout( new GridLayout( 1, 2 ) );
         
-        JPanel vasenLohko = new JPanel( new GridLayout( 2, 1 ) );
+        vasenLohko = new JPanel( new GridLayout( 2, 1 ) );
         
         vasenLohko.add( KaliPaneelit.uusiHavaintoKaavake(this) );
         
@@ -72,12 +78,11 @@ public class Kayttoliittyma implements Runnable {
     }
     
     private void luoMenut(JMenuBar menuBar) {
-        JMenu tiedostoMenu = luoTiedostoMenu();
-        
-        menuBar.add(tiedostoMenu);
+        menuBar.add( tiedostoMenu() );
+        menuBar.add( kirjastoMenu() );
     }
     
-    private JMenu luoTiedostoMenu() {
+    private JMenu tiedostoMenu() {
         JMenu tiedostoMenu = new JMenu( "Tiedosto" );
         
         JMenuItem lataaTiedosto = new JMenuItem( "Lataa" );
@@ -92,16 +97,40 @@ public class Kayttoliittyma implements Runnable {
         return tiedostoMenu;
     }
     
-    public void lisaaLintukortti(Lintulaji laji) {
+    private JMenu kirjastoMenu() {
+        JMenu kirjastoMenu = new JMenu( "Kirjasto" );
         
+        JMenuItem lisaaLaji = new JMenuItem( "Lisää laji" );
+        lisaaLaji.addActionListener( new LisaaLaji(this) );
+        
+        kirjastoMenu.add(lisaaLaji);
+        
+        return kirjastoMenu;
+    }
+    
+    public void lisaaLintukortti(Lintulaji laji) {
+        vasenLohko.removeAll();
+        
+        vasenLohko.add( KaliPaneelit.uusiHavaintoKaavake(this) );
+        vasenLohko.add( KaliPaneelit.lintukortti(laji) );
+        
+        vasenLohko.validate();
+        vasenLohko.repaint();
     }
     
     public void poistaLintukortti() {
+        vasenLohko.removeAll();
         
+        vasenLohko.add( KaliPaneelit.uusiHavaintoKaavake(this) );
+        
+        vasenLohko.validate();
+        vasenLohko.repaint();
     }
     
     public void lisaaLaji(Lintulaji laji) {
-        
+        lintulista.lisaa(laji);
+        data.tallennaKirjasto(lintulista);
+        paivitaLlp();
     }
     
     public void lisaaHavainto(String laji, Havainto havainto) throws NullPointerException {
@@ -110,7 +139,7 @@ public class Kayttoliittyma implements Runnable {
     }
     
     public void lataaHavainnot(File tiedosto) {
-        lintulista = Lintulista.lataaHavainnot(tiedosto);
+        lintulista.lataaHavainnot(tiedosto);
         llp.paivita(this);
     }
     

@@ -20,8 +20,8 @@ public class Lintulista {
         lista = new TreeSet<>();
     }
     
-    public static Lintulista lataaHavainnot(File tiedosto) {
-        return new LataaHavainnotXML().lue(tiedosto);
+    public void lataaHavainnot(File tiedosto) {
+        new LataaHavainnotXML().lue(tiedosto, this);
     }
     
     public static void tallennaHavainnot(Lintulista lintulista, File tiedosto) {

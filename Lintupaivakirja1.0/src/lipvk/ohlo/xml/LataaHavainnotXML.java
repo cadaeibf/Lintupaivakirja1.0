@@ -10,7 +10,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Havaintopaikka;
-import lipvk.ohlo.Lintulaji;
 import lipvk.ohlo.Lintulista;
 import lipvk.util.Pvm;
 import org.w3c.dom.Document;
@@ -27,7 +26,7 @@ public class LataaHavainnotXML {
     public LataaHavainnotXML() {
     }
     
-    public Lintulista lue(File tiedosto) {
+    public void lue(File tiedosto, Lintulista lintulista) {
         
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -38,24 +37,16 @@ public class LataaHavainnotXML {
             doc.normalize();
             
             NodeList lajit = doc.getElementsByTagName( "laji" );
-            System.out.println("Lajeja yhteensä: " + lajit.getLength() );
-            System.out.println("..........................");
-            if( lajit.getLength() == 0 ) return null;
             
-            Lintulista lintulista = lueLajit(lajit);
+            if( lajit.getLength() == 0 ) return;
             
-            System.out.println("..........................");
-            System.out.println("lataus valmis");
-            
-            return lintulista;
+            lueLajit(lintulista, lajit);
             
         } catch( Exception ex ) {
-            return null;
         }
     }
     
-    private Lintulista lueLajit( NodeList lajit ) {
-        Lintulista lintulista = new Lintulista();
+    private void lueLajit( Lintulista lintulista, NodeList lajit ) {
 
         for (int i = 0; i < lajit.getLength(); i++) {
             Node laji = lajit.item(i);
@@ -65,20 +56,16 @@ public class LataaHavainnotXML {
             // Lisää lintulaji listaan
             Element nimiE =  (Element) e.getElementsByTagName( "nimi" ).item(0);
             String nimi = nimiE.getChildNodes().item(0).getNodeValue();
-            lintulista.lisaa( new Lintulaji( nimi ) );
-            System.out.println( nimi + " ladattu" );
             
             // Lisää lintulajin havainnot
             
             Element havainnotE = (Element) e.getElementsByTagName( "havainnot" ).item(0);
             NodeList havainnot = havainnotE.getChildNodes();
             for (int j = 0; j < havainnot.getLength(); j++) {
-                lintulista.lisaaHavainto(nimi, lueHavainto( (Element) havainnot.item(j) ) );
+                if(lintulista.sisaltaa(nimi)) lintulista.lisaaHavainto(nimi, lueHavainto( (Element) havainnot.item(j) ) );
             }
             
         }
-        
-        return lintulista;
     }
     
     private Havainto lueHavainto( Element havaintoE ) {

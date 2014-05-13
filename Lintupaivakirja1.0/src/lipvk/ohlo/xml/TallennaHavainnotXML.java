@@ -29,8 +29,6 @@ import org.w3c.dom.Element;
  * @author anterova
  */
 public class TallennaHavainnotXML {
-    private DocumentBuilderFactory docFactory;
-    private DocumentBuilder docBuilder;
 
     public TallennaHavainnotXML() {
     }
@@ -39,8 +37,8 @@ public class TallennaHavainnotXML {
         
         try {
             
-            docFactory = DocumentBuilderFactory.newInstance();
-            docBuilder = docFactory.newDocumentBuilder();
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             
             Document doc = (Document) docBuilder.newDocument();
             
@@ -100,7 +98,7 @@ public class TallennaHavainnotXML {
         
         Element nimi = doc.createElement( "nimi" );
         
-        nimi.appendChild( doc.createTextNode( lintulaji.getNimi().toLowerCase() ) );
+        nimi.appendChild( doc.createTextNode( lintulaji.getNimi() ) );
         
         laji.appendChild( nimi );
         
@@ -111,7 +109,7 @@ public class TallennaHavainnotXML {
         Element havaintoE = doc.createElement( "havainto" );
         
         Element paikka = doc.createElement( "paikka" );
-        paikka.appendChild( doc.createTextNode( havainto.getPaikka().toString().toLowerCase() ) );
+        paikka.appendChild( doc.createTextNode( havainto.getPaikka().toString() ) );
         havaintoE.appendChild( paikka );
         
         Element pvm = doc.createElement( "pvm" );

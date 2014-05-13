@@ -56,6 +56,12 @@ public class LisaaLintulaji implements ActionListener {
         if(!heimoKentta.getText().equals("")) uusi.setHeimo(heimoKentta.getText().toLowerCase() );
         if(!lahkoKentta.getText().equals("")) uusi.setLahko(lahkoKentta.getText().toLowerCase() );
         kali.lisaaLaji(uusi);
+        
+        nimiKentta.setText("");
+        latNimiKentta.setText("");
+        heimoKentta.setText("");
+        lahkoKentta.setText("");
+        
         virheilmoitukset.setText("");
     }
     

@@ -5,8 +5,6 @@
 package lipvk.ohlo;
 
 import java.io.File;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import lipvk.ohlo.xml.LataaKirjastoXML;
 import lipvk.ohlo.xml.TallennaKirjastoXML;
 
@@ -21,7 +19,7 @@ public class Sovellusdata {
     }
     
     public void lataa() {
-        valitseKirjasto();
+        kirjasto = new File("src/kirjasto/lajikirjasto.xml");
     }
     
     public Lintulista luoLintulista() {
@@ -33,19 +31,5 @@ public class Sovellusdata {
     public void tallennaKirjasto(Lintulista lintulista) {
         new TallennaKirjastoXML().kirjoita(lintulista, kirjasto);
     }
-
-    private void valitseKirjasto() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Valitse kirjasto");
-        fileChooser.setFileFilter( new FileNameExtensionFilter("xml tiedostot", "xml") );
-        
-        int returVal = fileChooser.showDialog(null , "Valitse");
-        
-        if (returVal == JFileChooser.APPROVE_OPTION) {
-            kirjasto = fileChooser.getSelectedFile();
-            
-        }
-        
-        
-    }
+    
 }

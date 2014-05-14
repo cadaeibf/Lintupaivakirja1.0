@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="lista">
+	<xs:element name="laji" minOccurs="0" maxOccurs="unbounded">
+	<xs:complexType>
+		<xs:sequence>	
+			<xs:element name="nimi" type="xs:string"/>
+			<xs:element name="havainto" maxOccurs="unbounded">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="paikka" type="xs:string"/>
+					<xs:element name="pvm" type="xs:date"/>
+					<xs:element name="lkm">
+						<xs:simpleType>
+							<xs:restriction base="xs:integer">
+								<xs:minInclusive value="1"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:any minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+</xs:element>
+
+</xs:schema>

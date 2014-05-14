@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -72,6 +73,7 @@ public class Kayttoliittyma implements Runnable {
         vasenLohko = new JPanel( new GridLayout( 2, 1 ) );
         
         vasenLohko.add( KaliPaneelit.uusiHavaintoKaavake(this) );
+        vasenLohko.add( new JLabel(data.kirjastoSijainti()) );
         
         container.add(vasenLohko);
         container.add( llp = new Lajilistapaneeli(this) );

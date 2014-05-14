@@ -19,7 +19,7 @@ public class Sovellusdata {
     }
     
     public void lataa() {
-        kirjasto = new File("src/kirjasto/lajikirjasto.xml");
+        kirjasto = new File("kirjasto/lajikirjasto.xml");
     }
     
     public Lintulista luoLintulista() {
@@ -30,6 +30,10 @@ public class Sovellusdata {
     
     public void tallennaKirjasto(Lintulista lintulista) {
         new TallennaKirjastoXML().kirjoita(lintulista, kirjasto);
+    }
+    
+    public String kirjastoSijainti() {
+        return kirjasto.getAbsolutePath();
     }
     
 }

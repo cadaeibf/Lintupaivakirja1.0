@@ -2,27 +2,30 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lipvk.takut.menu;
+package lipvk.pics;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.SwingUtilities;
 import lipvk.gui.Kayttoliittyma;
+import lipvk.ohlo.Lintulaji;
 
 /**
- * Luokka pyytää käyttäjää valitsemaan halutun havaintolistan xml-tiedoston 
- * ja käskee käyttöliittymää lataamaan havainnot.
+ *
  * @author anterova
  */
-public class LataaHavainnot implements ActionListener {
+public class LisaaKuva implements ActionListener {
+    private Lintulaji laji;
     private Kayttoliittyma kali;
-
-    public LataaHavainnot(Kayttoliittyma kali) {
+    
+    public LisaaKuva(Lintulaji laji, Kayttoliittyma kali) {
+        this.laji = laji;
         this.kali = kali;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        kali.lataaHavainnot();
+        SwingUtilities.invokeLater( new LisaaKuvaKaavake(laji, kali) );
     }
     
 }

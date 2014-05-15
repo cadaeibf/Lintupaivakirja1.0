@@ -45,6 +45,7 @@ public class TallennaHavainnotXML {
             Element juuri = luoJuuriElementti( doc );
             
             for (Lintulaji lintulaji : lintulista.getLista()) {
+                if(lintulaji.eiHavaintoja()) continue;
                 Element laji = luoLajiElementti( doc, lintulaji );
 
                 Element havainnot = doc.createElement( "havainnot" );

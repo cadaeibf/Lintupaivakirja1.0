@@ -8,9 +8,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.io.File;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -22,7 +20,7 @@ import lipvk.ohlo.Lintulista;
 import lipvk.ohlo.Sovellusdata;
 import lipvk.takut.menu.LataaHavainnot;
 import lipvk.takut.menu.LisaaLaji;
-import lipvk.takut.menu.TallennaHavainnotNimella;
+import lipvk.takut.menu.TallennaHavainnot;
 
 /**
  *
@@ -37,7 +35,7 @@ public class Kayttoliittyma implements Runnable {
     private Lintulista lintulista;
     
     public Kayttoliittyma() {
-        (data = new Sovellusdata()).lataa();
+        data = new Sovellusdata();
         lintulista = data.luoLintulista();
     }
     
@@ -73,7 +71,6 @@ public class Kayttoliittyma implements Runnable {
         vasenLohko = new JPanel( new GridLayout( 2, 1 ) );
         
         vasenLohko.add( KaliPaneelit.uusiHavaintoKaavake(this) );
-        vasenLohko.add( new JLabel(data.kirjastoSijainti()) );
         
         container.add(vasenLohko);
         container.add( llp = new Lajilistapaneeli(this) );
@@ -90,8 +87,8 @@ public class Kayttoliittyma implements Runnable {
         JMenuItem lataaTiedosto = new JMenuItem( "Lataa" );
         lataaTiedosto.addActionListener( new LataaHavainnot(this) );
         
-        JMenuItem tallennaNimella = new JMenuItem("Tallenna nimellä...");
-        tallennaNimella.addActionListener( new TallennaHavainnotNimella(this) );
+        JMenuItem tallennaNimella = new JMenuItem("Tallenna");
+        tallennaNimella.addActionListener( new TallennaHavainnot(this) );
         
         tiedostoMenu.add(lataaTiedosto);
         tiedostoMenu.add(tallennaNimella);
@@ -114,7 +111,7 @@ public class Kayttoliittyma implements Runnable {
         vasenLohko.removeAll();
         
         vasenLohko.add( KaliPaneelit.uusiHavaintoKaavake(this) );
-        vasenLohko.add( KaliPaneelit.lintukortti(laji) );
+        vasenLohko.add( KaliPaneelit.lintukortti( laji, this ) );
         
         vasenLohko.validate();
         vasenLohko.repaint();
@@ -140,13 +137,13 @@ public class Kayttoliittyma implements Runnable {
         llp.paivita(this);
     }
     
-    public void lataaHavainnot(File tiedosto) {
-        lintulista.lataaHavainnot(tiedosto);
+    public void lataaHavainnot() {
+        data.lataaHavainnot(lintulista);
         llp.paivita(this);
     }
     
-    public void tallennaHavainnot(File tiedosto) {
-        Lintulista.tallennaHavainnot(lintulista, tiedosto);
+    public void tallennaHavainnot() {
+        data.tallennaHavainnot(lintulista);
     }
     
     public Lintulista getLintulista() {

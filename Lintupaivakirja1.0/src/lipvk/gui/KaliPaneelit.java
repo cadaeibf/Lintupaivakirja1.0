@@ -6,7 +6,9 @@ package lipvk.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,7 +20,9 @@ import lipvk.ohlo.Lintulaji;
 import lipvk.takut.NapinpainoNappaimistolta;
 import lipvk.takut.napit.LisaaHavainto;
 import lipvk.takut.napit.LisaaLintulaji;
-import lipvk.takut.napit.SoitaAudio;
+import lipvk.audio.SoitaAudio;
+import lipvk.pics.Kuvapaneeli;
+import lipvk.pics.LisaaKuva;
 import lipvk.util.Pvm;
 import lipvk.util.TekstinFormatointi;
 
@@ -100,17 +104,19 @@ public class KaliPaneelit {
         return rivi;
     }
     
-    public static JPanel lintukortti( Lintulaji laji ) {
+    public static JPanel lintukortti( Lintulaji laji, Kayttoliittyma kali ) {
         JPanel lintukortti = new JPanel( new GridLayout(1, 2) );
         
-        lintukortti.add( lintufaktat(laji) );
+        lintukortti.add( lintufaktat(laji, kali) );
         lintukortti.add( havainnot(laji) );
         
         return lintukortti;
     }
     
-    private static JPanel lintufaktat(Lintulaji laji) {
-        JPanel lintufaktat = new JPanel(new GridLayout(15, 1));
+    private static JPanel lintufaktat(Lintulaji laji, Kayttoliittyma kali) {
+        JPanel paneeli = new JPanel( new GridLayout(2,1) );
+        
+        JPanel lintufaktat = new JPanel(new GridLayout(7, 1));
         
         JButton aaniNappi = new JButton("Lauluääni");
         aaniNappi.addActionListener(new SoitaAudio(null));
@@ -122,7 +128,22 @@ public class KaliPaneelit {
         lintufaktat.add( kentta( "Havaintoja:", laji.getHavaintoja() + "" ) );
         lintufaktat.add(aaniNappi);
         
-        return lintufaktat;
+        paneeli.add(lintufaktat);
+        paneeli.add(kuva(laji, kali));
+        
+        return paneeli;
+    }
+    
+    private static Component kuva(Lintulaji laji, Kayttoliittyma kali) {
+        if(laji.getKuvat().isEmpty()) {
+            JButton lisaaKuva = new JButton("Lisää kuva");
+            lisaaKuva.addActionListener(new LisaaKuva(laji, kali));
+            return lisaaKuva;
+        }
+        Dimension ruudunKoko = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        return new Kuvapaneeli( laji.getKuvat().get(0), (int) ruudunKoko.getWidth() / 4, (int) ruudunKoko.getHeight() / 4 );
+        
     }
     
     private static JPanel kentta(String nimi, String tiedot) {

@@ -9,20 +9,20 @@ import java.awt.event.ActionListener;
 import lipvk.gui.Kayttoliittyma;
 
 /**
- * Luokka pyytää käyttäjää valitsemaan halutun havaintolistan xml-tiedoston 
- * ja käskee käyttöliittymää lataamaan havainnot.
+ * Luokka pyytää käyttäjää valitsemaan tallennuskohteen ja tallentaa session 
+ * havainnot sinne.
  * @author anterova
  */
-public class LataaHavainnot implements ActionListener {
+public class TallennaHavainnot implements ActionListener {
     private Kayttoliittyma kali;
-
-    public LataaHavainnot(Kayttoliittyma kali) {
+    
+    public TallennaHavainnot( Kayttoliittyma kali ) {
         this.kali = kali;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        kali.lataaHavainnot();
+        kali.tallennaHavainnot();
     }
     
 }

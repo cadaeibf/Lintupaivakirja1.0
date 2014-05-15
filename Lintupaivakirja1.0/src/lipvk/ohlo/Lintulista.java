@@ -84,6 +84,12 @@ public class Lintulista {
         }
         return null;
     }
+    
+    public void tyhjennaHavainnot() {
+        for (Lintulaji lintulaji : lista) {
+            lintulaji.tyhjennaHavainnot();
+        }
+    }
 
     @Override
     public String toString() {

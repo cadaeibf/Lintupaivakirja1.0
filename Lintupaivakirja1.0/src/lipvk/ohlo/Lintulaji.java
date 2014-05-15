@@ -50,6 +50,7 @@ public class Lintulaji implements Comparable {
     
     public void lisaaKuvaTiedosto(File kuvaTiedosto) {
         kuvat.add(kuvaTiedosto);
+        System.out.println("kuvatiedosto lisätty");
     }
     
     public void lisaaHavainto(Havainto havainto) {
@@ -87,6 +88,10 @@ public class Lintulaji implements Comparable {
         return kuvat;
     }
     
+    public boolean eiHavaintoja() {
+        return havainnot.isEmpty();
+    }
+    
     public int getHavaintoja() {
         return havainnot.size();
     }
@@ -120,6 +125,10 @@ public class Lintulaji implements Comparable {
     public String viimeinenHavaintoLkm() {
         if( havainnot.isEmpty() ) return "-";
         return havainnot.last().getLkm() + "";
+    }
+    
+    public void tyhjennaHavainnot() {
+        havainnot.removeAll(kuvat);
     }
     
     @Override

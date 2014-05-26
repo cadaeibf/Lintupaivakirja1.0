@@ -19,38 +19,39 @@ import lipvk.ohlo.xml.TallennaKirjastoXML;
 public class Sovellusdata {
     private final File kirjasto;
     private File havainnot;
+    private boolean muutoksiaTehty;
 
     public Sovellusdata() {
         kirjasto = new File("kirjasto/lajikirjasto.xml");
+        if(!kirjasto.exists()) {
+            try{
+                kirjasto.createNewFile();
+            } catch(Exception ex) {
+                
+            }
+        }
+        muutoksiaTehty = false;
     }
     
-    public Lintulista luoLintulista() {
-        Lintulista lintulista = new LataaKirjastoXML().lataa(kirjasto);
-        
-        return lintulista;
+    public Lintulista lataaKirjasto() {
+        return new LataaKirjastoXML().lataa(kirjasto);
     }
     
     public void tallennaKirjasto(Lintulista lintulista) {
         new TallennaKirjastoXML().kirjoita(lintulista, kirjasto);
     }
     
-    /**
-     * metodi ohjelman testausta varten MUISTA POISTAA
-     * @return 
-     */
-    public String kirjastoSijainti() {
-        return kirjasto.getAbsolutePath();
-    }
-    
     public void tallennaHavainnot(Lintulista lintulista) {
         if(havainnot == null) valitseHavainnotTiedosto();
         new TallennaHavainnotXML().kirjoita(lintulista, havainnot);
+        muutoksiaTehty = false;
     }
     
     public void lataaHavainnot(Lintulista lintulista) {
         valitseHavainnotTiedosto();
         lintulista.tyhjennaHavainnot();
         new LataaHavainnotXML().lue(havainnot, lintulista);
+        muutoksiaTehty = false;
     }
     
     private void valitseHavainnotTiedosto() {
@@ -66,6 +67,14 @@ public class Sovellusdata {
             if( fSave.getName().endsWith(".xml") ) havainnot = fSave;
             else havainnot = new File( fSave + ".xml" );
         }
+    }
+    
+    public void setMuutoksiaTehty(Boolean muutoksiaTehty) {
+        this.muutoksiaTehty = muutoksiaTehty;
+    }
+    
+    public boolean muutoksiaTehty() {
+        return muutoksiaTehty;
     }
     
 }

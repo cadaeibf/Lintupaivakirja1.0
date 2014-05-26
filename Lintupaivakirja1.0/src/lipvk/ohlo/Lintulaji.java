@@ -48,9 +48,8 @@ public class Lintulaji implements Comparable {
         this.aaniTiedosto = aaniTiedosto;
     }
     
-    public void lisaaKuvaTiedosto(File kuvaTiedosto) {
-        kuvat.add(kuvaTiedosto);
-        System.out.println("kuvatiedosto lisätty");
+    public void lisaaKuva(File kuva) {
+        kuvat.add(kuva);
     }
     
     public void lisaaHavainto(Havainto havainto) {

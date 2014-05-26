@@ -27,26 +27,28 @@ public class Kuvapaneeli extends JPanel {
         
         luoKomponentit(kuvatiedosto);
     }
-    
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        
-        if(image != null) {
-            float s = muuntosuhde(image.getWidth(), image.getHeight(), leveys, korkeus);
-            int kuvanLeveys = (int) ( s*image.getWidth() );
-            int kuvanKorkeus = (int) ( s*image.getHeight() );
-            
-            g.drawImage(image, (leveys - kuvanLeveys) / 2, 0, kuvanLeveys, kuvanKorkeus, null);
-        } else add( new JLabel("kuvatiedostoa ei löytynyt") );
-    }
 
     private void luoKomponentit(File kuvatiedosto) {
         try {
             image = ImageIO.read(kuvatiedosto);
         } catch(Exception ex) {
-            image = null;
         }
+    }
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        
+        if(image == null) {
+            add( new JLabel("kuvatiedostoa ei löytynyt") );
+            return;
+        }
+        
+        float s = muuntosuhde(image.getWidth(), image.getHeight(), leveys, korkeus);
+        int kuvanLeveys = (int) ( s*image.getWidth() );
+        int kuvanKorkeus = (int) ( s*image.getHeight() );
+
+        g.drawImage(image, (leveys - kuvanLeveys) / 2, 0, kuvanLeveys, kuvanKorkeus, null);
     }
     
     private float muuntosuhde(int xAlku, int yAlku, int xLoppu, int yLoppu) {

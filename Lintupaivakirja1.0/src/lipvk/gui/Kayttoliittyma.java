@@ -7,20 +7,13 @@ package lipvk.gui;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
+import java.io.File;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import lipvk.ohlo.Havainto;
 import lipvk.ohlo.Lintulaji;
 import lipvk.ohlo.Lintulista;
 import lipvk.ohlo.Sovellusdata;
-import lipvk.takut.menu.LataaHavainnot;
-import lipvk.takut.menu.LisaaLaji;
-import lipvk.takut.menu.TallennaHavainnot;
 
 /**
  *
@@ -28,7 +21,7 @@ import lipvk.takut.menu.TallennaHavainnot;
  */
 public class Kayttoliittyma implements Runnable {
     private JFrame frame;
-    private JPanel vasenLohko;
+    private VasenLohko vasenLohko;
     private Lajilistapaneeli llp;
     
     private Sovellusdata data;
@@ -36,94 +29,43 @@ public class Kayttoliittyma implements Runnable {
     
     public Kayttoliittyma() {
         data = new Sovellusdata();
-        lintulista = data.luoLintulista();
-    }
-    
-    public void taysiRuutu() {
-        frame.setResizable(true);
-        
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setBounds(0,0,screenSize.width, screenSize.height);
-        
-        frame.setResizable(true);
+        lintulista = data.lataaKirjasto();
     }
 
     @Override
     public void run() {
         frame = new JFrame("Lintupäiväkirja v1.0");
-        
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        taysiRuutu();
         
-        JMenuBar menuBar = new JMenuBar();
-        luoMenut(menuBar);
+        frame.setJMenuBar( KaliPaneelit.menuBar(this) );
+        luoKomponentit( frame.getContentPane() );
         
-        frame.setJMenuBar(menuBar);
-        
-        luoKomponentit(frame.getContentPane());
-        
+        frame.pack();
+        frame.setMinimumSize( frame.getSize() );
         frame.setVisible(true);
     }
 
     private void luoKomponentit(Container container) {
         container.setLayout( new GridLayout( 1, 2 ) );
         
-        vasenLohko = new JPanel( new GridLayout( 2, 1 ) );
-        
-        vasenLohko.add( KaliPaneelit.uusiHavaintoKaavake(this) );
-        
-        container.add(vasenLohko);
+        container.add( vasenLohko = new VasenLohko(this) );
         container.add( llp = new Lajilistapaneeli(this) );
     }
     
-    private void luoMenut(JMenuBar menuBar) {
-        menuBar.add( tiedostoMenu() );
-        menuBar.add( kirjastoMenu() );
-    }
-    
-    private JMenu tiedostoMenu() {
-        JMenu tiedostoMenu = new JMenu( "Tiedosto" );
-        
-        JMenuItem lataaTiedosto = new JMenuItem( "Lataa" );
-        lataaTiedosto.addActionListener( new LataaHavainnot(this) );
-        
-        JMenuItem tallennaNimella = new JMenuItem("Tallenna");
-        tallennaNimella.addActionListener( new TallennaHavainnot(this) );
-        
-        tiedostoMenu.add(lataaTiedosto);
-        tiedostoMenu.add(tallennaNimella);
-        
-        return tiedostoMenu;
-    }
-    
-    private JMenu kirjastoMenu() {
-        JMenu kirjastoMenu = new JMenu( "Kirjasto" );
-        
-        JMenuItem lisaaLaji = new JMenuItem( "Lisää laji" );
-        lisaaLaji.addActionListener( new LisaaLaji(this) );
-        
-        kirjastoMenu.add(lisaaLaji);
-        
-        return kirjastoMenu;
-    }
-    
-    public void lisaaLintukortti(Lintulaji laji) {
-        vasenLohko.removeAll();
-        
-        vasenLohko.add( KaliPaneelit.uusiHavaintoKaavake(this) );
-        vasenLohko.add( KaliPaneelit.lintukortti( laji, this ) );
-        
-        vasenLohko.validate();
-        vasenLohko.repaint();
+    public void setLintukortti(Lintulaji laji) {
+        vasenLohko.setLintukortti(laji);
     }
     
     public void poistaLintukortti() {
-        vasenLohko.removeAll();
-        
-        vasenLohko.add( KaliPaneelit.uusiHavaintoKaavake(this) );
-        
-        vasenLohko.validate();
-        vasenLohko.repaint();
+        vasenLohko.poistaLintukortti();
+    }
+    
+    public Dimension getKoko() {
+        return frame.getSize();
+    }
+    
+    private void paivitaLlp() {
+        llp.paivita(this);
     }
     
     public void lisaaLaji(Lintulaji laji) {
@@ -132,12 +74,16 @@ public class Kayttoliittyma implements Runnable {
         paivitaLlp();
     }
     
-    public void lisaaHavainto(String laji, Havainto havainto) throws NullPointerException {
+    public void lisaaHavainto(String laji, Havainto havainto) {
         lintulista.lisaaHavainto(laji, havainto);
+        data.setMuutoksiaTehty(true);
         llp.paivita(this);
     }
     
     public void lataaHavainnot() {
+        if( data.muutoksiaTehty() ) {
+            // Lisää kysely halutaanko tallentaa muutokset
+        }
         data.lataaHavainnot(lintulista);
         llp.paivita(this);
     }
@@ -150,14 +96,10 @@ public class Kayttoliittyma implements Runnable {
         return lintulista;
     }
     
-    private void paivitaLlp() {
-        Container container = frame.getContentPane();
-        container.remove(llp);
-        
-        container.add(llp = new Lajilistapaneeli(this));
-        
-        frame.validate();
-        frame.repaint();
+    public void lisaaKuva(String laji, File kuva) {
+        lintulista.lisaaKuva(laji, kuva);
+        data.tallennaKirjasto(lintulista);
+        vasenLohko.paivita();
     }
     
 }

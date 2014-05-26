@@ -5,7 +5,6 @@
 package lipvk.takut.menu;
 
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -34,17 +33,15 @@ public class LisaaLaji implements ActionListener {
         public void run() {
             frame = new JFrame("Uusi laji");
             
-            Dimension ruudunKoko = new Dimension( Toolkit.getDefaultToolkit().getScreenSize() );
-            Dimension ikkunanKoko = new Dimension( 100, 200 );
+            Dimension ruudunKoko = new Dimension( kali.getKoko() );
+            Dimension ikkunanKoko = new Dimension( 400, 200 );
+            int x = (int) (ruudunKoko.getWidth() / 2 -  ikkunanKoko.getWidth() / 2);
+            int y = (int) (ruudunKoko.getHeight() / 2 - ikkunanKoko.getHeight() / 2);
             
             frame.setSize( ikkunanKoko );
             
             frame.getContentPane().add( KaliPaneelit.uusiLintulajiKaavake(kali) );
             
-            frame.pack();
-            
-            int x = ruudunKoko.width / 2 -  ikkunanKoko.width / 2;
-            int y = ruudunKoko.height / 2 - ikkunanKoko.height / 2;
             frame.setLocation(x, y);
             
             frame.setResizable(false);

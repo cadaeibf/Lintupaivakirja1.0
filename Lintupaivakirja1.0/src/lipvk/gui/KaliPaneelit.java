@@ -8,9 +8,11 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -22,7 +24,10 @@ import lipvk.takut.napit.LisaaHavainto;
 import lipvk.takut.napit.LisaaLintulaji;
 import lipvk.audio.SoitaAudio;
 import lipvk.pics.Kuvapaneeli;
-import lipvk.pics.LisaaKuva;
+import lipvk.pics.takut.LisaaKuva;
+import lipvk.takut.menu.LataaHavainnot;
+import lipvk.takut.menu.LisaaLaji;
+import lipvk.takut.menu.TallennaHavainnot;
 import lipvk.util.Pvm;
 import lipvk.util.TekstinFormatointi;
 
@@ -31,6 +36,46 @@ import lipvk.util.TekstinFormatointi;
  * @author anterova
  */
 public class KaliPaneelit {
+    
+    public static JMenuBar menuBar(Kayttoliittyma kali) {
+        JMenuBar menuBar = new JMenuBar();
+        
+        menuBar.add( tiedostoMenu(kali) );
+        menuBar.add( kirjastoMenu(kali) );
+        
+        return menuBar;
+    }
+    
+    private static JMenu tiedostoMenu(Kayttoliittyma kali) {
+        JMenu tiedostoMenu = new JMenu( "Tiedosto" );
+        
+        // JMenuItem uusi = new JMenuItem( "Uusi" );
+        
+        JMenuItem lataaTiedosto = new JMenuItem( "Lataa" );
+        lataaTiedosto.addActionListener( new LataaHavainnot(kali) );
+        
+        JMenuItem tallennaNimella = new JMenuItem("Tallenna");
+        tallennaNimella.addActionListener( new TallennaHavainnot(kali) );
+        
+        // tiedostoMenu.add(uusi);
+        tiedostoMenu.add(lataaTiedosto);
+        tiedostoMenu.add(tallennaNimella);
+        
+        return tiedostoMenu;
+    }
+    
+    
+    
+    private static JMenu kirjastoMenu(Kayttoliittyma kali) {
+        JMenu kirjastoMenu = new JMenu( "Kirjasto" );
+        
+        JMenuItem lisaaLaji = new JMenuItem( "Lisää laji" );
+        lisaaLaji.addActionListener( new LisaaLaji(kali) );
+        
+        kirjastoMenu.add(lisaaLaji);
+        
+        return kirjastoMenu;
+    }
     
     public static JPanel uusiHavaintoKaavake( Kayttoliittyma kali ) {
         JPanel uhk = new JPanel( new GridLayout( 10, 1 ) );
@@ -65,7 +110,7 @@ public class KaliPaneelit {
     }
     
     public static JPanel uusiLintulajiKaavake( Kayttoliittyma kali ) {
-        JPanel ulk = new JPanel( new GridLayout( 10, 1 ) );
+        JPanel ulk = new JPanel( new GridLayout( 5, 1 ) );
         
         JTextField nimikentta = new JTextField();
         JTextField latNimiKentta = new JTextField();
@@ -75,10 +120,7 @@ public class KaliPaneelit {
         JLabel aaniSijainti = new JLabel("");
         JLabel kuvaSijainti = new JLabel("");
         
-        ulk.add( kaavakeRivi( "Nimi:", nimikentta , new JLabel() ) );
-        ulk.add( kaavakeRivi( "Tieteellinen nimi:", latNimiKentta , new JLabel() ) );
-        ulk.add( kaavakeRivi( "Heimo:", heimoKentta , new JLabel() ) );
-        ulk.add( kaavakeRivi( "Lahko:", lahkoKentta , new JLabel() ) );
+        
         
         JButton lisaa = new JButton("Lisää");
         lisaa.addActionListener( new LisaaLintulaji(nimikentta, latNimiKentta, 
@@ -89,6 +131,10 @@ public class KaliPaneelit {
         heimoKentta.addKeyListener(new NapinpainoNappaimistolta(lisaa) );
         lahkoKentta.addKeyListener(new NapinpainoNappaimistolta(lisaa) );
         
+        ulk.add( kaavakeRivi( "Nimi:", nimikentta , new JLabel() ) );
+        ulk.add( kaavakeRivi( "Tieteellinen nimi:", latNimiKentta , new JLabel() ) );
+        ulk.add( kaavakeRivi( "Heimo:", heimoKentta , new JLabel() ) );
+        ulk.add( kaavakeRivi( "Lahko:", lahkoKentta , new JLabel() ) );
         ulk.add( kaavakeRivi("", lisaa, new JLabel()) );
         
         return ulk;
@@ -105,6 +151,8 @@ public class KaliPaneelit {
     }
     
     public static JPanel lintukortti( Lintulaji laji, Kayttoliittyma kali ) {
+        if(laji == null) return new JPanel();
+        
         JPanel lintukortti = new JPanel( new GridLayout(1, 2) );
         
         lintukortti.add( lintufaktat(laji, kali) );
@@ -137,12 +185,12 @@ public class KaliPaneelit {
     private static Component kuva(Lintulaji laji, Kayttoliittyma kali) {
         if(laji.getKuvat().isEmpty()) {
             JButton lisaaKuva = new JButton("Lisää kuva");
-            lisaaKuva.addActionListener(new LisaaKuva(laji, kali));
+            lisaaKuva.addActionListener(new LisaaKuva(laji.getNimi(), kali));
             return lisaaKuva;
         }
-        Dimension ruudunKoko = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension ikkunanKoko = kali.getKoko();
         
-        return new Kuvapaneeli( laji.getKuvat().get(0), (int) ruudunKoko.getWidth() / 4, (int) ruudunKoko.getHeight() / 4 );
+        return new Kuvapaneeli( laji.getKuvat().get(0), (int) ikkunanKoko.getWidth() / 4, (int) ikkunanKoko.getHeight() / 4 );
         
     }
     

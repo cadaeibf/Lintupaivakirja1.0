@@ -2,23 +2,23 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lipvk.pics;
+package lipvk.pics.takut;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 import lipvk.gui.Kayttoliittyma;
-import lipvk.ohlo.Lintulaji;
+import lipvk.pics.LisaaKuvaKaavake;
 
 /**
  *
  * @author anterova
  */
 public class LisaaKuva implements ActionListener {
-    private Lintulaji laji;
+    private String laji;
     private Kayttoliittyma kali;
     
-    public LisaaKuva(Lintulaji laji, Kayttoliittyma kali) {
+    public LisaaKuva(String laji, Kayttoliittyma kali) {
         this.laji = laji;
         this.kali = kali;
     }

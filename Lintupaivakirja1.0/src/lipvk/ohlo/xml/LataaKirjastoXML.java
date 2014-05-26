@@ -69,6 +69,15 @@ public class LataaKirjastoXML {
             Element lahkoE = (Element) e.getElementsByTagName("lahko").item(0);
             String lahko = lahkoE.getChildNodes().item(0).getNodeValue();
             
+            Element kuvatE = (Element) e.getElementsByTagName("kuvat").item(0);
+            if(kuvatE.hasChildNodes()) {
+                Element kuvaE = (Element) e.getElementsByTagName("kuva").item(0);
+                String tiedostonimi = kuvaE.getChildNodes().item(0).getNodeValue();
+                
+                File kuvatiedosto = new File("kirjasto/kuvat/" + tiedostonimi);
+                if( kuvatiedosto.exists() ) uusi.lisaaKuva(kuvatiedosto);
+            }
+            
             uusi.setLatNimi(latNimi);
             uusi.setHeimo(heimo);
             uusi.setLahko(lahko);

@@ -27,7 +27,7 @@ public class ValitseLintu implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        kali.lisaaLintukortti(laji);
+        kali.setLintukortti(laji);
     }
     
 }

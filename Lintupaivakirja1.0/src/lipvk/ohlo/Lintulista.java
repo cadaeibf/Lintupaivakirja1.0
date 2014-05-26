@@ -45,7 +45,7 @@ public class Lintulista {
     public void lisaaHavainto(String laji, Havainto havainto) throws NullPointerException {
         if( !sisaltaa(laji) ) throw new NullPointerException();
         
-        get(laji).lisaaHavainto(havainto);
+        hae(laji).lisaaHavainto(havainto);
     }
     
     public void poista(Lintulaji lintulaji) {
@@ -78,7 +78,7 @@ public class Lintulista {
         return lista;
     }
     
-    public Lintulaji get(String laji) {
+    private Lintulaji hae(String laji) {
         for (Lintulaji lintulaji : lista) {
             if( lintulaji.getNimi().toLowerCase().equals( laji.toLowerCase() ) ) return lintulaji;
         }
@@ -89,6 +89,10 @@ public class Lintulista {
         for (Lintulaji lintulaji : lista) {
             lintulaji.tyhjennaHavainnot();
         }
+    }
+    
+    public void lisaaKuva(String laji, File kuva) {
+        hae(laji).lisaaKuva(kuva);
     }
 
     @Override

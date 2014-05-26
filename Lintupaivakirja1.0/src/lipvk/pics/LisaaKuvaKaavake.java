@@ -4,19 +4,22 @@
  */
 package lipvk.pics;
 
+import lipvk.pics.takut.HyvaksyKuva;
+import lipvk.pics.takut.ValitseKuva;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
-import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import lipvk.gui.Kayttoliittyma;
-import lipvk.ohlo.Lintulaji;
+import lipvk.util.TekstinFormatointi;
 
 /**
  *
@@ -24,11 +27,13 @@ import lipvk.ohlo.Lintulaji;
  */
 public class LisaaKuvaKaavake implements Runnable {
     private JFrame frame;
-    private Lintulaji laji;
+    private String laji;
     private Kayttoliittyma kali;
     private File valinta;
     
-   public LisaaKuvaKaavake(Lintulaji laji, Kayttoliittyma kali) {
+    private final int x = 500; 
+    
+   public LisaaKuvaKaavake(String laji, Kayttoliittyma kali) {
        this.laji = laji;
        this.kali = kali;
        this.valinta = null;
@@ -38,11 +43,10 @@ public class LisaaKuvaKaavake implements Runnable {
     public void run() {
         frame = new JFrame("Lisää Kuva");
         
-        Dimension kaavakkeenKoko = new Dimension( 500, 500 );
-        Dimension ruudunKoko = new Dimension( Toolkit.getDefaultToolkit().getScreenSize() );
-        int x = ( ruudunKoko.width - kaavakkeenKoko.width ) / 2;
-        int y = ( ruudunKoko.height - kaavakkeenKoko.height ) / 2;
-        frame.setSize(kaavakkeenKoko);
+        Dimension ruudunKoko = kali.getKoko();
+        int x = ( ruudunKoko.width - this.x ) / 2;
+        int y = ( ruudunKoko.height - this.x ) / 2;
+        frame.setSize( new Dimension( this.x, this.x ) );
         
         luoKomponentit(frame.getContentPane());
         
@@ -57,7 +61,7 @@ public class LisaaKuvaKaavake implements Runnable {
     private void luoKomponentit(Container container) {
         container.setLayout( new BorderLayout() );
         
-        container.add( new Kuvapaneeli( valinta, 400, 600 ), BorderLayout.CENTER );
+        container.add( new Kuvapaneeli( valinta, x, x ), BorderLayout.CENTER );
         container.add( painikekentta(), BorderLayout.SOUTH );
     }
     
@@ -71,7 +75,7 @@ public class LisaaKuvaKaavake implements Runnable {
         hyvaksy.addActionListener( new HyvaksyKuva(this) );
         
         painikekentta.add( new JLabel("Laji:") );
-        painikekentta.add( new JLabel(laji.getNimi()) );
+        painikekentta.add( new JLabel( laji ) );
         painikekentta.add( valitseKuva );
         painikekentta.add( hyvaksy );
         
@@ -85,7 +89,7 @@ public class LisaaKuvaKaavake implements Runnable {
         
         container.removeAll();
         
-        container.add( new Kuvapaneeli(valinta, 400, 600), BorderLayout.CENTER );
+        container.add( new Kuvapaneeli(valinta, x, x), BorderLayout.CENTER );
         container.add( painikekentta(), BorderLayout.SOUTH );
         
         container.validate();
@@ -94,9 +98,16 @@ public class LisaaKuvaKaavake implements Runnable {
     
     public void hyvaksy() {
         if(valinta == null) return;
-        laji.lisaaKuvaTiedosto(valinta);
-        kali.poistaLintukortti();
-        kali.lisaaLintukortti(laji);
+        
+        try {
+            BufferedImage im = ImageIO.read(valinta);
+            File output = new File("kirjasto/kuvat/" + TekstinFormatointi.tiedostonimeksi( laji ) + ".jpg");
+            ImageIO.write(im, "jpg", output);
+            kali.lisaaKuva(laji, output);
+        } catch(Exception ex) {
+            System.out.println("virhe");
+            return;
+        }
         frame.dispose();
     }
     

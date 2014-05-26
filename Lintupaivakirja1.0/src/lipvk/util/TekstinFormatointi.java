@@ -16,4 +16,15 @@ public class TekstinFormatointi {
         return ( teksti.charAt(0) + "" ).toUpperCase() + teksti.substring(1);
     }
     
+    public static String tiedostonimeksi(String teksti) {
+        String output = teksti;
+        
+        output = output.trim();
+        output = output.replace(" ", "");
+        output = output.replace("ä", "a");
+        output = output.replace("ö", "o");
+        
+        return output;
+    }
+    
 }

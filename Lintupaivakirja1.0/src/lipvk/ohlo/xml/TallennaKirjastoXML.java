@@ -89,9 +89,7 @@ public class TallennaKirjastoXML {
         Element aaniE = doc.createElement("aanitiedosto");
         if(laji.getAaniTiedosto() != null) {
             aaniE.appendChild( doc.createTextNode( laji.getAaniTiedosto().getName() ) );
-        } else {
-            aaniE.appendChild( doc.createTextNode("") );
-        }
+        } 
         
         Element kuvatE = kuvatElementti( laji, doc );
         
@@ -111,6 +109,7 @@ public class TallennaKirjastoXML {
         for (File kuvatiedosto : laji.getKuvat()) {
             Element kuvaE = doc.createElement("kuva");
             kuvaE.appendChild( doc.createTextNode( kuvatiedosto.getName() ) );
+            kuvatE.appendChild(kuvaE);
         }
         
         return kuvatE;

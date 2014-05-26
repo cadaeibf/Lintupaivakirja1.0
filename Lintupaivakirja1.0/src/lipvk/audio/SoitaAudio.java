@@ -7,21 +7,22 @@ package lipvk.audio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import lipvk.ohlo.Lintulaji;
 
 /**
  *
  * @author anterova
  */
 public class SoitaAudio implements ActionListener {
-    private File tiedosto;
+    private Lintulaji laji;
 
-    public SoitaAudio(File tiedosto) {
-        this.tiedosto = tiedosto;
+    public SoitaAudio(Lintulaji laji) {
+        this.laji = laji;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new Audio().soitaAudio("");
+        Audio.soitaAudio( new File("kirjasto/audio/cornix.mp3"));
     }
     
 }

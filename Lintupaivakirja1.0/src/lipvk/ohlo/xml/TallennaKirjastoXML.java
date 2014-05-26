@@ -87,8 +87,8 @@ public class TallennaKirjastoXML {
         lahkoE.appendChild( doc.createTextNode( laji.getLahko()) );
         
         Element aaniE = doc.createElement("aanitiedosto");
-        if(laji.getAaniTiedosto() != null) {
-            aaniE.appendChild( doc.createTextNode( laji.getAaniTiedosto().getName() ) );
+        if(laji.getAanitiedosto() != null) {
+            aaniE.appendChild( doc.createTextNode( laji.getAanitiedosto().getName() ) );
         } 
         
         Element kuvatE = kuvatElementti( laji, doc );

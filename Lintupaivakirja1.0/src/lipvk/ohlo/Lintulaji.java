@@ -18,7 +18,7 @@ public class Lintulaji implements Comparable {
     private String heimo;
     private String lahko;
     private String latNimi;
-    private File aaniTiedosto;
+    private File aanitiedosto;
     private List<File> kuvat;
     
     private TreeSet<Havainto> havainnot;
@@ -44,8 +44,8 @@ public class Lintulaji implements Comparable {
         this.heimo = heimo;
     }
 
-    public void setAaniTiedosto(File aaniTiedosto) {
-        this.aaniTiedosto = aaniTiedosto;
+    public void setAaniTiedosto(File aanitiedosto) {
+        this.aanitiedosto = aanitiedosto;
     }
     
     public void lisaaKuva(File kuva) {
@@ -78,9 +78,13 @@ public class Lintulaji implements Comparable {
         if( heimo == null ) return "";
         return heimo;
     }
+    
+    public int getHavaintoja() {
+        return havainnot.size();
+    }
 
-    public File getAaniTiedosto() {
-        return aaniTiedosto;
+    public File getAanitiedosto() {
+        return aanitiedosto;
     }
 
     public List<File> getKuvat() {
@@ -91,8 +95,8 @@ public class Lintulaji implements Comparable {
         return havainnot.isEmpty();
     }
     
-    public int getHavaintoja() {
-        return havainnot.size();
+    public boolean eiAanitiedostoa() {
+        return aanitiedosto == null;
     }
     
     public TreeSet<Havainto> getHavainnot() {
